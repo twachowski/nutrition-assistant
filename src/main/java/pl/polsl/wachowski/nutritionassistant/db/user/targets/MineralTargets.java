@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class MineralTargets {
 
     @Id
-    private final Long id;
+    private Long id;
 
     @Column
     private Short calcium;
@@ -46,6 +46,6 @@ public class MineralTargets {
     private Short zinc;
 
     @OneToOne(mappedBy = "mineralTargets")
-    private final User user;
+    private User user;
 
 }

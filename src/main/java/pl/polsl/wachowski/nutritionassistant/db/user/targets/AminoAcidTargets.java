@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class AminoAcidTargets {
 
     @Id
-    private final Long id;
+    private Long id;
 
     @Column
     private Short arginine;
@@ -43,6 +43,6 @@ public class AminoAcidTargets {
     private Short valine;
 
     @OneToOne(mappedBy = "aminoAcidTargets")
-    private final User user;
+    private User user;
 
 }

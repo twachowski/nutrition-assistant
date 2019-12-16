@@ -1,6 +1,5 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import pl.polsl.wachowski.nutritionassistant.def.activity.ActivityLevel;
 
@@ -9,13 +8,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
 @Entity
 public class UserBiometrics {
 
     @Id
     @GeneratedValue
-    private final Long id;
+    private Long id;
 
     @Column(nullable = false)
     private LocalDate dateOfBirth;
@@ -25,9 +23,8 @@ public class UserBiometrics {
             columnDefinition = "CHAR(1)")
     private Sex sex;
 
-    @Column(nullable = false,
-            columnDefinition = "SMALLINT")
-    private Integer height;
+    @Column(nullable = false)
+    private Short height;
 
     @Column(nullable = false,
             precision = 5,
@@ -41,7 +38,7 @@ public class UserBiometrics {
 
     @OneToOne
     @MapsId
-    private final User user;
+    private User user;
 
     public enum Sex {
         M,  //male

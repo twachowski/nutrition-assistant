@@ -52,6 +52,6 @@ public class VitaminTargets {
     private Short vitaminK;
 
     @OneToOne(mappedBy = "vitaminTargets")
-    private final User user;
+    private User user;
 
 }

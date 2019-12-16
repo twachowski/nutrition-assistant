@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 public class LipidTargets {
 
     @Id
-    private final Long id;
+    private Long id;
 
     @Column
     private Short saturatedFat;

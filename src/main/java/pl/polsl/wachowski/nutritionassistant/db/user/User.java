@@ -1,25 +1,25 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
-import lombok.Value;
+import lombok.Data;
 import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntry;
 import pl.polsl.wachowski.nutritionassistant.db.user.targets.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Value
+@Data
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(unique = true,
             nullable = false,
             updatable = false,
             length = 64)
-    String email;
+    private final String email;
 
     @OneToOne(
             mappedBy = "user",
@@ -27,7 +27,7 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
-    UserBiometrics userBiometrics;
+    private final UserBiometrics userBiometrics;
 
     @OneToOne(
             mappedBy = "user",
@@ -35,13 +35,13 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
-    UserCredentials userCredentials;
+    private final UserCredentials userCredentials;
 
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    List<DiaryEntry> diaryEntries;
+    private final List<DiaryEntry> diaryEntries;
 
     @OneToOne(
             cascade = CascadeType.ALL,

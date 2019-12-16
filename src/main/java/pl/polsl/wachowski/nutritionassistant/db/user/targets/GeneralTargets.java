@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class GeneralTargets {
 
     @Id
-    private final Long id;
+    private Long id;
 
     @Column
     private Byte carbohydrates;
@@ -31,6 +31,6 @@ public class GeneralTargets {
     private Short caffeine;
 
     @OneToOne(mappedBy = "generalTargets")
-    private final User user;
+    private User user;
 
 }

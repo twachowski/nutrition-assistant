@@ -1,45 +1,45 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
-import lombok.Value;
+import lombok.Data;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Value
+@Data
 @Entity
 public class DiaryEntry {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
-    LocalDate date;
+    private final LocalDate date;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    List<FoodEntry> foodEntries;
+    private final List<FoodEntry> foodEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    List<ExerciseEntry> exerciseEntries;
+    private final List<ExerciseEntry> exerciseEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    List<NoteEntry> noteEntries;
+    private final List<NoteEntry> noteEntries;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             nullable = false,
             updatable = false)
-    User user;
+    private User user;
 
 }
