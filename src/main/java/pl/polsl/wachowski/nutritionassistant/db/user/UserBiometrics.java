@@ -22,7 +22,7 @@ public class UserBiometrics {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
-            length = 1)
+            columnDefinition = "CHAR(1)")
     private Sex sex;
 
     @Column(nullable = false,
