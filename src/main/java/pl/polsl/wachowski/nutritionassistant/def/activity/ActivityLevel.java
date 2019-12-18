@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.def.activity;
 
 public enum ActivityLevel {
+    NONE(1.f),
     SEDENTARY(1.2f),
     LIGHT(1.375f),
     MODERATE(1.55f),
