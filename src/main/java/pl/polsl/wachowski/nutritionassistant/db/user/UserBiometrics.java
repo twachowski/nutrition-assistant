@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.def.activity.ActivityLevel;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class UserBiometrics {
 

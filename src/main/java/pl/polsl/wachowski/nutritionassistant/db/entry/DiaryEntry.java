@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class DiaryEntry {
 
@@ -41,5 +43,9 @@ public class DiaryEntry {
             nullable = false,
             updatable = false)
     private User user;
+
+    public DiaryEntry(final LocalDate date) {
+        this.date = date;
+    }
 
 }

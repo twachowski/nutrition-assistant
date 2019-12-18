@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntry;
 import pl.polsl.wachowski.nutritionassistant.db.user.targets.*;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class User {
 
@@ -102,5 +104,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "vitamin_targets_id", referencedColumnName = "id", nullable = false))
     private VitaminTargets vitaminTargets;
+
+    public User(final String email, final UserBiometrics userBiometrics) {
+        this.email = email;
+        this.userBiometrics = userBiometrics;
+    }
 
 }

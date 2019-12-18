@@ -1,11 +1,13 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class ExerciseEntry {
 
@@ -40,6 +42,17 @@ public class ExerciseEntry {
     public enum TimeUnit {
         MINUTE,
         HOUR
+    }
+
+    public ExerciseEntry(
+            final String name,
+            final TimeUnit timeUnit,
+            final BigDecimal amount,
+            final Short position) {
+        this.name = name;
+        this.timeUnit = timeUnit;
+        this.amount = amount;
+        this.position = position;
     }
 
 }
