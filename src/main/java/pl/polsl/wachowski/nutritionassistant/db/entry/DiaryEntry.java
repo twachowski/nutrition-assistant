@@ -16,25 +16,25 @@ public class DiaryEntry {
     private Long id;
 
     @Column(nullable = false)
-    private final LocalDate date;
+    private LocalDate date;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<FoodEntry> foodEntries;
+    private List<FoodEntry> foodEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<ExerciseEntry> exerciseEntries;
+    private List<ExerciseEntry> exerciseEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<NoteEntry> noteEntries;
+    private List<NoteEntry> noteEntries;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

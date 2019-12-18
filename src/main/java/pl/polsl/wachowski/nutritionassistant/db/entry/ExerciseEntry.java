@@ -16,7 +16,7 @@ public class ExerciseEntry {
     @Column(nullable = false,
             updatable = false,
             length = 32)
-    private final String name;
+    private String name;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,

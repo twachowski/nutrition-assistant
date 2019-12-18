@@ -19,7 +19,7 @@ public class User {
             nullable = false,
             updatable = false,
             length = 64)
-    private final String email;
+    private String email;
 
     @OneToOne(
             mappedBy = "user",
@@ -27,7 +27,7 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
-    private final UserBiometrics userBiometrics;
+    private UserBiometrics userBiometrics;
 
     @OneToOne(
             mappedBy = "user",
@@ -35,13 +35,13 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
-    private final UserCredentials userCredentials;
+    private UserCredentials userCredentials;
 
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<DiaryEntry> diaryEntries;
+    private List<DiaryEntry> diaryEntries;
 
     @OneToOne(
             cascade = CascadeType.ALL,

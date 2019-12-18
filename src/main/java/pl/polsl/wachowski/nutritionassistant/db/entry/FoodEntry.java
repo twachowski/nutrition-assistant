@@ -16,13 +16,13 @@ public class FoodEntry {
 
     @Column(nullable = false,
             updatable = false)
-    private final Integer externalId;
+    private Integer externalId;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
             updatable = false,
             length = 11)
-    private final NutritionDataProvider provider;
+    private NutritionDataProvider provider;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
