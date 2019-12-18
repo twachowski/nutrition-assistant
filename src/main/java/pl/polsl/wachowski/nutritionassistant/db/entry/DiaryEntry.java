@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class DiaryEntry {
 
@@ -16,30 +18,34 @@ public class DiaryEntry {
     private Long id;
 
     @Column(nullable = false)
-    private final LocalDate date;
+    private LocalDate date;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<FoodEntry> foodEntries;
+    private List<FoodEntry> foodEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<ExerciseEntry> exerciseEntries;
+    private List<ExerciseEntry> exerciseEntries;
 
     @OneToMany(
             mappedBy = "diaryEntry",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private final List<NoteEntry> noteEntries;
+    private List<NoteEntry> noteEntries;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             nullable = false,
             updatable = false)
     private User user;
+
+    public DiaryEntry(final LocalDate date) {
+        this.date = date;
+    }
 
 }

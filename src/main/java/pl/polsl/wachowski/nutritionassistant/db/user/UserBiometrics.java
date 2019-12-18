@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.def.activity.ActivityLevel;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class UserBiometrics {
 
@@ -44,6 +46,28 @@ public class UserBiometrics {
         M,  //male
         F,  //female
         O   //other
+    }
+
+    public UserBiometrics(
+            final LocalDate dateOfBirth,
+            final Sex sex,
+            final Short height,
+            final BigDecimal weight,
+            final ActivityLevel activityLevel) {
+        this.dateOfBirth = dateOfBirth;
+        this.sex = sex;
+        this.height = height;
+        this.weight = weight;
+        this.activityLevel = activityLevel;
+    }
+
+    public static UserBiometrics getDefault() {
+        return new UserBiometrics(
+                LocalDate.of(2000, 1, 1),
+                Sex.M,
+                (short) 180,
+                new BigDecimal(180),
+                ActivityLevel.NONE);
     }
 
 }

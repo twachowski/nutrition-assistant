@@ -1,10 +1,12 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class NoteEntry {
 
@@ -23,5 +25,10 @@ public class NoteEntry {
             nullable = false,
             updatable = false)
     private DiaryEntry diaryEntry;
+
+    public NoteEntry(final String content, final Short position) {
+        this.content = content;
+        this.position = position;
+    }
 
 }

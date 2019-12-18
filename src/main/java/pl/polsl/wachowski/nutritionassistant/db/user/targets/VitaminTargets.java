@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class VitaminTargets {
 
     @Id
-    private final Long id;
+    private Long id;
 
     @Column(name = "A")
     private Short vitaminA;

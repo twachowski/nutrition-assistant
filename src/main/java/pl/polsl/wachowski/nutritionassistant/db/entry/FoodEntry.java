@@ -1,12 +1,14 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.NutritionDataProvider;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class FoodEntry {
 
@@ -16,13 +18,13 @@ public class FoodEntry {
 
     @Column(nullable = false,
             updatable = false)
-    private final Integer externalId;
+    private Integer externalId;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
             updatable = false,
             length = 11)
-    private final NutritionDataProvider provider;
+    private NutritionDataProvider provider;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
@@ -47,6 +49,19 @@ public class FoodEntry {
         MICROGRAM,
         MILLIGRAM,
         GRAM
+    }
+
+    public FoodEntry(
+            final Integer externalId,
+            final NutritionDataProvider provider,
+            final MeasureUnit measureUnit,
+            final BigDecimal amount,
+            final Short position) {
+        this.externalId = externalId;
+        this.provider = provider;
+        this.measureUnit = measureUnit;
+        this.amount = amount;
+        this.position = position;
     }
 
 }
