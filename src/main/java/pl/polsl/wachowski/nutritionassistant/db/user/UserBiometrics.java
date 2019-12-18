@@ -66,7 +66,7 @@ public class UserBiometrics {
                 LocalDate.of(2000, 1, 1),
                 Sex.M,
                 (short) 180,
-                new BigDecimal(180),
+                new BigDecimal(80),
                 ActivityLevel.NONE);
     }
 
