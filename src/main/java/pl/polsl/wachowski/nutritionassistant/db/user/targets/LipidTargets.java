@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -41,7 +38,11 @@ public class LipidTargets {
     @Column
     private Short cholesterol;
 
-    @OneToOne(mappedBy = "lipidTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public LipidTargets(final User user) {

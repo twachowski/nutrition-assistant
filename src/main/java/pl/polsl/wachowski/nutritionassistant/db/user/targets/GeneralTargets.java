@@ -32,7 +32,11 @@ public class GeneralTargets {
     @Column
     private Short caffeine;
 
-    @OneToOne(mappedBy = "generalTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public GeneralTargets(final User user) {

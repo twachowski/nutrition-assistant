@@ -53,7 +53,11 @@ public class VitaminTargets {
     @Column(name = "K")
     private Short vitaminK;
 
-    @OneToOne(mappedBy = "vitaminTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public VitaminTargets(final User user) {

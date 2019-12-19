@@ -47,7 +47,11 @@ public class MineralTargets {
     @Column
     private Short zinc;
 
-    @OneToOne(mappedBy = "mineralTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public MineralTargets(final User user) {

@@ -23,7 +23,11 @@ public class CarbohydrateTargets {
     @Column
     private Short starch;
 
-    @OneToOne(mappedBy = "carbohydrateTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public CarbohydrateTargets(final User user) {

@@ -44,7 +44,11 @@ public class AminoAcidTargets {
     @Column
     private Short valine;
 
-    @OneToOne(mappedBy = "aminoAcidTargets")
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
+    @MapsId
     private User user;
 
     public AminoAcidTargets(final User user) {
