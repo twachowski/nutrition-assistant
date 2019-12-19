@@ -26,9 +26,10 @@ public class NoteEntry {
             updatable = false)
     private DiaryEntry diaryEntry;
 
-    public NoteEntry(final String content, final Short position) {
+    public NoteEntry(final String content, final Short position, final DiaryEntry diaryEntry) {
         this.content = content;
         this.position = position;
+        this.diaryEntry = diaryEntry;
     }
 
 }

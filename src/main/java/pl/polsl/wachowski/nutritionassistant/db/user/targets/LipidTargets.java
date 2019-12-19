@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.db.user.targets;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class LipidTargets {
 
@@ -41,5 +43,9 @@ public class LipidTargets {
 
     @OneToOne(mappedBy = "lipidTargets")
     private User user;
+
+    public LipidTargets(final User user) {
+        this.user = user;
+    }
 
 }

@@ -105,9 +105,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "vitamin_targets_id", referencedColumnName = "id", nullable = false))
     private VitaminTargets vitaminTargets;
 
-    public User(final String email, final UserBiometrics userBiometrics) {
+    public User(final String email) {
         this.email = email;
-        this.userBiometrics = userBiometrics;
     }
 
 }

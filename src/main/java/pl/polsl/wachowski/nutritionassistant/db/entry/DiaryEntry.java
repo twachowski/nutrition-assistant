@@ -44,8 +44,9 @@ public class DiaryEntry {
             updatable = false)
     private User user;
 
-    public DiaryEntry(final LocalDate date) {
+    public DiaryEntry(final LocalDate date, final User user) {
         this.date = date;
+        this.user = user;
     }
 
 }

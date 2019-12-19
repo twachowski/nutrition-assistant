@@ -1,11 +1,13 @@
 package pl.polsl.wachowski.nutritionassistant.db.user.targets;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class GeneralTargets {
 
@@ -32,5 +34,9 @@ public class GeneralTargets {
 
     @OneToOne(mappedBy = "generalTargets")
     private User user;
+
+    public GeneralTargets(final User user) {
+        this.user = user;
+    }
 
 }

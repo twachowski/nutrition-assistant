@@ -1,10 +1,12 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class UserCredentials {
 
@@ -18,5 +20,10 @@ public class UserCredentials {
     @OneToOne
     @MapsId
     private User user;
+
+    public UserCredentials(final String password, final User user) {
+        this.password = password;
+        this.user = user;
+    }
 
 }
