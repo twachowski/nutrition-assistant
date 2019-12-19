@@ -48,11 +48,13 @@ public class ExerciseEntry {
             final String name,
             final TimeUnit timeUnit,
             final BigDecimal amount,
-            final Short position) {
+            final Short position,
+            final DiaryEntry diaryEntry) {
         this.name = name;
         this.timeUnit = timeUnit;
         this.amount = amount;
         this.position = position;
+        this.diaryEntry = diaryEntry;
     }
 
 }

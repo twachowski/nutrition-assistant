@@ -56,12 +56,14 @@ public class FoodEntry {
             final NutritionDataProvider provider,
             final MeasureUnit measureUnit,
             final BigDecimal amount,
-            final Short position) {
+            final Short position,
+            final DiaryEntry diaryEntry) {
         this.externalId = externalId;
         this.provider = provider;
         this.measureUnit = measureUnit;
         this.amount = amount;
         this.position = position;
+        this.diaryEntry = diaryEntry;
     }
 
 }

@@ -53,21 +53,24 @@ public class UserBiometrics {
             final Sex sex,
             final Short height,
             final BigDecimal weight,
-            final ActivityLevel activityLevel) {
+            final ActivityLevel activityLevel,
+            final User user) {
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.height = height;
         this.weight = weight;
         this.activityLevel = activityLevel;
+        this.user = user;
     }
 
-    public static UserBiometrics getDefault() {
+    public static UserBiometrics getDefault(final User user) {
         return new UserBiometrics(
                 LocalDate.of(2000, 1, 1),
                 Sex.M,
                 (short) 180,
-                new BigDecimal(180),
-                ActivityLevel.NONE);
+                new BigDecimal(80),
+                ActivityLevel.NONE,
+                user);
     }
 
 }

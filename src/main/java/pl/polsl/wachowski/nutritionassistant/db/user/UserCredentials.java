@@ -1,26 +1,29 @@
 package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class UserCredentials {
 
     @Id
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            columnDefinition = "CHAR(60)")
     private String password;
-
-    @Column(unique = true,
-            nullable = false,
-            columnDefinition = "CHAR(6)")
-    private String passwordSalt;
 
     @OneToOne
     @MapsId
     private User user;
+
+    public UserCredentials(final String password, final User user) {
+        this.password = password;
+        this.user = user;
+    }
 
 }
