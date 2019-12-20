@@ -14,7 +14,6 @@ import java.time.LocalDate;
 public class UserBiometrics {
 
     @Id
-    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -40,6 +39,7 @@ public class UserBiometrics {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public enum Sex {
