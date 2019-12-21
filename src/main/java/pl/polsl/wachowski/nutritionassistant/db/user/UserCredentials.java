@@ -19,6 +19,7 @@ public class UserCredentials {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public UserCredentials(final String password, final User user) {

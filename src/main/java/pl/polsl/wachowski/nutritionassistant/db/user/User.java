@@ -22,6 +22,11 @@ public class User {
             length = 64)
     private String email;
 
+    @Enumerated
+    @Column(nullable = false,
+            columnDefinition = "TINYINT(1)")
+    private UserStatus status;
+
     @OneToOne(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -44,8 +49,14 @@ public class User {
             orphanRemoval = true)
     private List<DiaryEntry> diaryEntries;
 
+    public enum UserStatus {
+        INACTIVE,
+        ACTIVE
+    }
+
     public User(final String email) {
         this.email = email;
+        this.status = UserStatus.INACTIVE;
     }
 
 }
