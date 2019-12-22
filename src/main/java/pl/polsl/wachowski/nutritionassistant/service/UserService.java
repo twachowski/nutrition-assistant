@@ -3,6 +3,7 @@ package pl.polsl.wachowski.nutritionassistant.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentials;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
@@ -39,6 +40,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void activateUser(final String token) throws VerificationTokenNotFoundException,
                                                         VerificationTokenExpiredException,
                                                         UserAlreadyActiveException {
@@ -48,7 +50,7 @@ public class UserService {
             throw new UserAlreadyActiveException("Your account has been already activated");
         }
         user.activate();
-        tokenRepository.delete(verificationToken);
+        tokenRepository.deleteAllByUser(user);
     }
 
     public void createVerificationToken(final String token, final User user) {
