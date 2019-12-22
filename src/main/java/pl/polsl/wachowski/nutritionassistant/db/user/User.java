@@ -59,4 +59,12 @@ public class User {
         this.status = UserStatus.INACTIVE;
     }
 
+    public boolean isActive() {
+        return status.equals(UserStatus.ACTIVE);
+    }
+
+    public void activate() {
+        setStatus(UserStatus.ACTIVE);
+    }
+
 }
