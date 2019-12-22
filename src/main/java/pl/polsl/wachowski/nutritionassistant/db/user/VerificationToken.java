@@ -23,7 +23,9 @@ public class VerificationToken {
             updatable = false)
     private LocalDateTime expiryDate;
 
-    @OneToOne(optional = false)
+    @ManyToOne(
+            optional = false,
+            fetch = FetchType.LAZY)
     @JoinColumn(
             nullable = false,
             updatable = false)
