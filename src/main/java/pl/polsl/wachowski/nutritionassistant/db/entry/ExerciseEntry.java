@@ -44,12 +44,11 @@ public class ExerciseEntry {
         HOUR
     }
 
-    public ExerciseEntry(
-            final String name,
-            final TimeUnit timeUnit,
-            final BigDecimal amount,
-            final Short position,
-            final DiaryEntry diaryEntry) {
+    public ExerciseEntry(final String name,
+                         final TimeUnit timeUnit,
+                         final BigDecimal amount,
+                         final Short position,
+                         final DiaryEntry diaryEntry) {
         this.name = name;
         this.timeUnit = timeUnit;
         this.amount = amount;

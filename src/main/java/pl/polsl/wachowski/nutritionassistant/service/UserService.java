@@ -23,10 +23,9 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(
-            final UserRepository userRepository,
-            final TokenRepository tokenRepository,
-            final BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(final UserRepository userRepository,
+                       final TokenRepository tokenRepository,
+                       final BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

@@ -51,13 +51,12 @@ public class FoodEntry {
         GRAM
     }
 
-    public FoodEntry(
-            final Integer externalId,
-            final NutritionDataProvider provider,
-            final MeasureUnit measureUnit,
-            final BigDecimal amount,
-            final Short position,
-            final DiaryEntry diaryEntry) {
+    public FoodEntry(final Integer externalId,
+                     final NutritionDataProvider provider,
+                     final MeasureUnit measureUnit,
+                     final BigDecimal amount,
+                     final Short position,
+                     final DiaryEntry diaryEntry) {
         this.externalId = externalId;
         this.provider = provider;
         this.measureUnit = measureUnit;

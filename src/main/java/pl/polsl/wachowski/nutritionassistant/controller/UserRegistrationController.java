@@ -27,7 +27,8 @@ public class UserRegistrationController {
     private final ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public UserRegistrationController(final UserService userService, final ApplicationEventPublisher eventPublisher) {
+    public UserRegistrationController(final UserService userService,
+                                      final ApplicationEventPublisher eventPublisher) {
         this.userService = userService;
         this.eventPublisher = eventPublisher;
     }

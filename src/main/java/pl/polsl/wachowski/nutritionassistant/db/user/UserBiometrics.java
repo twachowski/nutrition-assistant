@@ -48,13 +48,12 @@ public class UserBiometrics {
         O   //other
     }
 
-    public UserBiometrics(
-            final LocalDate dateOfBirth,
-            final Sex sex,
-            final Short height,
-            final BigDecimal weight,
-            final ActivityLevel activityLevel,
-            final User user) {
+    public UserBiometrics(final LocalDate dateOfBirth,
+                          final Sex sex,
+                          final Short height,
+                          final BigDecimal weight,
+                          final ActivityLevel activityLevel,
+                          final User user) {
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.height = height;
