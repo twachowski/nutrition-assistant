@@ -1,15 +1,26 @@
 package pl.polsl.wachowski.nutritionassistant.config;
 
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(12);
+    @ConfigurationProperties("jasypt.encryptor")
+    public SimpleStringPBEConfig jasyptConfig() {
+        return new SimpleStringPBEConfig();
+    }
+
+    @Bean
+    public StringEncryptor jasyptEncryptor() {
+        final PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        encryptor.setConfig(jasyptConfig());
+        return encryptor;
     }
 
 }

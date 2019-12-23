@@ -1,14 +1,13 @@
 package pl.polsl.wachowski.nutritionassistant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentials;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
-import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
+import pl.polsl.wachowski.nutritionassistant.exception.*;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
@@ -21,15 +20,15 @@ public class UserService {
 
     private final TokenRepository tokenRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(final UserRepository userRepository,
                        final TokenRepository tokenRepository,
-                       final BCryptPasswordEncoder bCryptPasswordEncoder) {
+                       final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void createUser(final User user) throws UserExistsException {
@@ -76,7 +75,7 @@ public class UserService {
     }
 
     private void encodeUserPassword(final UserCredentials userCredentials) {
-        final String encodedPassword = bCryptPasswordEncoder.encode(userCredentials.getPassword());
+        final String encodedPassword = passwordEncoder.encode(userCredentials.getPassword());
         userCredentials.setPassword(encodedPassword);
     }
 
