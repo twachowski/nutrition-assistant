@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
@@ -8,5 +9,8 @@ import pl.polsl.wachowski.nutritionassistant.db.user.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByEmail(final String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.userCredentials WHERE u.email = :email")
+    User findUserCredentialsByEmail(final String email);
 
 }
