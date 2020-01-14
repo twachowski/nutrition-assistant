@@ -22,4 +22,7 @@ public class NutritionixApiConfig {
     @Value("${nutritionix-api.nutrients.url}")
     private String nutrientsUrl;
 
+    @Value("${nutritionix-api.exercise.url}")
+    private String exerciseUrl;
+
 }
