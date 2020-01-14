@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.data;
+package pl.polsl.wachowski.nutritionassistant.data.provider;
 
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.NutritionDataProvider;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;

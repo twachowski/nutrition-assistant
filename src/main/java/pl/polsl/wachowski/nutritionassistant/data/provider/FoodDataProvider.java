@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.data;
+package pl.polsl.wachowski.nutritionassistant.data.provider;
 
 public interface FoodDataProvider<T, U> {
 

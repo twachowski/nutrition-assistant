@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.data.nutritionix;
+package pl.polsl.wachowski.nutritionassistant.data.provider.nutritionix;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import pl.polsl.wachowski.nutritionassistant.config.api.NutritionixApiConfig;
-import pl.polsl.wachowski.nutritionassistant.data.FoodDataProvider;
+import pl.polsl.wachowski.nutritionassistant.data.provider.FoodDataProvider;
 import pl.polsl.wachowski.nutritionassistant.dto.details.nutritionix.NutritionixFoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.nutritionix.NutritionixFoodDetailsRequestBodyDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.nutritionix.NutritionixSearchResultDTO;
@@ -27,8 +27,7 @@ public class NutritionixProvider implements FoodDataProvider<NutritionixSearchRe
     private final HttpHeaders headers;
 
     @Autowired
-    public NutritionixProvider(final NutritionixApiConfig config,
-                               final RestTemplate restTemplate) {
+    public NutritionixProvider(final NutritionixApiConfig config, final RestTemplate restTemplate) {
         this.config = config;
         this.restTemplate = restTemplate;
         this.headers = createHeaders();

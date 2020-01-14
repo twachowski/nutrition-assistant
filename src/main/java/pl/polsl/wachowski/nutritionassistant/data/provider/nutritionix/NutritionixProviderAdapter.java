@@ -1,10 +1,10 @@
-package pl.polsl.wachowski.nutritionassistant.data.nutritionix;
+package pl.polsl.wachowski.nutritionassistant.data.provider.nutritionix;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.polsl.wachowski.nutritionassistant.data.FoodDataProviderAdapter;
+import pl.polsl.wachowski.nutritionassistant.data.provider.FoodDataProviderAdapter;
 import pl.polsl.wachowski.nutritionassistant.data.mapper.NutrientMapper;
-import pl.polsl.wachowski.nutritionassistant.data.nutritionix.mapper.*;
+import pl.polsl.wachowski.nutritionassistant.data.mapper.nutritionix.*;
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.*;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.NutrientDetailDTO;
@@ -95,7 +95,7 @@ public class NutritionixProviderAdapter implements FoodDataProviderAdapter {
         for (final NutrientMapper mapper : nutrientMappers) {
             final Nutrient n = mapper.get(nutrient.getId());
             if (n != null) {
-                return new NutrientDetailDTO(n, nutrient.getValue());
+                return new NutrientDetailDTO(n, nutrient.getAmount());
             }
         }
         return null;
