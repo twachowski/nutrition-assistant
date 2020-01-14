@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.controller.search;
+package pl.polsl.wachowski.nutritionassistant.controller.food;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.FoodSearchCriteriaDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.FoodSearchItemDTO;
@@ -41,8 +42,9 @@ public class FoodController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getDetails(@RequestBody @Valid FoodDetailsRequestDTO request) {
-
+    public ResponseEntity getDetails(@RequestBody @Valid final FoodDetailsRequestDTO request) {
+        final FoodDetailsDTO foodDetails = foodService.getDetails(request.getExternalId(), request.getProvider());
+        return ResponseEntity.ok(foodDetails);
     }
 
 }
