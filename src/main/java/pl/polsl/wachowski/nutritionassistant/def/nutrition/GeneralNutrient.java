@@ -7,6 +7,9 @@ import pl.polsl.wachowski.nutritionassistant.def.measure.Unit;
 public enum GeneralNutrient implements Nutrient {
 
     ENERGY(EnergyUnit.KCAL),
+    TOTAL_CARBS(MassUnit.GRAM),
+    TOTAL_FAT(MassUnit.GRAM),
+    TOTAL_PROTEIN(MassUnit.GRAM),
     WATER(MassUnit.GRAM),
     CAFFEINE(MassUnit.MILLIGRAM),
     ALCOHOL(MassUnit.MILLIGRAM);
