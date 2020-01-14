@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.data.FoodDataProviderAdapter;
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.NutritionDataProvider;
+import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.details.fdc.FdcFoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.FoodSearchItemDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.fdc.FdcFoodItemDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.fdc.FdcSearchResultDTO;
@@ -28,6 +30,17 @@ public class FdcProviderAdapter implements FoodDataProviderAdapter {
                 .stream()
                 .map(FdcProviderAdapter::mapFdcFoodItem)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FoodDetailsDTO getDetails(final String id) {
+        final FdcFoodDetailsDTO result = provider.getDetails(id);
+        return null;
+    }
+
+    @Override
+    public NutritionDataProvider getProviderType() {
+        return NutritionDataProvider.USDA;
     }
 
     private static FoodSearchItemDTO mapFdcFoodItem(final FdcFoodItemDTO item) {
