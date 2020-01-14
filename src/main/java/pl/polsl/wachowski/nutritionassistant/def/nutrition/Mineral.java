@@ -7,7 +7,6 @@ public enum Mineral implements Nutrient {
     CALCIUM(MassUnit.MILLIGRAM),
     COPPER(MassUnit.MILLIGRAM),
     FLUORIDE(MassUnit.MILLIGRAM),
-    IODINE(MassUnit.MICROGRAM),
     IRON(MassUnit.MILLIGRAM),
     MAGNESIUM(MassUnit.MILLIGRAM),
     MANGANESE(MassUnit.MILLIGRAM),
