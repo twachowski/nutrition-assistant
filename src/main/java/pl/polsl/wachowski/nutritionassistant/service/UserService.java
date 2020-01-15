@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentials;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
 import pl.polsl.wachowski.nutritionassistant.exception.*;
@@ -55,6 +56,14 @@ public class UserService {
     public void createVerificationToken(final String token, final User user) {
         final VerificationToken verificationToken = new VerificationToken(token, user);
         tokenRepository.save(verificationToken);
+    }
+
+    public UserBiometrics getUserBiometrics(final String userEmail) {
+        final User user = userRepository.findUserBiometricsByEmail(userEmail);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user.getUserBiometrics();
     }
 
     private VerificationToken findVerificationToken(final String token) throws  VerificationTokenNotFoundException,
