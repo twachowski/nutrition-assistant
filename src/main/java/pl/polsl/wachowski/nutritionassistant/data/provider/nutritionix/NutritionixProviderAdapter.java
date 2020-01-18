@@ -14,8 +14,10 @@ import pl.polsl.wachowski.nutritionassistant.dto.search.FoodSearchItemDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.nutritionix.NutritionixBrandedFoodItemDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.nutritionix.NutritionixCommonFoodItemDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.search.nutritionix.NutritionixSearchResultDTO;
+import pl.polsl.wachowski.nutritionassistant.util.LipidHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,15 +29,23 @@ public class NutritionixProviderAdapter implements FoodDataProviderAdapter {
 
     private final List<NutrientMapper> nutrientMappers = new ArrayList<>(6);
 
+    private final LipidHelper lipidHelper;
+
     @Autowired
     public NutritionixProviderAdapter(final NutritionixProvider provider) {
         this.provider = provider;
+
         nutrientMappers.add(GeneralNutrientsMapper.getInstance());
         nutrientMappers.add(CarbohydratesMapper.getInstance());
         nutrientMappers.add(LipidsMapper.getInstance());
         nutrientMappers.add(AminoAcidsMapper.getInstance());
         nutrientMappers.add(MineralsMapper.getInstance());
         nutrientMappers.add(VitaminsMapper.getInstance());
+
+        lipidHelper = new LipidHelper(
+                LipidsMapper.OMEGA6_IDS,
+                LipidsMapper.OMEGA3_ALA_IDS,
+                LipidsMapper.OMEGA3_NON_ALA_IDS);
     }
 
     @Override
@@ -64,9 +74,11 @@ public class NutritionixProviderAdapter implements FoodDataProviderAdapter {
         final List<NutrientDetailDTO> nutrientDetails =
                 nutrients
                         .stream()
+                        .filter(NutritionixProviderAdapter::isNotOmega)
                         .map(this::toNutrientDetail)
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
+        nutrientDetails.addAll(getTotalOmegaFattyAcids(nutrients));
         return new FoodDetailsDTO(nutrientDetails);
     }
 
@@ -99,6 +111,18 @@ public class NutritionixProviderAdapter implements FoodDataProviderAdapter {
             }
         }
         return null;
+    }
+
+    private List<NutrientDetailDTO> getTotalOmegaFattyAcids(final List<NutritionixNutrientDTO> nutrients) {
+        final float omega6Amount = lipidHelper.getTotalOmega6Amount(nutrients);
+        final float omega3Amount = lipidHelper.getTotalOmega3Amount(nutrients);
+        final NutrientDetailDTO totalOmega6 = new NutrientDetailDTO(Lipid.OMEGA6, omega6Amount);
+        final NutrientDetailDTO totalOmega3 = new NutrientDetailDTO(Lipid.OMEGA3, omega3Amount);
+        return Arrays.asList(totalOmega6, totalOmega3);
+    }
+
+    private static boolean isNotOmega(final NutritionixNutrientDTO nutrient) {
+        return !LipidsMapper.OMEGA_ACIDS_IDS.contains(nutrient.getId());
     }
 
 }
