@@ -6,6 +6,7 @@ import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -47,6 +48,9 @@ public class DiaryEntry {
     public DiaryEntry(final LocalDate date, final User user) {
         this.date = date;
         this.user = user;
+        this.foodEntries = new ArrayList<>(1);
+        this.exerciseEntries = new ArrayList<>(1);
+        this.noteEntries = new ArrayList<>(1);
     }
 
 }
