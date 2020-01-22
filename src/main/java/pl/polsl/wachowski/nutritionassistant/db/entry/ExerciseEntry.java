@@ -2,6 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.polsl.wachowski.nutritionassistant.def.measure.TimeUnit;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -38,11 +39,6 @@ public class ExerciseEntry {
             nullable = false,
             updatable = false)
     private DiaryEntry diaryEntry;
-
-    public enum TimeUnit {
-        MINUTE,
-        HOUR
-    }
 
     public ExerciseEntry(final String name,
                          final TimeUnit timeUnit,
