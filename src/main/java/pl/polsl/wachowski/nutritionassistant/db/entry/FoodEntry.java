@@ -2,6 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.polsl.wachowski.nutritionassistant.def.measure.FoodMeasureUnit;
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.NutritionDataProvider;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class FoodEntry {
 
     @Column(nullable = false,
             updatable = false)
-    private Integer externalId;
+    private String externalId;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
@@ -28,8 +29,8 @@ public class FoodEntry {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false,
-            length = 9)
-    private MeasureUnit measureUnit;
+            length = 5)
+    private FoodMeasureUnit unit;
 
     @Column(nullable = false,
             precision = 10,
@@ -45,21 +46,15 @@ public class FoodEntry {
             updatable = false)
     private DiaryEntry diaryEntry;
 
-    public enum MeasureUnit {
-        MICROGRAM,
-        MILLIGRAM,
-        GRAM
-    }
-
-    public FoodEntry(final Integer externalId,
+    public FoodEntry(final String externalId,
                      final NutritionDataProvider provider,
-                     final MeasureUnit measureUnit,
+                     final FoodMeasureUnit unit,
                      final BigDecimal amount,
                      final Short position,
                      final DiaryEntry diaryEntry) {
         this.externalId = externalId;
         this.provider = provider;
-        this.measureUnit = measureUnit;
+        this.unit = unit;
         this.amount = amount;
         this.position = position;
         this.diaryEntry = diaryEntry;
