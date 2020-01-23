@@ -1,13 +1,19 @@
 package pl.polsl.wachowski.nutritionassistant.dto.details;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import pl.polsl.wachowski.nutritionassistant.def.nutrition.Nutrient;
 
-@Value
+@Data
+@AllArgsConstructor
 public class NutrientDetailDTO {
 
-    Nutrient nutrient;
+    private final Nutrient nutrient;
 
-    Float amount;
+    private Float amount;
+
+    public void multiply(final float factor) {
+        this.amount *= factor;
+    }
 
 }
