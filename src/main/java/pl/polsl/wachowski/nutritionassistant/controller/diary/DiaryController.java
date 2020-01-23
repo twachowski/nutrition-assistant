@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesRequestDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.NewFoodEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NewNoteEntryRequestDTO;
@@ -23,6 +25,15 @@ public class DiaryController {
     @Autowired
     public DiaryController(final DiaryService diaryService) {
         this.diaryService = diaryService;
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getDiaryEntries(@RequestBody @Valid final DiaryEntriesRequestDTO request) {
+        final DiaryEntriesResponseDTO response = diaryService.getDiaryEntries(request.getUser(), request.getDiaryDate());
+        return ResponseEntity.ok(response);
     }
 
     @RequestMapping(
