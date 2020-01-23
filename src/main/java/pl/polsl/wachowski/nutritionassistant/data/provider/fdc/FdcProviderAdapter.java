@@ -70,7 +70,7 @@ public class FdcProviderAdapter implements FoodDataProviderAdapter {
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
         nutrientDetails.addAll(getTotalOmegaFattyAcids(nutrients));
-        return new FoodDetailsDTO(nutrientDetails);
+        return new FoodDetailsDTO(result.getDescription(), result.getBrandOwner(), nutrientDetails);
     }
 
     @Override

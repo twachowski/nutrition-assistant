@@ -7,6 +7,10 @@ import java.util.List;
 @Value
 public class FoodDetailsDTO {
 
-    private final List<NutrientDetailDTO> nutrientDetails;
+    String name;
+
+    String brandName;
+
+    List<NutrientDetailDTO> nutrientDetails;
 
 }
