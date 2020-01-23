@@ -54,6 +54,10 @@ public class DiaryService {
     public DiaryEntriesResponseDTO getDiaryEntries(final String userEmail, final LocalDate diaryDate) {
         final User user = userRepository.findUserByEmail(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
+        if (diaryEntry == null) {
+            return DiaryEntriesResponseDTO.empty();
+        }
+
         final List<FoodEntryDetailsDTO> foodEntries =
                 diaryEntry.getFoodEntries()
                         .stream()
