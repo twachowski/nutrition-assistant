@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.EntryEditRequest;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.ReorderRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.EditedFoodEntryDTO;
@@ -112,6 +113,19 @@ public class DiaryController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequest<NoteEntryDTO> request) {
         diaryService.editNoteEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @RequestMapping(
+            path = "/reorder",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity reorder(@RequestBody @Valid final ReorderRequestDTO request) {
+        diaryService.reorder(request.getUser(), request.getDiaryDate(), request.getPositionChanges());
 
         return ResponseEntity
                 .ok()

@@ -2,10 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntry;
-import pl.polsl.wachowski.nutritionassistant.db.entry.ExerciseEntry;
-import pl.polsl.wachowski.nutritionassistant.db.entry.FoodEntry;
-import pl.polsl.wachowski.nutritionassistant.db.entry.NoteEntry;
+import pl.polsl.wachowski.nutritionassistant.db.entry.*;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.NutrientDetailDTO;
@@ -28,6 +25,7 @@ import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -126,6 +124,22 @@ public class DiaryService {
         noteService.editNoteEntry(diaryEntry.getNoteEntries(), editedNoteEntry);
     }
 
+    public void reorder(final String userEmail,
+                        final LocalDate diaryDate,
+                        final Map<Short, Short> positionChanges) {
+        final User user = userService.findUser(userEmail);
+        final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
+
+        diaryEntry.getFoodEntries()
+                .forEach(entry -> changePosition(entry, positionChanges));
+        diaryEntry.getExerciseEntries()
+                .forEach(entry -> changePosition(entry, positionChanges));
+        diaryEntry.getNoteEntries()
+                .forEach(entry -> changePosition(entry, positionChanges));
+
+        diaryRepository.save(diaryEntry);
+    }
+
     private DiaryEntry findOrCreateDiaryEntry(final String userEmail, final LocalDate date) {
         final User user = userService.findUser(userEmail);
         final DiaryEntry entry = diaryRepository.findDiaryEntryByUserAndDate(user, date);
@@ -189,6 +203,13 @@ public class DiaryService {
 
     private NoteEntryDTO mapNoteEntry(final NoteEntry noteEntry) {
         return new NoteEntryDTO(noteEntry.getContent(), noteEntry.getPosition());
+    }
+
+    private static void changePosition(final Sortable entry, final Map<Short, Short> positionChanges) {
+        final Short newPosition = positionChanges.get(entry.getPosition());
+        if (newPosition != null) {
+            entry.setPosition(newPosition);
+        }
     }
 
 }
