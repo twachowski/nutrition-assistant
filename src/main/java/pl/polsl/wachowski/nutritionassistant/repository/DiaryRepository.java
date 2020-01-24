@@ -18,4 +18,14 @@ public interface DiaryRepository extends JpaRepository<DiaryEntry, Long> {
             " WHERE d.user = :user AND d.date = :date")
     DiaryEntry findDiaryEntryByUserAndDateFetchFoodEntries(final User user, final LocalDate date);
 
+    @Query("SELECT d FROM DiaryEntry d" +
+            " LEFT JOIN FETCH d.exerciseEntries" +
+            " WHERE d.user = :user AND d.date = :date")
+    DiaryEntry findDiaryEntryByUserAndDateFetchExerciseEntries(final User user, final LocalDate date);
+
+    @Query("SELECT d FROM DiaryEntry d" +
+            " LEFT JOIN FETCH d.noteEntries" +
+            " WHERE d.user = :user AND d.date = :date")
+    DiaryEntry findDiaryEntryByUserAndDateFetchNoteEntries(final User user, final LocalDate date);
+
 }
