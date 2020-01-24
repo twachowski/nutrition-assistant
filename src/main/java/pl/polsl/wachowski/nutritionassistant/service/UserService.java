@@ -14,6 +14,8 @@ import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNo
 import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -64,6 +66,11 @@ public class UserService {
             throw new UserNotFoundException();
         }
         return user.getUserBiometrics();
+    }
+
+    public User findUser(final String userEmail) {
+        return Optional.of(userRepository.findUserByEmail(userEmail))
+                .orElseThrow(UserNotFoundException::new);
     }
 
     private VerificationToken findVerificationToken(final String token) throws  VerificationTokenNotFoundException,
