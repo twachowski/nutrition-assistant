@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @Entity
-public class FoodEntry {
+public class FoodEntry implements Sortable {
 
     @Id
     @GeneratedValue

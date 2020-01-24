@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @Entity
-public class ExerciseEntry {
+public class ExerciseEntry implements Sortable {
 
     @Id
     @GeneratedValue
