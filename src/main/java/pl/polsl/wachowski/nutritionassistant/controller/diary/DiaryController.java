@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.EntryEditRequest;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.food.EditedFoodEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.NewFoodEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NewNoteEntryRequestDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NoteEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.service.DiaryService;
 
 import javax.validation.Valid;
@@ -69,6 +73,45 @@ public class DiaryController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addNote(@RequestBody @Valid final NewNoteEntryRequestDTO request) {
         diaryService.addNoteEntry(request);
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @RequestMapping(
+            path = "/edit/food",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editFood(@RequestBody @Valid final EntryEditRequest<EditedFoodEntryDTO> request) {
+        diaryService.editFoodEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @RequestMapping(
+            path = "/edit/exercise",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editExercise(@RequestBody @Valid final EntryEditRequest<EditedExerciseEntryDTO> request) {
+        diaryService.editExerciseEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @RequestMapping(
+            path = "/edit/note",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequest<NoteEntryDTO> request) {
+        diaryService.editNoteEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
                 .ok()
