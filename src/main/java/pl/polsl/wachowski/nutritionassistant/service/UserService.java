@@ -61,7 +61,7 @@ public class UserService {
     }
 
     public UserBiometrics getUserBiometrics(final String userEmail) {
-        final User user = userRepository.findUserBiometricsByEmail(userEmail);
+        final User user = userRepository.findUserByEmailFetchBiometrics(userEmail);
         if (user == null) {
             throw new UserNotFoundException();
         }
