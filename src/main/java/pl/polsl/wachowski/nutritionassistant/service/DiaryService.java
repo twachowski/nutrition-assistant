@@ -10,9 +10,11 @@ import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.NutrientDetailDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.food.EditedFoodEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.FoodEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.FoodEntryDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.NewFoodEntryRequestDTO;
@@ -21,7 +23,6 @@ import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NoteEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.repository.DiaryRepository;
-import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
 import java.math.BigDecimal;
@@ -32,27 +33,31 @@ import java.util.stream.Collectors;
 @Service
 public class DiaryService {
 
+    private final UserService userService;
+
     private final FoodService foodService;
 
     private final ExerciseService exerciseService;
 
-    private final UserRepository userRepository;
+    private final NoteService noteService;
 
     private final DiaryRepository diaryRepository;
 
     @Autowired
-    public DiaryService(final UserRepository userRepository,
-                        final DiaryRepository diaryRepository,
+    public DiaryService(final DiaryRepository diaryRepository,
+                        final UserService userService,
                         final FoodService foodService,
-                        final ExerciseService exerciseService) {
-        this.userRepository = userRepository;
+                        final ExerciseService exerciseService,
+                        final NoteService noteService) {
+        this.userService = userService;
         this.diaryRepository = diaryRepository;
         this.foodService = foodService;
         this.exerciseService = exerciseService;
+        this.noteService = noteService;
     }
 
     public DiaryEntriesResponseDTO getDiaryEntries(final String userEmail, final LocalDate diaryDate) {
-        final User user = userRepository.findUserByEmail(userEmail);
+        final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
         if (diaryEntry == null) {
             return DiaryEntriesResponseDTO.empty();
@@ -97,8 +102,32 @@ public class DiaryService {
         diaryRepository.save(diaryEntry);
     }
 
+    public void editFoodEntry(final String userEmail,
+                              final LocalDate diaryDate,
+                              final EditedFoodEntryDTO editedFoodEntry) {
+        final User user = userService.findUser(userEmail);
+        final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
+        foodService.editFoodEntry(diaryEntry.getFoodEntries(), editedFoodEntry);
+    }
+
+    public void editExerciseEntry(final String userEmail,
+                                  final LocalDate diaryDate,
+                                  final EditedExerciseEntryDTO editedExerciseEntry) {
+        final User user = userService.findUser(userEmail);
+        final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchExerciseEntries(user, diaryDate);
+        exerciseService.editExerciseEntry(diaryEntry.getExerciseEntries(), editedExerciseEntry);
+    }
+
+    public void editNoteEntry(final String userEmail,
+                              final LocalDate diaryDate,
+                              final NoteEntryDTO editedNoteEntry) {
+        final User user = userService.findUser(userEmail);
+        final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchNoteEntries(user, diaryDate);
+        noteService.editNoteEntry(diaryEntry.getNoteEntries(), editedNoteEntry);
+    }
+
     private DiaryEntry findOrCreateDiaryEntry(final String userEmail, final LocalDate date) {
-        final User user = userRepository.findUserByEmail(userEmail);
+        final User user = userService.findUser(userEmail);
         final DiaryEntry entry = diaryRepository.findDiaryEntryByUserAndDate(user, date);
         return entry != null ? entry : new DiaryEntry(date, user);
     }
