@@ -16,7 +16,7 @@ public class ExerciseEntryDTO {
     @NotNull(message = "Amount must not be null")
     BigDecimal amount;
 
-    @NotBlank(message = "Time unit must not be blank")
+    @NotNull(message = "Time unit must not be null")
     TimeUnit unit;
 
     @NotNull(message = "Position must not be null")

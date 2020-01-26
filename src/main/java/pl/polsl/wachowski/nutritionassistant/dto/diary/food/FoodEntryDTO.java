@@ -14,13 +14,13 @@ public class FoodEntryDTO {
     @NotBlank(message = "External id must not be blank")
     String externalId;
 
-    @NotBlank(message = "Provider must not be blank")
+    @NotNull(message = "Provider must not be null")
     NutritionDataProvider provider;
 
     @NotNull(message = "Amount must not be null")
     BigDecimal amount;
 
-    @NotBlank(message = "Unit must not be null")
+    @NotNull(message = "Unit must not be null")
     FoodMeasureUnit unit;
 
     @NotNull(message = "Position must not be null")
