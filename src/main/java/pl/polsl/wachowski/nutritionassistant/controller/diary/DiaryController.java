@@ -125,7 +125,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity reorder(@RequestBody @Valid final ReorderRequestDTO request) {
-        diaryService.reorder(request.getUser(), request.getDiaryDate(), request.getPositionChanges());
+        diaryService.reorder(request.getUser(), request.getDiaryDate(), request.getPositionChange());
 
         return ResponseEntity
                 .ok()

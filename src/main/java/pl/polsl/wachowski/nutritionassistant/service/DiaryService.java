@@ -7,6 +7,7 @@ import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.dto.details.FoodDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.details.NutrientDetailDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.PositionChangeDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDetailsDTO;
@@ -24,6 +25,7 @@ import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -126,9 +128,16 @@ public class DiaryService {
 
     public void reorder(final String userEmail,
                         final LocalDate diaryDate,
-                        final Map<Short, Short> positionChanges) {
+                        final PositionChangeDTO positionChange) {
+        if (positionChange.notChanged()) {
+            return;
+        }
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
+
+        final short previousPosition = positionChange.getPreviousPosition();
+        final short currentPosition = positionChange.getCurrentPosition();
+        final Map<Short, Short> positionChanges = getPositionChanges(previousPosition, currentPosition);
 
         diaryEntry.getFoodEntries()
                 .forEach(entry -> changePosition(entry, positionChanges));
@@ -203,6 +212,20 @@ public class DiaryService {
 
     private NoteEntryDTO mapNoteEntry(final NoteEntry noteEntry) {
         return new NoteEntryDTO(noteEntry.getContent(), noteEntry.getPosition());
+    }
+
+    private static Map<Short, Short> getPositionChanges(final short previousPosition, final short currentPosition) {
+        final boolean movedUp = currentPosition < previousPosition;
+        final int begin = movedUp ? currentPosition : previousPosition + 1;
+        final int end = movedUp ? previousPosition - 1 : currentPosition;
+        final int positionOffset = movedUp ? (short) 1 : (short) -1;
+
+        final Map<Short, Short> positionChanges = new HashMap<>(end - begin + 1);
+        positionChanges.put(previousPosition, currentPosition);
+        for (int i = begin; i <= end; ++i)
+            positionChanges.put((short) i, (short) (i + positionOffset));
+
+        return positionChanges;
     }
 
     private static void changePosition(final Sortable entry, final Map<Short, Short> positionChanges) {
