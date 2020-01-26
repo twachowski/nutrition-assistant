@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesRequestDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.DiaryEntriesResponseDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.EntryEditRequest;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.ReorderRequestDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.diary.*;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.EditedFoodEntryDTO;
@@ -113,6 +110,19 @@ public class DiaryController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequest<NoteEntryDTO> request) {
         diaryService.editNoteEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @RequestMapping(
+            path = "/delete",
+            method = RequestMethod.DELETE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteEntry(@RequestBody @Valid final EntryDeleteRequest request) {
+        diaryService.deleteEntry(request.getUser(), request.getDiaryDate(), request.getEntryPosition());
 
         return ResponseEntity
                 .ok()

@@ -26,6 +26,7 @@ import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -124,6 +125,17 @@ public class DiaryService {
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchNoteEntries(user, diaryDate);
         noteService.editNoteEntry(diaryEntry.getNoteEntries(), editedNoteEntry);
+    }
+
+    public void deleteEntry(final String userEmail, final LocalDate diaryDate, final Short entryPosition) {
+        final User user = userService.findUser(userEmail);
+        final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
+
+        deleteOrMove(diaryEntry.getFoodEntries(), entryPosition);
+        deleteOrMove(diaryEntry.getExerciseEntries(), entryPosition);
+        deleteOrMove(diaryEntry.getNoteEntries(), entryPosition);
+
+        diaryRepository.save(diaryEntry);
     }
 
     public void reorder(final String userEmail,
@@ -232,6 +244,19 @@ public class DiaryService {
         final Short newPosition = positionChanges.get(entry.getPosition());
         if (newPosition != null) {
             entry.setPosition(newPosition);
+        }
+    }
+
+    private static void deleteOrMove(final List<? extends Sortable> entries, final Short position) {
+        for (final Iterator<? extends Sortable> it = entries.iterator(); it.hasNext(); ) {
+            final Sortable entry = it.next();
+            final Short entryPosition = entry.getPosition();
+            if (entryPosition.equals(position)) {
+                it.remove();
+            } else if (entryPosition > position) {
+                final short newPosition = (short) (entryPosition - 1);
+                entry.setPosition(newPosition);
+            }
         }
     }
 
