@@ -6,7 +6,7 @@ import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
 import java.math.BigDecimal;
 
 @Value
-public class UserBiometricsDTO {
+public class UserSimpleBiometricsDTO {
 
     Short age;
 

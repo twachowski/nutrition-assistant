@@ -9,7 +9,7 @@ import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEn
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchResponseDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.user.UserBiometricsDTO;
+import pl.polsl.wachowski.nutritionassistant.dto.user.UserSimpleBiometricsDTO;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.ExerciseRepository;
 import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
@@ -38,7 +38,7 @@ public class ExerciseService {
         final UserBiometrics userBiometrics = userService.getUserBiometrics(request.getUser());
         final List<ExerciseDetailsDTO> exercises = provider.search(request, userBiometrics);
 
-        final UserBiometricsDTO biometricsDTO = mapUserBiometrics(userBiometrics);
+        final UserSimpleBiometricsDTO biometricsDTO = mapUserBiometrics(userBiometrics);
         return new ExerciseSearchResponseDTO(biometricsDTO, exercises);
     }
 
@@ -55,9 +55,9 @@ public class ExerciseService {
         exerciseRepository.save(exerciseEntry);
     }
 
-    private static UserBiometricsDTO mapUserBiometrics(final UserBiometrics userBiometrics) {
+    private static UserSimpleBiometricsDTO mapUserBiometrics(final UserBiometrics userBiometrics) {
         final Integer age = DateUtil.getUserAge(userBiometrics.getDateOfBirth());
-        return new UserBiometricsDTO(
+        return new UserSimpleBiometricsDTO(
                 age.shortValue(),
                 userBiometrics.getSex(),
                 userBiometrics.getHeight(),
