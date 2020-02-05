@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -15,37 +16,37 @@ public class MineralTargets {
     private Long id;
 
     @Column
-    private Short calcium;
+    private BigDecimal calcium;
 
     @Column
-    private Short copper;
+    private BigDecimal copper;
 
     @Column
-    private Short iodine;
+    private BigDecimal fluoride;
 
     @Column
-    private Short iron;
+    private BigDecimal iron;
 
     @Column
-    private Short magnesium;
+    private BigDecimal magnesium;
 
     @Column
-    private Short manganese;
+    private BigDecimal manganese;
 
     @Column
-    private Short phosphorus;
+    private BigDecimal phosphorus;
 
     @Column
-    private Short potassium;
+    private BigDecimal potassium;
 
     @Column
-    private Short selenium;
+    private BigDecimal selenium;
 
     @Column
-    private Short sodium;
+    private BigDecimal sodium;
 
     @Column
-    private Short zinc;
+    private BigDecimal zinc;
 
     @OneToOne(
             cascade = CascadeType.ALL,
