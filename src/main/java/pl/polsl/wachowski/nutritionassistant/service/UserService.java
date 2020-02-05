@@ -8,11 +8,13 @@ import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentials;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
+import pl.polsl.wachowski.nutritionassistant.dto.user.UserBiometricsDTO;
 import pl.polsl.wachowski.nutritionassistant.exception.*;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
+import pl.polsl.wachowski.nutritionassistant.security.AuthenticationProvider;
 
 import java.util.Optional;
 
@@ -25,13 +27,17 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final AuthenticationProvider authenticationProvider;
+
     @Autowired
     public UserService(final UserRepository userRepository,
                        final TokenRepository tokenRepository,
-                       final PasswordEncoder passwordEncoder) {
+                       final PasswordEncoder passwordEncoder,
+                       final AuthenticationProvider authenticationProvider) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationProvider = authenticationProvider;
     }
 
     public void createUser(final User user) throws UserExistsException {
@@ -66,6 +72,17 @@ public class UserService {
             throw new UserNotFoundException();
         }
         return user.getUserBiometrics();
+    }
+
+    public UserBiometricsDTO getUserBiometricsDTO() {
+        final String user = authenticationProvider.getAuthentication().getName();
+        final UserBiometrics userBiometrics = getUserBiometrics(user);
+        return new UserBiometricsDTO(
+                userBiometrics.getDateOfBirth(),
+                userBiometrics.getSex(),
+                userBiometrics.getHeight(),
+                userBiometrics.getWeight(),
+                userBiometrics.getActivityLevel());
     }
 
     public User findUser(final String userEmail) {
