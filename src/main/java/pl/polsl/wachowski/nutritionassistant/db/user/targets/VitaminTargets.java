@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -15,43 +16,46 @@ public class VitaminTargets {
     private Long id;
 
     @Column(name = "A")
-    private Short vitaminA;
+    private BigDecimal vitaminA;
 
     @Column(name = "B1")
-    private Short vitaminB1;
+    private BigDecimal vitaminB1;
 
     @Column(name = "B2")
-    private Short vitaminB2;
+    private BigDecimal vitaminB2;
 
     @Column(name = "B3")
-    private Short vitaminB3;
+    private BigDecimal vitaminB3;
+
+    @Column(name = "B4")
+    private BigDecimal vitaminB4;
 
     @Column(name = "B5")
-    private Short vitaminB5;
+    private BigDecimal vitaminB5;
 
     @Column(name = "B6")
-    private Short vitaminB6;
+    private BigDecimal vitaminB6;
 
     @Column(name = "B7")
-    private Short vitaminB7;
+    private BigDecimal vitaminB7;
 
     @Column(name = "B12")
-    private Short vitaminB12;
+    private BigDecimal vitaminB12;
 
     @Column(name = "C")
-    private Short vitaminC;
+    private BigDecimal vitaminC;
 
     @Column(name = "D")
-    private Short vitaminD;
+    private BigDecimal vitaminD;
 
     @Column(name = "E")
-    private Short vitaminE;
+    private BigDecimal vitaminE;
 
     @Column
-    private Short folate;
+    private BigDecimal folate;
 
     @Column(name = "K")
-    private Short vitaminK;
+    private BigDecimal vitaminK;
 
     @OneToOne(
             cascade = CascadeType.ALL,
