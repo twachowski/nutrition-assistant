@@ -67,11 +67,7 @@ public class UserService {
     }
 
     public UserBiometrics getUserBiometrics(final String userEmail) {
-        final User user = userRepository.findUserByEmailFetchBiometrics(userEmail);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user.getUserBiometrics();
+        return findUserFetchBiometrics(userEmail).getUserBiometrics();
     }
 
     public UserBiometricsDTO getUserBiometricsDTO() {
@@ -85,8 +81,26 @@ public class UserService {
                 userBiometrics.getActivityLevel());
     }
 
+    public void saveUserBiometrics(final UserBiometricsDTO biometrics) {
+        final String userEmail = authenticationProvider.getAuthentication().getName();
+        final User user = findUserFetchBiometrics(userEmail);
+        final UserBiometrics userBiometrics = user.getUserBiometrics();
+        userBiometrics.setDateOfBirth(biometrics.getDateOfBirth());
+        userBiometrics.setSex(biometrics.getSex());
+        userBiometrics.setHeight(biometrics.getHeight());
+        userBiometrics.setWeight(biometrics.getWeight());
+        userBiometrics.setActivityLevel(biometrics.getActivityLevel());
+
+        userRepository.save(user);
+    }
+
     public User findUser(final String userEmail) {
         return Optional.of(userRepository.findUserByEmail(userEmail))
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    private User findUserFetchBiometrics(final String userEmail) {
+        return Optional.of(userRepository.findUserByEmailFetchBiometrics(userEmail))
                 .orElseThrow(UserNotFoundException::new);
     }
 
