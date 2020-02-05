@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -15,34 +16,37 @@ public class AminoAcidTargets {
     private Long id;
 
     @Column
-    private Short arginine;
+    private BigDecimal cysteine;
 
     @Column
-    private Short histidine;
+    private BigDecimal histidine;
 
     @Column
-    private Short isoleucine;
+    private BigDecimal isoleucine;
 
     @Column
-    private Short leucine;
+    private BigDecimal leucine;
 
     @Column
-    private Short lysine;
+    private BigDecimal lysine;
 
     @Column
-    private Short methionine;
+    private BigDecimal methionine;
 
     @Column
-    private Short phenylalanine;
+    private BigDecimal phenylalanine;
 
     @Column
-    private Short threonine;
+    private BigDecimal threonine;
 
     @Column
-    private Short tryptophan;
+    private BigDecimal tryptophan;
 
     @Column
-    private Short valine;
+    private BigDecimal tyrosine;
+
+    @Column
+    private BigDecimal valine;
 
     @OneToOne(
             cascade = CascadeType.ALL,
