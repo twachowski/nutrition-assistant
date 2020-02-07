@@ -37,6 +37,9 @@ public class UserBiometrics {
             length = 9)
     private ActivityLevel activityLevel;
 
+    @Column(nullable = false)
+    private Short calorieGoal;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "USER_ID")
@@ -53,12 +56,14 @@ public class UserBiometrics {
                           final Short height,
                           final BigDecimal weight,
                           final ActivityLevel activityLevel,
+                          final Short calorieGoal,
                           final User user) {
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.height = height;
         this.weight = weight;
         this.activityLevel = activityLevel;
+        this.calorieGoal = calorieGoal;
         this.user = user;
     }
 
@@ -69,6 +74,7 @@ public class UserBiometrics {
                 (short) 180,
                 new BigDecimal(80),
                 ActivityLevel.NONE,
+                (short) 0,
                 user);
     }
 

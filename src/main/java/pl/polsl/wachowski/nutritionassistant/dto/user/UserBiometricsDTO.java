@@ -29,4 +29,7 @@ public class UserBiometricsDTO {
     @NotNull(message = "Activity level must not be null")
     ActivityLevel activityLevel;
 
+    @NotNull(message = "Calorie goal must not be null")
+    Short calorieGoal;
+
 }

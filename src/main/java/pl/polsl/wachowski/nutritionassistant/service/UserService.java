@@ -78,7 +78,8 @@ public class UserService {
                 userBiometrics.getSex(),
                 userBiometrics.getHeight(),
                 userBiometrics.getWeight(),
-                userBiometrics.getActivityLevel());
+                userBiometrics.getActivityLevel(),
+                userBiometrics.getCalorieGoal());
     }
 
     public void saveUserBiometrics(final UserBiometricsDTO biometrics) {
@@ -90,6 +91,7 @@ public class UserService {
         userBiometrics.setHeight(biometrics.getHeight());
         userBiometrics.setWeight(biometrics.getWeight());
         userBiometrics.setActivityLevel(biometrics.getActivityLevel());
+        userBiometrics.setCalorieGoal(biometrics.getCalorieGoal());
 
         userRepository.save(user);
     }
