@@ -82,7 +82,7 @@ public class DiaryController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editFood(@RequestBody @Valid final EntryEditRequest<EditedFoodEntryDTO> request) {
+    public ResponseEntity editFood(@RequestBody @Valid final EntryEditRequestDTO<EditedFoodEntryDTO> request) {
         diaryService.editFoodEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
@@ -95,7 +95,7 @@ public class DiaryController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editExercise(@RequestBody @Valid final EntryEditRequest<EditedExerciseEntryDTO> request) {
+    public ResponseEntity editExercise(@RequestBody @Valid final EntryEditRequestDTO<EditedExerciseEntryDTO> request) {
         diaryService.editExerciseEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
@@ -108,7 +108,7 @@ public class DiaryController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequest<NoteEntryDTO> request) {
+    public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequestDTO<NoteEntryDTO> request) {
         diaryService.editNoteEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
@@ -121,7 +121,7 @@ public class DiaryController {
             method = RequestMethod.DELETE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteEntry(@RequestBody @Valid final EntryDeleteRequest request) {
+    public ResponseEntity deleteEntry(@RequestBody @Valid final EntryDeleteRequestDTO request) {
         diaryService.deleteEntry(request.getDiaryDate(), request.getEntryPosition());
 
         return ResponseEntity
