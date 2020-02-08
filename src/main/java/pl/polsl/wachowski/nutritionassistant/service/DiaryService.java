@@ -11,15 +11,11 @@ import pl.polsl.wachowski.nutritionassistant.dto.diary.PositionChangeDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.ExerciseEntryDetailsDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.NewExerciseEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.EditedFoodEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.FoodEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.food.FoodEntryDetailsDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.food.NewFoodEntryRequestDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NewNoteEntryRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.note.NoteEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseDetailsDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.repository.DiaryRepository;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
@@ -83,26 +79,26 @@ public class DiaryService {
         return new DiaryEntriesResponseDTO(foodEntries, exerciseEntries, noteEntries);
     }
 
-    public void addFoodEntry(final NewFoodEntryRequestDTO request) {
+    public void addFoodEntry(final LocalDate diaryDate, final FoodEntryDTO entry) {
         final String user = userService.getAuthenticatedUser();
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
-        final FoodEntry foodEntry = createFoodEntry(request.getFoodEntry(), diaryEntry);
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, diaryDate);
+        final FoodEntry foodEntry = createFoodEntry(entry, diaryEntry);
         diaryEntry.getFoodEntries().add(foodEntry);
         diaryRepository.save(diaryEntry);
     }
 
-    public void addExerciseEntry(final NewExerciseEntryRequestDTO request) {
+    public void addExerciseEntry(final LocalDate diaryDate, final ExerciseEntryDTO entry) {
         final String user = userService.getAuthenticatedUser();
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
-        final ExerciseEntry exerciseEntry = createExerciseEntry(request.getExerciseEntry(), diaryEntry);
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, diaryDate);
+        final ExerciseEntry exerciseEntry = createExerciseEntry(entry, diaryEntry);
         diaryEntry.getExerciseEntries().add(exerciseEntry);
         diaryRepository.save(diaryEntry);
     }
 
-    public void addNoteEntry(final NewNoteEntryRequestDTO request) {
+    public void addNoteEntry(final LocalDate diaryDate, final NoteEntryDTO entry) {
         final String user = userService.getAuthenticatedUser();
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
-        final NoteEntry noteEntry = createNoteEntry(request.getNoteEntry(), diaryEntry);
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, diaryDate);
+        final NoteEntry noteEntry = createNoteEntry(entry, diaryEntry);
         diaryEntry.getNoteEntries().add(noteEntry);
         diaryRepository.save(diaryEntry);
     }
@@ -211,8 +207,8 @@ public class DiaryService {
     }
 
     private ExerciseEntryDetailsDTO mapExerciseEntry(final ExerciseEntry exerciseEntry) {
-        final ExerciseSearchRequestDTO request = new ExerciseSearchRequestDTO(exerciseEntry.getName());
-        final ExerciseDetailsDTO exercise = exerciseService.search(request).getExercises().get(0);
+        final String exerciseName = exerciseEntry.getName();
+        final ExerciseDetailsDTO exercise = exerciseService.search(exerciseName).getExercises().get(0);
         final float coeff = AmountConverter.getExerciseDurationCoeff(
                 exercise.getDurationMin(),
                 exerciseEntry.getAmount().floatValue(),

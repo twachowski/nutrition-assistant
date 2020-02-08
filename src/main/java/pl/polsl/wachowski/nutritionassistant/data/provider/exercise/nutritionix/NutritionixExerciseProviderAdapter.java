@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.data.provider.exercise.ExerciseDataProviderAdapter;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseDetailsDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.nutritionix.NutritionixExerciseDetailsDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.nutritionix.NutritionixExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.nutritionix.NutritionixExerciseSearchResultDTO;
@@ -25,9 +24,8 @@ public class NutritionixExerciseProviderAdapter implements ExerciseDataProviderA
     }
 
     @Override
-    public List<ExerciseDetailsDTO> search(final ExerciseSearchRequestDTO request, final UserBiometrics userBiometrics) {
-        final NutritionixExerciseSearchRequestDTO nutritionixRequest =
-                createExerciseSearchRequest(request, userBiometrics);
+    public List<ExerciseDetailsDTO> search(final String query, final UserBiometrics userBiometrics) {
+        final NutritionixExerciseSearchRequestDTO nutritionixRequest = createExerciseSearchRequest(query, userBiometrics);
         final NutritionixExerciseSearchResultDTO result = provider.search(nutritionixRequest);
 
         return result.getExercises()
@@ -36,12 +34,12 @@ public class NutritionixExerciseProviderAdapter implements ExerciseDataProviderA
                 .collect(Collectors.toList());
     }
 
-    private NutritionixExerciseSearchRequestDTO createExerciseSearchRequest(final ExerciseSearchRequestDTO request,
+    private NutritionixExerciseSearchRequestDTO createExerciseSearchRequest(final String query,
                                                                             final UserBiometrics userBiometrics) {
         final String gender = getGender(userBiometrics.getSex());
         final Integer age = DateUtil.getUserAge(userBiometrics.getDateOfBirth());
         return new NutritionixExerciseSearchRequestDTO(
-                request.getQuery(),
+                query,
                 gender,
                 age.shortValue(),
                 userBiometrics.getHeight(),

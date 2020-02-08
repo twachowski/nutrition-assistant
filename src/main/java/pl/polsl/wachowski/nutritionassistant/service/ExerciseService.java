@@ -7,7 +7,6 @@ import pl.polsl.wachowski.nutritionassistant.db.entry.ExerciseEntry;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.dto.diary.exercise.EditedExerciseEntryDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseDetailsDTO;
-import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchRequestDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.exercise.ExerciseSearchResponseDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.user.UserSimpleBiometricsDTO;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
@@ -34,10 +33,10 @@ public class ExerciseService {
         this.userService = userService;
     }
 
-    public ExerciseSearchResponseDTO search(final ExerciseSearchRequestDTO request) {
+    public ExerciseSearchResponseDTO search(final String query) {
         final String user = userService.getAuthenticatedUser();
         final UserBiometrics userBiometrics = userService.getUserBiometrics(user);
-        final List<ExerciseDetailsDTO> exercises = provider.search(request, userBiometrics);
+        final List<ExerciseDetailsDTO> exercises = provider.search(query, userBiometrics);
 
         final UserSimpleBiometricsDTO biometricsDTO = mapUserBiometrics(userBiometrics);
         return new ExerciseSearchResponseDTO(biometricsDTO, exercises);

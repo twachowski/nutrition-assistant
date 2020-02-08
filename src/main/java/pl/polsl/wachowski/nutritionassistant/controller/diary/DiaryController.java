@@ -44,7 +44,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addFood(@RequestBody @Valid final NewFoodEntryRequestDTO request) {
-        diaryService.addFoodEntry(request);
+        diaryService.addFoodEntry(request.getDiaryDate(), request.getFoodEntry());
 
         return ResponseEntity
                 .ok()
@@ -57,7 +57,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExercise(@RequestBody @Valid final NewExerciseEntryRequestDTO request) {
-        diaryService.addExerciseEntry(request);
+        diaryService.addExerciseEntry(request.getDiaryDate(), request.getExerciseEntry());
 
         return ResponseEntity
                 .ok()
@@ -70,7 +70,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addNote(@RequestBody @Valid final NewNoteEntryRequestDTO request) {
-        diaryService.addNoteEntry(request);
+        diaryService.addNoteEntry(request.getDiaryDate(), request.getNoteEntry());
 
         return ResponseEntity
                 .ok()

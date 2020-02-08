@@ -30,7 +30,7 @@ public class ExerciseController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity search(@RequestBody @Valid final ExerciseSearchRequestDTO request) {
-        final ExerciseSearchResponseDTO response = exerciseService.search(request);
+        final ExerciseSearchResponseDTO response = exerciseService.search(request.getQuery());
         return ResponseEntity.ok(response);
     }
 
