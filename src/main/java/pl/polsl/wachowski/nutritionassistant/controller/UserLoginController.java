@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.polsl.wachowski.nutritionassistant.dto.jwt.JwtTokenDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.user.UserLoginDTO;
 import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
@@ -38,7 +39,7 @@ public class UserLoginController {
             final String jwtToken = jwtHelper.generateToken(userLoginDTO.getEmail());
 
             return ResponseEntity
-                    .ok(jwtToken);
+                    .ok(new JwtTokenDTO(jwtToken));
         } catch (final UserNotFoundException | InvalidCredentialsException | UserInactiveException ex) {
             return ResponseEntity
                     .badRequest()
