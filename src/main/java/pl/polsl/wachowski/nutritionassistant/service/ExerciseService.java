@@ -35,7 +35,8 @@ public class ExerciseService {
     }
 
     public ExerciseSearchResponseDTO search(final ExerciseSearchRequestDTO request) {
-        final UserBiometrics userBiometrics = userService.getUserBiometrics(request.getUser());
+        final String user = userService.getAuthenticatedUser();
+        final UserBiometrics userBiometrics = userService.getUserBiometrics(user);
         final List<ExerciseDetailsDTO> exercises = provider.search(request, userBiometrics);
 
         final UserSimpleBiometricsDTO biometricsDTO = mapUserBiometrics(userBiometrics);

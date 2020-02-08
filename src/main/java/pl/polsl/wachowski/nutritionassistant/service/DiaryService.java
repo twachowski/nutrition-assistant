@@ -57,7 +57,8 @@ public class DiaryService {
         this.noteService = noteService;
     }
 
-    public DiaryEntriesResponseDTO getDiaryEntries(final String userEmail, final LocalDate diaryDate) {
+    public DiaryEntriesResponseDTO getDiaryEntries(final LocalDate diaryDate) {
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
         if (diaryEntry == null) {
@@ -72,7 +73,7 @@ public class DiaryService {
         final List<ExerciseEntryDetailsDTO> exerciseEntries =
                 diaryEntry.getExerciseEntries()
                         .stream()
-                        .map(exercise -> mapExerciseEntry(exercise, userEmail))
+                        .map(this::mapExerciseEntry)
                         .collect(Collectors.toList());
         final List<NoteEntryDTO> noteEntries =
                 diaryEntry.getNoteEntries()
@@ -83,51 +84,55 @@ public class DiaryService {
     }
 
     public void addFoodEntry(final NewFoodEntryRequestDTO request) {
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(request.getUser(), request.getDiaryDate());
+        final String user = userService.getAuthenticatedUser();
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
         final FoodEntry foodEntry = createFoodEntry(request.getFoodEntry(), diaryEntry);
         diaryEntry.getFoodEntries().add(foodEntry);
         diaryRepository.save(diaryEntry);
     }
 
     public void addExerciseEntry(final NewExerciseEntryRequestDTO request) {
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(request.getUser(), request.getDiaryDate());
+        final String user = userService.getAuthenticatedUser();
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
         final ExerciseEntry exerciseEntry = createExerciseEntry(request.getExerciseEntry(), diaryEntry);
         diaryEntry.getExerciseEntries().add(exerciseEntry);
         diaryRepository.save(diaryEntry);
     }
 
     public void addNoteEntry(final NewNoteEntryRequestDTO request) {
-        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(request.getUser(), request.getDiaryDate());
+        final String user = userService.getAuthenticatedUser();
+        final DiaryEntry diaryEntry = findOrCreateDiaryEntry(user, request.getDiaryDate());
         final NoteEntry noteEntry = createNoteEntry(request.getNoteEntry(), diaryEntry);
         diaryEntry.getNoteEntries().add(noteEntry);
         diaryRepository.save(diaryEntry);
     }
 
-    public void editFoodEntry(final String userEmail,
-                              final LocalDate diaryDate,
+    public void editFoodEntry(final LocalDate diaryDate,
                               final EditedFoodEntryDTO editedFoodEntry) {
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
         foodService.editFoodEntry(diaryEntry.getFoodEntries(), editedFoodEntry);
     }
 
-    public void editExerciseEntry(final String userEmail,
-                                  final LocalDate diaryDate,
+    public void editExerciseEntry(final LocalDate diaryDate,
                                   final EditedExerciseEntryDTO editedExerciseEntry) {
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchExerciseEntries(user, diaryDate);
         exerciseService.editExerciseEntry(diaryEntry.getExerciseEntries(), editedExerciseEntry);
     }
 
-    public void editNoteEntry(final String userEmail,
-                              final LocalDate diaryDate,
+    public void editNoteEntry(final LocalDate diaryDate,
                               final NoteEntryDTO editedNoteEntry) {
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchNoteEntries(user, diaryDate);
         noteService.editNoteEntry(diaryEntry.getNoteEntries(), editedNoteEntry);
     }
 
-    public void deleteEntry(final String userEmail, final LocalDate diaryDate, final Short entryPosition) {
+    public void deleteEntry(final LocalDate diaryDate, final Short entryPosition) {
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
 
@@ -138,12 +143,12 @@ public class DiaryService {
         diaryRepository.save(diaryEntry);
     }
 
-    public void reorder(final String userEmail,
-                        final LocalDate diaryDate,
+    public void reorder(final LocalDate diaryDate,
                         final PositionChangeDTO positionChange) {
         if (positionChange.notChanged()) {
             return;
         }
+        final String userEmail = userService.getAuthenticatedUser();
         final User user = userService.findUser(userEmail);
         final DiaryEntry diaryEntry = diaryRepository.findDiaryEntryByUserAndDateFetchFoodEntries(user, diaryDate);
 
@@ -205,8 +210,8 @@ public class DiaryService {
                 nutrientDetails);
     }
 
-    private ExerciseEntryDetailsDTO mapExerciseEntry(final ExerciseEntry exerciseEntry, final String user) {
-        final ExerciseSearchRequestDTO request = new ExerciseSearchRequestDTO(user, exerciseEntry.getName());
+    private ExerciseEntryDetailsDTO mapExerciseEntry(final ExerciseEntry exerciseEntry) {
+        final ExerciseSearchRequestDTO request = new ExerciseSearchRequestDTO(exerciseEntry.getName());
         final ExerciseDetailsDTO exercise = exerciseService.search(request).getExercises().get(0);
         final float coeff = AmountConverter.getExerciseDurationCoeff(
                 exercise.getDurationMin(),

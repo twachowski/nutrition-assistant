@@ -34,7 +34,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getDiaryEntries(@RequestBody @Valid final DiaryEntriesRequestDTO request) {
-        final DiaryEntriesResponseDTO response = diaryService.getDiaryEntries(request.getUser(), request.getDiaryDate());
+        final DiaryEntriesResponseDTO response = diaryService.getDiaryEntries(request.getDiaryDate());
         return ResponseEntity.ok(response);
     }
 
@@ -83,7 +83,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity editFood(@RequestBody @Valid final EntryEditRequest<EditedFoodEntryDTO> request) {
-        diaryService.editFoodEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+        diaryService.editFoodEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
                 .ok()
@@ -96,7 +96,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity editExercise(@RequestBody @Valid final EntryEditRequest<EditedExerciseEntryDTO> request) {
-        diaryService.editExerciseEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+        diaryService.editExerciseEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
                 .ok()
@@ -109,7 +109,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequest<NoteEntryDTO> request) {
-        diaryService.editNoteEntry(request.getUser(), request.getDiaryDate(), request.getEditedEntry());
+        diaryService.editNoteEntry(request.getDiaryDate(), request.getEditedEntry());
 
         return ResponseEntity
                 .ok()
@@ -122,7 +122,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteEntry(@RequestBody @Valid final EntryDeleteRequest request) {
-        diaryService.deleteEntry(request.getUser(), request.getDiaryDate(), request.getEntryPosition());
+        diaryService.deleteEntry(request.getDiaryDate(), request.getEntryPosition());
 
         return ResponseEntity
                 .ok()
@@ -135,7 +135,7 @@ public class DiaryController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity reorder(@RequestBody @Valid final ReorderRequestDTO request) {
-        diaryService.reorder(request.getUser(), request.getDiaryDate(), request.getPositionChange());
+        diaryService.reorder(request.getDiaryDate(), request.getPositionChange());
 
         return ResponseEntity
                 .ok()

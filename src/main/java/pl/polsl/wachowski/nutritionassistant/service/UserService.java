@@ -71,7 +71,7 @@ public class UserService {
     }
 
     public UserBiometricsDTO getUserBiometricsDTO() {
-        final String user = authenticationProvider.getAuthentication().getName();
+        final String user = getAuthenticatedUser();
         final UserBiometrics userBiometrics = getUserBiometrics(user);
         return new UserBiometricsDTO(
                 userBiometrics.getDateOfBirth(),
@@ -83,7 +83,7 @@ public class UserService {
     }
 
     public void saveUserBiometrics(final UserBiometricsDTO biometrics) {
-        final String userEmail = authenticationProvider.getAuthentication().getName();
+        final String userEmail = getAuthenticatedUser();
         final User user = findUserFetchBiometrics(userEmail);
         final UserBiometrics userBiometrics = user.getUserBiometrics();
         userBiometrics.setDateOfBirth(biometrics.getDateOfBirth());
@@ -99,6 +99,10 @@ public class UserService {
     public User findUser(final String userEmail) {
         return Optional.of(userRepository.findUserByEmail(userEmail))
                 .orElseThrow(UserNotFoundException::new);
+    }
+
+    public String getAuthenticatedUser() {
+        return authenticationProvider.getAuthentication().getName();
     }
 
     private User findUserFetchBiometrics(final String userEmail) {
