@@ -39,7 +39,7 @@ public class UserRegistrationController {
         final User user = getUser(userRegistrationDTO);
         try {
             userService.createUser(user);
-            eventPublisher.publishEvent(new RegistrationCompleteEvent(user, request.getRequestURL().toString()));
+            eventPublisher.publishEvent(new RegistrationCompleteEvent(user, request.getHeader("origin")));
 
             return ResponseEntity
                     .ok()
@@ -58,7 +58,7 @@ public class UserRegistrationController {
 
             return ResponseEntity
                     .ok()
-                    .body("Your account has been activated!");
+                    .build();
         } catch (final VerificationTokenNotFoundException
                 | VerificationTokenExpiredException
                 | UserAlreadyActiveException ex) {

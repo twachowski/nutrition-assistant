@@ -16,7 +16,7 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
     private static final String TITLE = "Nutrition Assistant account confirmation";
     private static final String CONTENT =   "Thank you for your registration at Nutrition Assistant! " +
                                             "Click the link below in order to activate your account:\n" +
-                                            "%s/confirm?token=%s";
+                                            "%s/registration/confirm/%s";
 
     private UserService userService;
 
@@ -29,7 +29,7 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
     }
 
     @Override
-    public void onApplicationEvent(RegistrationCompleteEvent registrationCompleteEvent) {
+    public void onApplicationEvent(final RegistrationCompleteEvent registrationCompleteEvent) {
         final User user = registrationCompleteEvent.getUser();
         final String token = createVerificationToken(user);
         sendEmail(user.getEmail(), registrationCompleteEvent.getUrl(), token);
