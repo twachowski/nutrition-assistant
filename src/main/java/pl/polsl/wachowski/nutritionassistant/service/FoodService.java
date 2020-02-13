@@ -11,6 +11,7 @@ import pl.polsl.wachowski.nutritionassistant.dto.search.FoodSearchItemDTO;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.ProviderNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.FoodRepository;
+import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,11 @@ public class FoodService {
                 .filter(p -> p.getProviderType().equals(providerType))
                 .findFirst()
                 .orElseThrow(() -> new ProviderNotFoundException(providerType));
-        return provider.getDetails(foodId);
+
+        final FoodDetailsDTO foodDetails = provider.getDetails(foodId);
+        NutrientHelper.addMandatoryNutrientsIfMissing(foodDetails.getNutrientDetails());
+
+        return foodDetails;
     }
 
     public void editFoodEntry(final List<FoodEntry> foodEntries, final EditedFoodEntryDTO editedEntry) {
