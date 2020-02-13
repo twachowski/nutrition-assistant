@@ -2,8 +2,8 @@ package pl.polsl.wachowski.nutritionassistant.exception;
 
 public class UserAlreadyActiveException extends Exception {
 
-    public UserAlreadyActiveException(final String message) {
-        super(message);
+    public UserAlreadyActiveException() {
+        super("Your account has been already activated");
     }
 
 }

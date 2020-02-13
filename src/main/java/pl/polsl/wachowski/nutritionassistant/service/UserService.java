@@ -42,7 +42,7 @@ public class UserService {
 
     public void createUser(final User user) throws UserExistsException {
         if (userExists(user.getEmail())) {
-            throw new UserExistsException("Email already exists");
+            throw new UserExistsException("User with such email already exists");
         }
         encodeUserPassword(user.getUserCredentials());
         userRepository.save(user);
@@ -55,7 +55,7 @@ public class UserService {
         final VerificationToken verificationToken = findVerificationToken(token);
         final User user = verificationToken.getUser();
         if (user.isActive()) {
-            throw new UserAlreadyActiveException("Your account has been already activated");
+            throw new UserAlreadyActiveException();
         }
         user.activate();
         tokenRepository.deleteAllByUser(user);
@@ -115,9 +115,9 @@ public class UserService {
         final VerificationToken verificationToken = tokenRepository.findVerificationTokenByValue(token);
 
         if (verificationToken == null) {
-            throw new VerificationTokenNotFoundException("Invalid verification token");
+            throw new VerificationTokenNotFoundException();
         } else if (verificationToken.isExpired()) {
-            throw new VerificationTokenExpiredException("This token has expired");
+            throw new VerificationTokenExpiredException();
         }
 
         return verificationToken;
