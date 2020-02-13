@@ -35,37 +35,25 @@ public class UserRegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity register(final HttpServletRequest request,
-                                   @RequestBody @Valid final UserRegistrationDTO userRegistrationDTO) {
+                                   @RequestBody @Valid final UserRegistrationDTO userRegistrationDTO) throws UserExistsException {
         final User user = getUser(userRegistrationDTO);
-        try {
-            userService.createUser(user);
-            eventPublisher.publishEvent(new RegistrationCompleteEvent(user, request.getHeader("origin")));
+        userService.createUser(user);
+        eventPublisher.publishEvent(new RegistrationCompleteEvent(user, request.getHeader("origin")));
 
-            return ResponseEntity
-                    .ok()
-                    .build();
-        } catch (final UserExistsException ex) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(ex.getMessage());
-        }
+        return ResponseEntity
+                .ok()
+                .build();
     }
 
     @RequestMapping(path = "/confirm", method = RequestMethod.GET)
-    public ResponseEntity confirmRegistration(@RequestParam("token") final String token) {
-        try {
-            userService.activateUser(token);
+    public ResponseEntity confirmRegistration(@RequestParam("token") final String token) throws VerificationTokenNotFoundException,
+                                                                                                VerificationTokenExpiredException,
+                                                                                                UserAlreadyActiveException {
+        userService.activateUser(token);
 
-            return ResponseEntity
-                    .ok()
-                    .build();
-        } catch (final VerificationTokenNotFoundException
-                | VerificationTokenExpiredException
-                | UserAlreadyActiveException ex) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(ex.getMessage());
-        }
+        return ResponseEntity
+                .ok()
+                .build();
     }
 
     private static User getUser(final UserRegistrationDTO userRegistrationDTO) {

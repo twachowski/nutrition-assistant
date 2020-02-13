@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.polsl.wachowski.nutritionassistant.dto.jwt.JwtTokenDTO;
 import pl.polsl.wachowski.nutritionassistant.dto.user.UserLoginDTO;
-import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.security.JwtHelper;
 
 import javax.validation.Valid;
@@ -32,19 +29,13 @@ public class UserLoginController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody @Valid final UserLoginDTO userLoginDTO) {
-        try {
-            final UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-            authenticationManager.authenticate(authenticationToken);
-            final String jwtToken = jwtHelper.generateToken(userLoginDTO.getEmail());
+        final UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+        authenticationManager.authenticate(authenticationToken);
+        final String jwtToken = jwtHelper.generateToken(userLoginDTO.getEmail());
 
-            return ResponseEntity
-                    .ok(new JwtTokenDTO(jwtToken));
-        } catch (final UserNotFoundException | InvalidCredentialsException | UserInactiveException ex) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(ex.getMessage());
-        }
+        return ResponseEntity
+                .ok(new JwtTokenDTO(jwtToken));
     }
 
 }
