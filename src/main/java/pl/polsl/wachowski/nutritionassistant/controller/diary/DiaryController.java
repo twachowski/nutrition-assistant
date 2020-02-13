@@ -33,7 +33,7 @@ public class DiaryController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getDiaryEntries(@RequestBody @Valid final DiaryEntriesRequestDTO request) {
+    public ResponseEntity<DiaryEntriesResponseDTO> getDiaryEntries(@RequestBody @Valid final DiaryEntriesRequestDTO request) {
         final DiaryEntriesResponseDTO response = diaryService.getDiaryEntries(request.getDiaryDate());
         return ResponseEntity.ok(response);
     }
@@ -41,105 +41,65 @@ public class DiaryController {
     @RequestMapping(
             path = "/add/food",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addFood(@RequestBody @Valid final NewFoodEntryRequestDTO request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addFood(@RequestBody @Valid final NewFoodEntryRequestDTO request) {
         diaryService.addFoodEntry(request.getDiaryDate(), request.getFoodEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/add/exercise",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addExercise(@RequestBody @Valid final NewExerciseEntryRequestDTO request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addExercise(@RequestBody @Valid final NewExerciseEntryRequestDTO request) {
         diaryService.addExerciseEntry(request.getDiaryDate(), request.getExerciseEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/add/note",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addNote(@RequestBody @Valid final NewNoteEntryRequestDTO request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addNote(@RequestBody @Valid final NewNoteEntryRequestDTO request) {
         diaryService.addNoteEntry(request.getDiaryDate(), request.getNoteEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/edit/food",
             method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editFood(@RequestBody @Valid final EntryEditRequestDTO<EditedFoodEntryDTO> request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editFood(@RequestBody @Valid final EntryEditRequestDTO<EditedFoodEntryDTO> request) {
         diaryService.editFoodEntry(request.getDiaryDate(), request.getEditedEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/edit/exercise",
             method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editExercise(@RequestBody @Valid final EntryEditRequestDTO<EditedExerciseEntryDTO> request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editExercise(@RequestBody @Valid final EntryEditRequestDTO<EditedExerciseEntryDTO> request) {
         diaryService.editExerciseEntry(request.getDiaryDate(), request.getEditedEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/edit/note",
             method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity editNote(@RequestBody @Valid final EntryEditRequestDTO<NoteEntryDTO> request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editNote(@RequestBody @Valid final EntryEditRequestDTO<NoteEntryDTO> request) {
         diaryService.editNoteEntry(request.getDiaryDate(), request.getEditedEntry());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/delete",
             method = RequestMethod.DELETE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteEntry(@RequestBody @Valid final EntryDeleteRequestDTO request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteEntry(@RequestBody @Valid final EntryDeleteRequestDTO request) {
         diaryService.deleteEntry(request.getDiaryDate(), request.getEntryPosition());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     @RequestMapping(
             path = "/reorder",
             method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity reorder(@RequestBody @Valid final ReorderRequestDTO request) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void reorder(@RequestBody @Valid final ReorderRequestDTO request) {
         diaryService.reorder(request.getDiaryDate(), request.getPositionChange());
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
 }

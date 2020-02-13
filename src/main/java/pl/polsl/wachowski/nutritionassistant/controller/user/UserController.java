@@ -27,7 +27,7 @@ public class UserController {
             path = "/biometrics",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getUserBiometrics() {
+    public ResponseEntity<UserBiometricsDTO> getUserBiometrics() {
         final UserBiometricsDTO userBiometrics = userService.getUserBiometricsDTO();
         return ResponseEntity.ok(userBiometrics);
     }
@@ -35,14 +35,9 @@ public class UserController {
     @RequestMapping(
             path = "/biometrics",
             method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateUserBiometrics(@RequestBody @Valid final UserBiometricsDTO userBiometrics) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateUserBiometrics(@RequestBody @Valid final UserBiometricsDTO userBiometrics) {
         userService.saveUserBiometrics(userBiometrics);
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
 }

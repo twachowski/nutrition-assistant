@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometrics;
@@ -33,27 +33,23 @@ public class UserRegistrationController {
         this.eventPublisher = eventPublisher;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity register(final HttpServletRequest request,
-                                   @RequestBody @Valid final UserRegistrationDTO userRegistrationDTO) throws UserExistsException {
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void register(final HttpServletRequest request,
+                         @RequestBody @Valid final UserRegistrationDTO userRegistrationDTO) throws UserExistsException {
         final User user = getUser(userRegistrationDTO);
         userService.createUser(user);
         eventPublisher.publishEvent(new RegistrationCompleteEvent(user, request.getHeader("origin")));
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
-    @RequestMapping(path = "/confirm", method = RequestMethod.GET)
-    public ResponseEntity confirmRegistration(@RequestParam("token") final String token) throws VerificationTokenNotFoundException,
-                                                                                                VerificationTokenExpiredException,
-                                                                                                UserAlreadyActiveException {
+    @RequestMapping(
+            path = "/confirm",
+            method = RequestMethod.GET)
+    public void confirmRegistration(@RequestParam("token") final String token) throws   VerificationTokenNotFoundException,
+                                                                                        VerificationTokenExpiredException,
+                                                                                        UserAlreadyActiveException {
         userService.activateUser(token);
-
-        return ResponseEntity
-                .ok()
-                .build();
     }
 
     private static User getUser(final UserRegistrationDTO userRegistrationDTO) {

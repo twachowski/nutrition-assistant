@@ -29,7 +29,7 @@ public class ExerciseController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity search(@RequestBody @Valid final ExerciseSearchRequestDTO request) {
+    public ResponseEntity<ExerciseSearchResponseDTO> search(@RequestBody @Valid final ExerciseSearchRequestDTO request) {
         final ExerciseSearchResponseDTO response = exerciseService.search(request.getQuery());
         return ResponseEntity.ok(response);
     }

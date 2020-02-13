@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionassistant.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,15 +28,17 @@ public class UserLoginController {
         this.jwtHelper = jwtHelper;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody @Valid final UserLoginDTO userLoginDTO) {
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<JwtTokenDTO> login(@RequestBody @Valid final UserLoginDTO userLoginDTO) {
         final UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
         authenticationManager.authenticate(authenticationToken);
         final String jwtToken = jwtHelper.generateToken(userLoginDTO.getEmail());
 
-        return ResponseEntity
-                .ok(new JwtTokenDTO(jwtToken));
+        return ResponseEntity.ok(new JwtTokenDTO(jwtToken));
     }
 
 }

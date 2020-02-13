@@ -32,7 +32,7 @@ public class FoodController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity searchFood(@RequestBody @Valid final FoodSearchCriteriaDTO criteria) {
+    public ResponseEntity<List<FoodSearchItemDTO>> searchFood(@RequestBody @Valid final FoodSearchCriteriaDTO criteria) {
         final List<FoodSearchItemDTO> foods = foodService.search(criteria.getQuery());
         return ResponseEntity.ok(foods);
     }
@@ -42,7 +42,7 @@ public class FoodController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getDetails(@RequestBody @Valid final FoodDetailsRequestDTO request) {
+    public ResponseEntity<FoodDetailsDTO> getDetails(@RequestBody @Valid final FoodDetailsRequestDTO request) {
         final FoodDetailsDTO foodDetails = foodService.getDetails(request.getExternalId(), request.getProvider());
         return ResponseEntity.ok(foodDetails);
     }
