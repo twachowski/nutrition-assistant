@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.db.user.User;
 import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
 @Component
@@ -32,9 +31,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         final String password = authentication.getCredentials().toString();
 
         final User user = userRepository.findUserByEmail(userEmail);
-        if (user == null) {
-            throw new UserNotFoundException();
-        } else if (credentialsDiffer(password, user.getUserCredentials().getPassword())) {
+        if (user == null || credentialsDiffer(password, user.getUserCredentials().getPassword())) {
             throw new InvalidCredentialsException();
         } else if (!user.isActive()) {
             throw new UserInactiveException();
