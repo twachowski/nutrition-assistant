@@ -4,10 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import pl.polsl.wachowski.nutritionassistant.fdc.client.FdcClientConfig;
+import pl.polsl.wachowski.nutritionix.client.NutritionixClientConfig;
 
 @SpringBootApplication
 @EnableConfigurationProperties(value = {
-        FdcClientConfig.class
+        FdcClientConfig.class,
+        NutritionixClientConfig.class
 })
 public class NutritionAssistantApplication {
 

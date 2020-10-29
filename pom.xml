@@ -13,6 +13,7 @@
         <module>nutrition-assistant-service</module>
         <module>nutrition-assistant-scheduling</module>
         <module>fdc-client</module>
+        <module>nutritionix-client</module>
     </modules>
     <groupId>pl.polsl.wachowski</groupId>
     <artifactId>nutrition-assistant</artifactId>
