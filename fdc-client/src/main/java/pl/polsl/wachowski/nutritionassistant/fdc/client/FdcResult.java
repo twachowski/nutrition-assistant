@@ -1,8 +1,11 @@
 package pl.polsl.wachowski.nutritionassistant.fdc.client;
 
+import lombok.ToString;
+
 import java.util.Objects;
 import java.util.Optional;
 
+@ToString
 public class FdcResult<T> {
 
     private final T response;
