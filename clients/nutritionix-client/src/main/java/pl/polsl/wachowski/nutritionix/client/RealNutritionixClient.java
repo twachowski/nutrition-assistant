@@ -4,12 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
+import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExercise;
+import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExerciseSearchRequest;
+import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExerciseSearchResponse;
 import pl.polsl.wachowski.nutritionix.client.api.food.NutritionixFood;
 import pl.polsl.wachowski.nutritionix.client.api.food.NutritionixFoodRequest;
 import pl.polsl.wachowski.nutritionix.client.api.food.NutritionixFoodResponse;
 import pl.polsl.wachowski.nutritionix.client.api.food.search.NutritionixFoodSearchResponse;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import static pl.polsl.wachowski.nutritionix.client.api.NutritionixApi.*;
@@ -62,6 +66,25 @@ public class RealNutritionixClient implements NutritionixClient {
                     .iterator()
                     .next();
             return NutritionixResult.success(food);
+        } catch (final Exception e) {
+            return NutritionixResult.failure(e);
+        }
+    }
+
+    @Override
+    public NutritionixResult<List<NutritionixExercise>> searchExercises(final NutritionixExerciseSearchRequest searchRequest) {
+        final HttpUrl url = createUrlBuilder(EXERCISE_SEARCH_API)
+                .build();
+        try {
+            final RequestBody requestBody = createRequestBody(searchRequest);
+            final Request request = new Request.Builder()
+                    .url(url)
+                    .headers(getHeaders())
+                    .post(requestBody)
+                    .build();
+            final Call call = okHttpClient.newCall(request);
+            final NutritionixExerciseSearchResponse response = makeCall(call, NutritionixExerciseSearchResponse.class);
+            return NutritionixResult.success(response.getExercises());
         } catch (final Exception e) {
             return NutritionixResult.failure(e);
         }
