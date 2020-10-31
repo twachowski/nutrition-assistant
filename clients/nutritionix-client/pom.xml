@@ -6,9 +6,10 @@
         <artifactId>nutrition-assistant</artifactId>
         <groupId>pl.polsl.wachowski</groupId>
         <version>${revision}</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>fdc-client</artifactId>
+    <artifactId>nutritionix-client</artifactId>
 
     <dependencies>
         <dependency>

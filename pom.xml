@@ -12,8 +12,8 @@
         <module>nutrition-assistant-api</module>
         <module>nutrition-assistant-service</module>
         <module>nutrition-assistant-scheduling</module>
-        <module>fdc-client</module>
-        <module>nutritionix-client</module>
+        <module>clients/fdc-client</module>
+        <module>clients/nutritionix-client</module>
     </modules>
     <groupId>pl.polsl.wachowski</groupId>
     <artifactId>nutrition-assistant</artifactId>
