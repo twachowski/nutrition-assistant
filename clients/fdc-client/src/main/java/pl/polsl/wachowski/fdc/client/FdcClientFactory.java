@@ -5,7 +5,6 @@ import okhttp3.OkHttpClient;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.Optional;
 
 public class FdcClientFactory {
 
@@ -17,20 +16,18 @@ public class FdcClientFactory {
                             final OkHttpClient okHttpClient,
                             final ObjectMapper objectMapper) {
         this.config = Objects.requireNonNull(config);
-        this.okHttpClient = Optional.ofNullable(okHttpClient)
-                .orElseGet(() -> defaultOkHttpClient(config.getConnectTimeout(), config.getReadTimeout()));
-        this.objectMapper = Optional.ofNullable(objectMapper)
-                .orElseGet(ObjectMapper::new);
+        this.okHttpClient = customizeOkHttpClient(Objects.requireNonNull(okHttpClient));
+        this.objectMapper = Objects.requireNonNull(objectMapper);
     }
 
     public FdcClient create() {
         return new RealFdcClient(okHttpClient, objectMapper, config);
     }
 
-    private static OkHttpClient defaultOkHttpClient(final long connectTimeout, final long readTimeout) {
-        return new OkHttpClient.Builder()
-                .connectTimeout(Duration.ofMillis(connectTimeout))
-                .readTimeout(Duration.ofMillis(readTimeout))
+    private OkHttpClient customizeOkHttpClient(final OkHttpClient okHttpClient) {
+        return okHttpClient.newBuilder()
+                .connectTimeout(Duration.ofMillis(config.getConnectTimeout()))
+                .readTimeout(Duration.ofMillis(config.getReadTimeout()))
                 .build();
     }
 
