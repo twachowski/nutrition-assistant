@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client.api;
+package pl.polsl.wachowski.fdc.client.api;
 
 public final class FdcApi {
 

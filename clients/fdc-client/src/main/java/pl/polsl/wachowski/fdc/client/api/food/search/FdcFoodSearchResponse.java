@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client.api.food.search;
+package pl.polsl.wachowski.fdc.client.api.food.search;
 
 import lombok.Value;
 

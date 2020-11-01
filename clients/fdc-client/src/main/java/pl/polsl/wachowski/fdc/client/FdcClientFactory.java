@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client;
+package pl.polsl.wachowski.fdc.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;

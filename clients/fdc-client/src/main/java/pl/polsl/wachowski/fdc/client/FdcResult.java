@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client;
+package pl.polsl.wachowski.fdc.client;
 
 import lombok.ToString;
 

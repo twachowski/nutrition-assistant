@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client.api.food;
+package pl.polsl.wachowski.fdc.client.api.food;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;

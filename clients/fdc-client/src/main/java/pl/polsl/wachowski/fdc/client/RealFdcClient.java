@@ -1,16 +1,16 @@
-package pl.polsl.wachowski.nutritionassistant.fdc.client;
+package pl.polsl.wachowski.fdc.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import pl.polsl.wachowski.nutritionassistant.fdc.client.api.food.FdcFood;
-import pl.polsl.wachowski.nutritionassistant.fdc.client.api.food.search.FdcFoodSearchRequest;
-import pl.polsl.wachowski.nutritionassistant.fdc.client.api.food.search.FdcFoodSearchResponse;
+import pl.polsl.wachowski.fdc.client.api.food.FdcFood;
+import pl.polsl.wachowski.fdc.client.api.food.search.FdcFoodSearchRequest;
+import pl.polsl.wachowski.fdc.client.api.food.search.FdcFoodSearchResponse;
 import pl.polsl.wachowski.okhttpclient.common.CommonOkhttpClient;
 
-import static pl.polsl.wachowski.nutritionassistant.fdc.client.api.FdcApi.*;
+import static pl.polsl.wachowski.fdc.client.api.FdcApi.*;
 
 public class RealFdcClient extends CommonOkhttpClient implements FdcClient {
 
