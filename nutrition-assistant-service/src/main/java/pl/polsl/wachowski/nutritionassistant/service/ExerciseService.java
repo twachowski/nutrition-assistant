@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.exercise.EditedExerciseEntry;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.ExerciseSearchResponse;
-import pl.polsl.wachowski.nutritionassistant.data.provider.exercise.ExerciseDataProviderAdapter;
 import pl.polsl.wachowski.nutritionassistant.db.entry.ExerciseEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
+import pl.polsl.wachowski.nutritionassistant.provider.exercise.ExerciseProvider;
 import pl.polsl.wachowski.nutritionassistant.repository.ExerciseRepository;
 
 import java.util.List;
@@ -18,26 +18,26 @@ import java.util.Set;
 public class ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
-    private final ExerciseDataProviderAdapter provider;
+    private final ExerciseProvider exerciseProvider;
     private final ProfileService profileService;
 
     @Autowired
     public ExerciseService(final ExerciseRepository exerciseRepository,
-                           final ExerciseDataProviderAdapter provider,
+                           final ExerciseProvider exerciseProvider,
                            final ProfileService profileService) {
         this.exerciseRepository = exerciseRepository;
-        this.provider = provider;
+        this.exerciseProvider = exerciseProvider;
         this.profileService = profileService;
     }
 
     public Set<Exercise> searchExercises(final String query) {
         final UserBiometricsEntity userBiometrics = profileService.getAuthenticatedUserBiometricsEntity();
-        return provider.search(query, userBiometrics);
+        return exerciseProvider.searchExercises(query, userBiometrics);
     }
 
     public ExerciseSearchResponse searchExercisesWithBiometrics(final String query) {
         final UserBiometricsEntity userBiometrics = profileService.getAuthenticatedUserBiometricsEntity();
-        final Set<Exercise> exercises = provider.search(query, userBiometrics);
+        final Set<Exercise> exercises = exerciseProvider.searchExercises(query, userBiometrics);
         return new ExerciseSearchResponse(ProfileService.toSimpleBiometrics(userBiometrics),
                                           exercises);
     }
