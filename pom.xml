@@ -14,6 +14,7 @@
         <module>nutrition-assistant-scheduling</module>
         <module>clients/fdc-client</module>
         <module>clients/nutritionix-client</module>
+        <module>clients/common-okhttp-client</module>
     </modules>
     <groupId>pl.polsl.wachowski</groupId>
     <artifactId>nutrition-assistant</artifactId>
