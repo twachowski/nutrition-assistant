@@ -27,6 +27,7 @@ public class FdcClientFactory {
     private OkHttpClient customizeOkHttpClient(final OkHttpClient okHttpClient) {
         return okHttpClient.newBuilder()
                 .connectTimeout(Duration.ofMillis(config.getConnectTimeout()))
+                .writeTimeout(Duration.ofMillis(config.getWriteTimeout()))
                 .readTimeout(Duration.ofMillis(config.getReadTimeout()))
                 .build();
     }

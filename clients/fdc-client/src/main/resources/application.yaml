@@ -2,5 +2,6 @@ usda:
   fdc:
     client:
       connect-timeout: 10000  #millis
+      write-timeout: 10000  #millis
       read-timeout: 10000  #millis
       api-key: ENC(C8OptM4elLnDbhUWd4cpYZZNFhfDixrhhfjkRQ0BQPntOPK+rZP8KJorOgSuyVtL6rbUlzGEoak=)

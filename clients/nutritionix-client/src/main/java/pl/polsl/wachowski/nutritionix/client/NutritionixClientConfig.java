@@ -29,6 +29,10 @@ public class NutritionixClientConfig {
 
     @NotNull
     @PositiveOrZero
+    private final Long writeTimeout;
+
+    @NotNull
+    @PositiveOrZero
     private final Long readTimeout;
 
 }
