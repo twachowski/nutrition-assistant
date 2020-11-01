@@ -32,6 +32,24 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>pl.polsl.wachowski</groupId>
+                <artifactId>nutrition-assistant-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.polsl.wachowski</groupId>
+                <artifactId>fdc-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.polsl.wachowski</groupId>
+                <artifactId>nutritionix-client</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>3.0.0</version>

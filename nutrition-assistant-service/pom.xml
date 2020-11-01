@@ -15,19 +15,16 @@
         <dependency>
             <groupId>pl.polsl.wachowski</groupId>
             <artifactId>nutrition-assistant-api</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>pl.polsl.wachowski</groupId>
             <artifactId>fdc-client</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>pl.polsl.wachowski</groupId>
             <artifactId>nutritionix-client</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
