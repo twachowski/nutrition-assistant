@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.data.provider;
+package pl.polsl.wachowski.nutritionassistant.provider.food;
 
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.FoodBasicData;
@@ -6,12 +6,12 @@ import pl.polsl.wachowski.nutritionassistant.api.food.NutritionDataProvider;
 
 import java.util.Set;
 
-public interface FoodDataProviderAdapter {
+public interface FoodProvider {
 
-    Set<FoodBasicData> search(String query);
+    Set<FoodBasicData> searchFoods(String query);
 
     Food getFood(String id);
 
-    NutritionDataProvider getProviderType();
+    NutritionDataProvider getType();
 
 }

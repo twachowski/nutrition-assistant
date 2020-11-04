@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.dto.details;
+package pl.polsl.wachowski.nutritionassistant.data;
 
 public interface ExternalNutrientDetails {
 

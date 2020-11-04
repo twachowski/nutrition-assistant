@@ -6,13 +6,14 @@ import pl.polsl.wachowski.nutritionassistant.api.diary.entry.food.EditedFoodEntr
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.FoodBasicData;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutritionDataProvider;
-import pl.polsl.wachowski.nutritionassistant.data.provider.FoodDataProviderAdapter;
 import pl.polsl.wachowski.nutritionassistant.db.entry.FoodEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.ProviderNotFoundException;
+import pl.polsl.wachowski.nutritionassistant.provider.food.FoodProvider;
 import pl.polsl.wachowski.nutritionassistant.repository.FoodRepository;
 import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,29 +22,29 @@ import java.util.stream.Collectors;
 public class FoodService {
 
     private final FoodRepository foodRepository;
-    private final List<FoodDataProviderAdapter> providers;
+    private final List<FoodProvider> foodProviders;
 
     @Autowired
     public FoodService(final FoodRepository foodRepository,
-                       final List<FoodDataProviderAdapter> providers) {
+                       final List<FoodProvider> foodProviders) {
         this.foodRepository = foodRepository;
-        this.providers = providers;
+        this.foodProviders = foodProviders;
     }
 
     public Set<FoodBasicData> searchFoods(final String query) {
-        return providers.stream()
-                .map(provider -> provider.search(query))
+        return foodProviders.stream()
+                .map(provider -> provider.searchFoods(query))
                 .flatMap(Set::stream)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public Food getFood(final String id, final NutritionDataProvider provider) {
-        final FoodDataProviderAdapter providerAdapter = providers.stream()
-                .filter(p -> p.getProviderType().equals(provider))
+        final FoodProvider foodProvider = foodProviders.stream()
+                .filter(p -> p.getType().equals(provider))
                 .findFirst()
                 .orElseThrow(() -> new ProviderNotFoundException(provider));
 
-        final Food food = providerAdapter.getFood(id);
+        final Food food = foodProvider.getFood(id);
         NutrientHelper.addMandatoryNutrientsIfMissing(food.getNutrients());
 
         return food;

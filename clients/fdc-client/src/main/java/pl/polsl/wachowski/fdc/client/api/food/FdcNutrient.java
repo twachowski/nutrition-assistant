@@ -10,6 +10,10 @@ public class FdcNutrient {
     FdcNutrientDetails details;
     float amount;
 
+    public int getId() {
+        return details.id;
+    }
+
     @Value
     public static class FdcNutrientDetails {
         int id;

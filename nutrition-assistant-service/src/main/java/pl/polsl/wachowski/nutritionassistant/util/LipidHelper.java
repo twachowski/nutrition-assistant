@@ -1,7 +1,8 @@
 package pl.polsl.wachowski.nutritionassistant.util;
 
-import pl.polsl.wachowski.nutritionassistant.dto.details.ExternalNutrientDetails;
+import pl.polsl.wachowski.nutritionassistant.data.ExternalNutrientDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,34 +20,30 @@ public final class LipidHelper {
         this.omega3NonAlaIds = omega3NonAlaIds;
     }
 
-    public float getTotalOmega6Amount(final List<? extends ExternalNutrientDetails> nutrients) {
-        return Optional.ofNullable(
-                nutrients
-                        .stream()
-                        .filter(n -> omega6Ids.contains(n.getId()))
-                        .reduce(null, this::getPrecedingO6, this::getPrecedingO6))
+    public float getTotalOmega6Amount(final Collection<? extends ExternalNutrientDetails> nutrients) {
+        final ExternalNutrientDetails nutrient = nutrients.stream()
+                .filter(n -> omega6Ids.contains(n.getId()))
+                .reduce(null, this::getPrecedingO6, this::getPrecedingO6);
+        return Optional.ofNullable(nutrient)
                 .map(ExternalNutrientDetails::getAmount)
                 .orElse(0.f);
     }
 
-    public float getTotalOmega3Amount(final List<? extends ExternalNutrientDetails> nutrients) {
+    public float getTotalOmega3Amount(final Collection<? extends ExternalNutrientDetails> nutrients) {
         final float alaAmount = getOmega3ALA(nutrients);
-        final float nonAlaAmount =
-                nutrients
-                        .stream()
-                        .filter(n -> omega3NonAlaIds.contains(n.getId()))
-                        .map(ExternalNutrientDetails::getAmount)
-                        .reduce(Float::sum)
-                        .orElse(0.f);
+        final float nonAlaAmount = nutrients.stream()
+                .filter(n -> omega3NonAlaIds.contains(n.getId()))
+                .map(ExternalNutrientDetails::getAmount)
+                .reduce(Float::sum)
+                .orElse(0.f);
         return alaAmount + nonAlaAmount;
     }
 
-    private float getOmega3ALA(final List<? extends ExternalNutrientDetails> nutrients) {
-        return Optional.ofNullable(
-                nutrients
-                        .stream()
-                        .filter(n -> omega3AlaIds.contains(n.getId()))
-                        .reduce(null, this::getPrecedingO3ALA, this::getPrecedingO3ALA))
+    private float getOmega3ALA(final Collection<? extends ExternalNutrientDetails> nutrients) {
+        final ExternalNutrientDetails nutrient = nutrients.stream()
+                .filter(n -> omega3AlaIds.contains(n.getId()))
+                .reduce(null, this::getPrecedingO3ALA, this::getPrecedingO3ALA);
+        return Optional.ofNullable(nutrient)
                 .map(ExternalNutrientDetails::getAmount)
                 .orElse(0.f);
     }
