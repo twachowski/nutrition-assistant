@@ -2,29 +2,34 @@ package pl.polsl.wachowski.nutritionassistant.config;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.Instant;
 import java.util.Date;
 
-@Configuration
-@PropertySource("classpath:jwt.properties")
+@ConfigurationProperties(prefix = "jwt")
+@ConstructorBinding
+@Validated
+@Getter
 public class JwtConfig {
 
-    @Value("${jwt.secret}")
-    private String secret;
+    @NotBlank
+    private final String secret;
 
-    @Getter
-    private Algorithm algorithm;
+    @NotNull
+    @PositiveOrZero
+    private final Long expirationTime;
 
-    @Value("${jwt.expiration.time}")
-    private Long expirationTime;
+    private final Algorithm algorithm;
 
-    @PostConstruct
-    private void initialize() {
+    public JwtConfig(final String secret, final Long expirationTime) {
+        this.secret = secret;
+        this.expirationTime = expirationTime;
         this.algorithm = Algorithm.HMAC512(secret);
     }
 

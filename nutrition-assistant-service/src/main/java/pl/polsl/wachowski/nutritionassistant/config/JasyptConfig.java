@@ -7,10 +7,8 @@ import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:jasypt.properties")
 public class JasyptConfig {
 
     @Bean
