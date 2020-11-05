@@ -20,6 +20,8 @@ import pl.polsl.wachowski.nutritionassistant.security.JwtFilter;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static pl.polsl.wachowski.nutritionassistant.api.NutritionAssistantApi.USERS_API_SUFFIX;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -40,13 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .cors()
+        http.cors()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/registration/**").permitAll()
+                .antMatchers(USERS_API_SUFFIX + "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
