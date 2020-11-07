@@ -22,12 +22,17 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
     private static final String SERVING_100G_SUFFIX = " 100g";
 
     private final NutritionixClientConfig config;
+    private final Headers headers;
 
     public RealNutritionixClient(final OkHttpClient okHttpClient,
                                  final ObjectMapper objectMapper,
                                  final NutritionixClientConfig config) {
         super(okHttpClient, objectMapper);
         this.config = config;
+        this.headers = new Headers.Builder()
+                .add(APP_ID_HEADER, config.getAppId())
+                .add(APP_KEY_HEADER, config.getAppKey())
+                .build();
     }
 
     @Override
@@ -37,7 +42,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
                 .build();
         final Request request = new Request.Builder()
                 .url(url)
-                .headers(getHeaders())
+                .headers(headers)
                 .get()
                 .build();
         try {
@@ -59,7 +64,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
             final RequestBody requestBody = createRequestBody(foodRequest);
             final Request request = new Request.Builder()
                     .url(url)
-                    .headers(getHeaders())
+                    .headers(headers)
                     .post(requestBody)
                     .build();
             final NutritionixFoodResponse response = sendRequest(request, NutritionixFoodResponse.class);
@@ -81,7 +86,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
             final RequestBody requestBody = createRequestBody(searchRequest);
             final Request request = new Request.Builder()
                     .url(url)
-                    .headers(getHeaders())
+                    .headers(headers)
                     .post(requestBody)
                     .build();
             final NutritionixExerciseSearchResponse response = sendRequest(request, NutritionixExerciseSearchResponse.class);
@@ -90,13 +95,6 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
             log.error("Failed to search exercises in Nutritionix, request={}", searchRequest, e);
             return NutritionixResult.failure(e);
         }
-    }
-
-    private Headers getHeaders() {
-        return new Headers.Builder()
-                .add(APP_ID_HEADER, config.getAppId())
-                .add(APP_KEY_HEADER, config.getAppKey())
-                .build();
     }
 
 }
