@@ -11,7 +11,6 @@ import static pl.polsl.wachowski.okhttpclient.common.HttpMediaTypes.JSON_MEDIA_T
 
 public abstract class CommonOkhttpClient {
 
-
     protected final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
 
@@ -29,13 +28,22 @@ public abstract class CommonOkhttpClient {
         final Call call = okHttpClient.newCall(request);
         try (final Response response = call.execute()) {
             if (response.isSuccessful()) {
-                final String responseBody = Optional.ofNullable(response.body())
-                        .map(Object::toString)
+                final String responseBody = getResponseBody(response)
                         .orElseThrow(() -> new IllegalStateException("Response body is null, status=" + response.code()));
                 return objectMapper.readValue(responseBody, clazz);
             }
-            throw new RuntimeException("Response unsuccessful, status=" + response.code());
+            final String responseBody = getResponseBody(response)
+                    .orElse(null);
+            throw new RuntimeException(String.format("Response unsuccessful, status=%s, message=%s, body=%s",
+                                                     response.code(),
+                                                     response.message(),
+                                                     responseBody));
         }
+    }
+
+    private static Optional<String> getResponseBody(final Response response) {
+        return Optional.ofNullable(response.body())
+                .map(Object::toString);
     }
 
     protected static HttpUrl.Builder createUrlBuilder(final String url) {
