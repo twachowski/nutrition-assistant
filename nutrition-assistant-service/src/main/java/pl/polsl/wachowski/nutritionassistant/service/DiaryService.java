@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.diary.DiaryEntriesResponse;
@@ -27,6 +28,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 @Service
 public class DiaryService {
 
@@ -54,6 +56,7 @@ public class DiaryService {
         final UserDiaryEntrySimpleView diaryEntry = diaryRepository.findDiaryEntryByUserAndDate(userEmail, date);
         //TODO test this
         if (diaryEntry.getUserId() == null) {
+            log.error("Cannot get diary entries - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (diaryEntry.get() == null) {
@@ -120,9 +123,11 @@ public class DiaryService {
         final UserDiaryFoodEntriesView foodEntriesView = diaryRepository.findUserAndFoodEntriesByUserAndDate(userEmail,
                                                                                                              diaryDate);
         if (foodEntriesView.getUserId() == null) {
+            log.error("Cannot edit food entry - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (foodEntriesView.getDiaryId() == null) {
+            log.error("Cannot edit food entry at {} position - diary is empty for {}", entryPosition, diaryDate);
             throw new EmptyDiaryException("Diary for " + diaryDate + " is empty");
         }
         foodService.editFoodEntry(foodEntriesView.getFoodEntries(),
@@ -137,9 +142,11 @@ public class DiaryService {
         final UserDiaryExerciseEntriesView exerciseEntriesView = diaryRepository.findUserAndExerciseEntriesByUserAndDate(userEmail,
                                                                                                                          diaryDate);
         if (exerciseEntriesView.getUserId() == null) {
+            log.error("Cannot edit exercise entry - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (exerciseEntriesView.getDiaryId() == null) {
+            log.error("Cannot edit exercise entry at {} position - diary is empty for {}", entryPosition, diaryDate);
             throw new EmptyDiaryException("Diary for " + diaryDate + " is empty");
         }
         exerciseService.editExerciseEntry(exerciseEntriesView.getExerciseEntries(),
@@ -154,9 +161,11 @@ public class DiaryService {
         final UserDiaryNoteEntriesView noteEntriesView = diaryRepository.findUserAndNoteEntriesByUserAndDate(userEmail,
                                                                                                              diaryDate);
         if (noteEntriesView.getUserId() == null) {
+            log.error("Cannot edit note entry - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (noteEntriesView.getDiaryId() == null) {
+            log.error("Cannot edit note entry at {} position - diary is empty for {}", entryPosition, diaryDate);
             throw new EmptyDiaryException("Diary for " + diaryDate + " is empty");
         }
         noteService.editNoteEntry(noteEntriesView.getNoteEntries(),
@@ -168,9 +177,11 @@ public class DiaryService {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
         final UserDiaryEntrySimpleView userDiaryView = diaryRepository.findDiaryEntryByUserAndDate(userEmail, diaryDate);
         if (userDiaryView.getUserId() == null) {
+            log.error("Cannot delete entry - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (userDiaryView.get() == null) {
+            log.error("Cannot delete entry at {} position - diary is empty for {}", diaryDate, entryPosition);
             throw new EmptyDiaryException("Diary for " + diaryDate + " is empty");
         }
         deleteByPosition(userDiaryView.getFoodEntries(), entryPosition);
@@ -191,9 +202,14 @@ public class DiaryService {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
         final UserDiaryEntrySimpleView userDiaryView = diaryRepository.findDiaryEntryByUserAndDate(userEmail, diaryDate);
         if (userDiaryView.getUserId() == null) {
+            log.error("Cannot move entry - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         if (userDiaryView.get() == null) {
+            log.error("Cannot move entry from {} to {} - diary is empty for {}",
+                      oldPosition,
+                      newPosition,
+                      diaryDate);
             throw new EmptyDiaryException("Diary for " + diaryDate + " is empty");
         }
         final Map<Short, Short> positionChanges = getPositionChanges(oldPosition, newPosition);
@@ -210,6 +226,7 @@ public class DiaryService {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
         final UserDiaryEntryView diaryEntryView = diaryRepository.findUserAndDiaryEntryByUserAndDate(userEmail, diaryDate);
         if (diaryEntryView.getUser() == null) {
+            log.error("Cannot get user diary entry view - authenticated user {} has not been found", userEmail);
             throw new UserNotFoundException();
         }
         return diaryEntryView;

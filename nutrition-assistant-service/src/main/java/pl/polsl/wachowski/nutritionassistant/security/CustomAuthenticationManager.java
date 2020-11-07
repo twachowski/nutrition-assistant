@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsExcepti
 import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
+@Slf4j
 @Component
 public class CustomAuthenticationManager implements AuthenticationManager {
 
@@ -32,8 +34,12 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
         final User user = userRepository.findUserByEmail(userEmail);
         if (user == null || credentialsDiffer(password, user.getUserCredentials().getPassword())) {
+            log.info("Failed to authenticate user {} - {}",
+                     userEmail,
+                     user == null ? "user not found" : "bad credentials");
             throw new InvalidCredentialsException();
         } else if (!user.isActive()) {
+            log.info("Failed to authenticate user {} - user has not been activated", userEmail);
             throw new UserInactiveException();
         }
 

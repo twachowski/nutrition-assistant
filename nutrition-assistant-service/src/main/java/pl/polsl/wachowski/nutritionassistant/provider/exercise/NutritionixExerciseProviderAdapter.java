@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.provider.exercise;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class NutritionixExerciseProviderAdapter implements ExerciseProvider {
 
@@ -32,6 +34,10 @@ public class NutritionixExerciseProviderAdapter implements ExerciseProvider {
         final NutritionixResult<List<NutritionixExercise>> result = nutritionixClient.searchExercises(searchRequest);
         if (result.isFailure()) {
             //TODO add exception handling
+            log.error("Failed to search exercises in Nutritionix, query={}, biometrics={}, result={}",
+                      query,
+                      userBiometrics,
+                      result);
             throw new NutritionixException("Failed to search exercises in Nutritionix", result.exception());
         }
 

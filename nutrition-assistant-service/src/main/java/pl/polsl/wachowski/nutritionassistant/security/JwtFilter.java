@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.security;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -34,12 +35,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(final HttpServletRequest httpServletRequest,
-                                    final HttpServletResponse httpServletResponse,
-                                    final FilterChain filterChain) throws ServletException, IOException {
+                                    @NotNull final HttpServletResponse httpServletResponse,
+                                    @NotNull final FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = httpServletRequest.getHeader(AUTH_HEADER);
 
         if (authHeader != null && authHeader.startsWith(JWT_PREFIX)) {
-            final String jwtToken = authHeader.substring(7);
+            final String jwtToken = authHeader.substring(JWT_PREFIX.length());
             final String user = JwtHelper.extractUserFrom(jwtToken);
             if (jwtHelper.isValid(jwtToken) && userExists(user)) {
                 final WebAuthenticationDetails details =

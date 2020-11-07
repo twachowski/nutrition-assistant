@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.fdc.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,6 +13,7 @@ import pl.polsl.wachowski.okhttpclient.common.CommonOkhttpClient;
 
 import static pl.polsl.wachowski.fdc.client.api.FdcApi.*;
 
+@Slf4j
 public class RealFdcClient extends CommonOkhttpClient implements FdcClient {
 
     private final FdcClientConfig config;
@@ -38,6 +40,7 @@ public class RealFdcClient extends CommonOkhttpClient implements FdcClient {
             final FdcFoodSearchResponse response = sendRequest(request, FdcFoodSearchResponse.class);
             return FdcResult.success(response);
         } catch (final Exception e) {
+            log.error("Failed to search foods in USDA, request={}", searchRequest, e);
             return FdcResult.failure(e);
         }
     }
@@ -56,6 +59,7 @@ public class RealFdcClient extends CommonOkhttpClient implements FdcClient {
             final FdcFood food = sendRequest(request, FdcFood.class);
             return FdcResult.success(food);
         } catch (final Exception e) {
+            log.error("Failed to get food from USDA, foodId={}", id, e);
             return FdcResult.failure(e);
         }
     }

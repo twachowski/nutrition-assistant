@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.event;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,6 +11,7 @@ import pl.polsl.wachowski.nutritionassistant.service.UserService;
 
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class RegistrationListener implements ApplicationListener<RegistrationCompleteEvent> {
 
@@ -30,7 +32,9 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
     @Override
     public void onApplicationEvent(final RegistrationCompleteEvent registrationCompleteEvent) {
         final User user = registrationCompleteEvent.getUser();
+        log.info("New user {} has registered - generating verification token...", user.getEmail());
         final String token = createVerificationToken(user);
+        log.info("Sending confirmation email to {}", user.getEmail());
         sendEmail(user.getEmail(), registrationCompleteEvent.getUrl(), token);
     }
 

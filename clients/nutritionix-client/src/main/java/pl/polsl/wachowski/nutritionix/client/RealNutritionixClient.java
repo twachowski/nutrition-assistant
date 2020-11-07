@@ -1,6 +1,7 @@
 package pl.polsl.wachowski.nutritionix.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExercise;
 import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExerciseSearchRequest;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static pl.polsl.wachowski.nutritionix.client.api.NutritionixApi.*;
 
+@Slf4j
 public class RealNutritionixClient extends CommonOkhttpClient implements NutritionixClient {
 
     private static final String SERVING_100G_SUFFIX = " 100g";
@@ -42,6 +44,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
             final NutritionixFoodSearchResponse response = sendRequest(request, NutritionixFoodSearchResponse.class);
             return NutritionixResult.success(response);
         } catch (final Exception e) {
+            log.error("Failed to search foods in Nutritionix, query={}", query, e);
             return NutritionixResult.failure(e);
         }
     }
@@ -65,6 +68,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
                     .next();
             return NutritionixResult.success(food);
         } catch (final Exception e) {
+            log.error("Failed to get food from Nutritionix, request={}", foodRequest, e);
             return NutritionixResult.failure(e);
         }
     }
@@ -83,6 +87,7 @@ public class RealNutritionixClient extends CommonOkhttpClient implements Nutriti
             final NutritionixExerciseSearchResponse response = sendRequest(request, NutritionixExerciseSearchResponse.class);
             return NutritionixResult.success(response.getExercises());
         } catch (final Exception e) {
+            log.error("Failed to search exercises in Nutritionix, request={}", searchRequest, e);
             return NutritionixResult.failure(e);
         }
     }

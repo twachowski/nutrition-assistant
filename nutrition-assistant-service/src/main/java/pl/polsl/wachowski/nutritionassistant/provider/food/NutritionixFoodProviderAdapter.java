@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.provider.food;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
@@ -23,6 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 @Component
 public class NutritionixFoodProviderAdapter implements FoodProvider {
 
@@ -46,6 +48,7 @@ public class NutritionixFoodProviderAdapter implements FoodProvider {
     public Set<FoodBasicData> searchFoods(final String query) {
         final NutritionixResult<NutritionixFoodSearchResponse> result = nutritionixClient.searchFoods(query);
         if (result.isFailure()) {
+            log.error("Failed to search foods in Nutritionix, query={}, result={}", query, result);
             throw new NutritionixException("Failed to search foods in Nutritionix", result.exception());
         }
 
@@ -60,6 +63,7 @@ public class NutritionixFoodProviderAdapter implements FoodProvider {
     public Food getFood(final String id) {
         final NutritionixResult<NutritionixFood> result = nutritionixClient.getFood(id);
         if (result.isFailure()) {
+            log.error("Failed to retrieve food data from Nutritionix, foodId={}, result={}", id, result);
             throw new NutritionixException("Failed to get Nutritionix food by id: " + id, result.exception());
         }
 

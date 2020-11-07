@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserBiometrics;
@@ -9,6 +10,7 @@ import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserBiometricsRepository;
 import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
 
+@Slf4j
 @Service
 public class ProfileService {
 
@@ -31,14 +33,12 @@ public class ProfileService {
 
     public UserBiometricsEntity getAuthenticatedUserBiometricsEntity() {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        return userBiometricsRepository.findUserBiometricsByUserEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+        return getUserBiometrics(userEmail);
     }
 
     public void updateUserBiometrics(final UserBiometrics newUserBiometrics) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserBiometricsEntity userBiometrics = userBiometricsRepository.findUserBiometricsByUserEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+        final UserBiometricsEntity userBiometrics = getUserBiometrics(userEmail);
         userBiometrics.setDateOfBirth(newUserBiometrics.getDateOfBirth());
         userBiometrics.setSex(newUserBiometrics.getSex());
         userBiometrics.setHeight(newUserBiometrics.getHeight());
@@ -55,6 +55,11 @@ public class ProfileService {
                                         userBiometricsEntity.getSex(),
                                         userBiometricsEntity.getHeight(),
                                         userBiometricsEntity.getWeight());
+    }
+
+    private UserBiometricsEntity getUserBiometrics(final String userEmail) {
+        return userBiometricsRepository.findUserBiometricsByUserEmail(userEmail)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     private static UserBiometrics toUserBiometrics(final UserBiometricsEntity userBiometricsEntity) {

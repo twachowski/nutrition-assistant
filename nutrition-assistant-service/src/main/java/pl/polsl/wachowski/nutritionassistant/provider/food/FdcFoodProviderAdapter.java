@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.provider.food;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.fdc.client.FdcClient;
@@ -22,6 +23,7 @@ import pl.polsl.wachowski.nutritionassistant.util.LipidHelper;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class FdcFoodProviderAdapter implements FoodProvider {
 
@@ -45,6 +47,7 @@ public class FdcFoodProviderAdapter implements FoodProvider {
     public Set<FoodBasicData> searchFoods(final String query) {
         final FdcResult<FdcFoodSearchResponse> result = fdcClient.searchFoods(query);
         if (result.isFailure()) {
+            log.error("Failed to search foods in USDA, query={}, result={}", query, result);
             throw new FdcException("Failed to search foods in USDA", result.exception());
         }
 
@@ -59,6 +62,7 @@ public class FdcFoodProviderAdapter implements FoodProvider {
     public Food getFood(final String id) {
         final FdcResult<FdcFood> result = fdcClient.getFood(Long.parseLong(id));
         if (result.isFailure()) {
+            log.error("Failed to retrieve food data from USDA, foodId={}, result={}", id, result);
             throw new FdcException("Failed to get USDA food by id: " + id, result.exception());
         }
 
