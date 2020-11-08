@@ -1,20 +1,20 @@
 package pl.polsl.wachowski.nutritionassistant.db.entry.views;
 
 import org.springframework.beans.factory.annotation.Value;
-import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntry;
+import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.db.entry.ExerciseEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.db.entry.FoodEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.db.entry.NoteEntryEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 
 import java.util.List;
 
 public interface UserDiaryEntryView {
 
     @Value("#{target.user}")
-    User getUser();
+    UserEntity getUser();
 
-    DiaryEntry getDiaryEntry();
+    DiaryEntryEntity getDiaryEntry();
 
     List<FoodEntryEntity> getFoodEntries();
 

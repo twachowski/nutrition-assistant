@@ -9,7 +9,7 @@ import pl.polsl.wachowski.nutritionassistant.api.user.auth.JwtTokenResponse;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserLoginRequest;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationConfirmationRequest;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationRequest;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.event.RegistrationCompleteEvent;
 import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
@@ -45,7 +45,7 @@ public class UserController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<Void> register(final HttpServletRequest httpRequest,
                                   @RequestBody @Valid final UserRegistrationRequest request) throws UserExistsException {
-        final User user = userService.addUser(request.getEmail(), request.getPassword());
+        final UserEntity user = userService.addUser(request.getEmail(), request.getPassword());
         eventPublisher.publishEvent(new RegistrationCompleteEvent(user, httpRequest.getHeader("origin")));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();

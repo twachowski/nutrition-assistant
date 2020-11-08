@@ -2,14 +2,15 @@ package pl.polsl.wachowski.nutritionassistant.db.user.targets;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @Entity
-public class GeneralTargets {
+@Table(name = "GENERAL_TARGETS")
+public class GeneralTargetsEntity {
 
     @Id
     private Long id;
@@ -37,9 +38,9 @@ public class GeneralTargets {
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     @MapsId
-    private User user;
+    private UserEntity user;
 
-    public GeneralTargets(final User user) {
+    public GeneralTargetsEntity(final UserEntity user) {
         this.user = user;
     }
 

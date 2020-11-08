@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "NOTE_ENTRY")
 public class NoteEntryEntity implements Sortable {
 
     @Id
@@ -24,9 +25,9 @@ public class NoteEntryEntity implements Sortable {
     @JoinColumn(
             nullable = false,
             updatable = false)
-    private DiaryEntry diaryEntry;
+    private DiaryEntryEntity diaryEntry;
 
-    public NoteEntryEntity(final String content, final Short position, final DiaryEntry diaryEntry) {
+    public NoteEntryEntity(final String content, final Short position, final DiaryEntryEntity diaryEntry) {
         this.content = content;
         this.position = position;
         this.diaryEntry = diaryEntry;

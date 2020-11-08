@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "USER_BIOMETRICS")
 public class UserBiometricsEntity {
 
     @Id
@@ -45,7 +46,7 @@ public class UserBiometricsEntity {
               optional = false)
     @MapsId
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private UserEntity user;
 
     public UserBiometricsEntity(final LocalDate dateOfBirth,
                                 final Sex sex,
@@ -53,7 +54,7 @@ public class UserBiometricsEntity {
                                 final BigDecimal weight,
                                 final ActivityLevel activityLevel,
                                 final Short calorieGoal,
-                                final User user) {
+                                final UserEntity user) {
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.height = height;
@@ -63,7 +64,7 @@ public class UserBiometricsEntity {
         this.user = user;
     }
 
-    public static UserBiometricsEntity getDefault(final User user) {
+    public static UserBiometricsEntity getDefault(final UserEntity user) {
         return new UserBiometricsEntity(
                 LocalDate.of(2000, 1, 1),
                 Sex.MALE,

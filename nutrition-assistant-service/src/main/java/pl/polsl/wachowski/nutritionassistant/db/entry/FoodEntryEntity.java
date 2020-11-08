@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "FOOD_ENTRY")
 public class FoodEntryEntity implements Sortable {
 
     @Id
@@ -44,14 +45,14 @@ public class FoodEntryEntity implements Sortable {
     @JoinColumn(
             nullable = false,
             updatable = false)
-    private DiaryEntry diaryEntry;
+    private DiaryEntryEntity diaryEntry;
 
     public FoodEntryEntity(final String externalId,
                            final NutritionDataProvider provider,
                            final FoodMassUnit unit,
                            final BigDecimal amount,
                            final Short position,
-                           final DiaryEntry diaryEntry) {
+                           final DiaryEntryEntity diaryEntry) {
         this.externalId = externalId;
         this.provider = provider;
         this.unit = unit;

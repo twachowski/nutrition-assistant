@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.db.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntry;
+import pl.polsl.wachowski.nutritionassistant.db.entry.DiaryEntryEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +10,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class User {
+@Table(name = "USER")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,20 +42,20 @@ public class User {
             fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
-    private UserCredentials userCredentials;
+    private UserCredentialsEntity userCredentials;
 
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<DiaryEntry> diaryEntries;
+    private List<DiaryEntryEntity> diaryEntries;
 
     public enum UserStatus {
         INACTIVE,
         ACTIVE
     }
 
-    public User(final String email) {
+    public UserEntity(final String email) {
         this.email = email;
         this.status = UserStatus.INACTIVE;
     }

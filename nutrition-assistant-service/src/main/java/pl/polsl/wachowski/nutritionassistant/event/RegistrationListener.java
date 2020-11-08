@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.service.UserService;
 
 import java.util.UUID;
@@ -31,14 +31,14 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
 
     @Override
     public void onApplicationEvent(final RegistrationCompleteEvent registrationCompleteEvent) {
-        final User user = registrationCompleteEvent.getUser();
+        final UserEntity user = registrationCompleteEvent.getUser();
         log.info("New user {} has registered - generating verification token...", user.getEmail());
         final String token = createVerificationToken(user);
         log.info("Sending confirmation email to {}", user.getEmail());
         sendEmail(user.getEmail(), registrationCompleteEvent.getUrl(), token);
     }
 
-    private String createVerificationToken(final User user) {
+    private String createVerificationToken(final UserEntity user) {
         final String token = UUID.randomUUID().toString();
         userService.createVerificationToken(token, user);
         return token;

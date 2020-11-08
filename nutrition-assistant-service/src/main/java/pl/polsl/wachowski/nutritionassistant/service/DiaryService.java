@@ -80,7 +80,7 @@ public class DiaryService {
 
     public void addFoodEntry(final LocalDate diaryDate, final FoodEntry foodEntry) {
         final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntry diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
+        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
         final short entryPosition = (short) diaryEntryView.getEntriesCount();
         final FoodEntryEntity foodEntryEntity = new FoodEntryEntity(foodEntry.getId(),
                                                                     foodEntry.getNutritionDataProvider(),
@@ -94,7 +94,7 @@ public class DiaryService {
 
     public void addExerciseEntry(final LocalDate diaryDate, final ExerciseEntry exerciseEntry) {
         final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntry diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
+        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
         final short entryPosition = (short) diaryEntryView.getEntriesCount();
         final ExerciseEntryEntity exerciseEntryEntity = new ExerciseEntryEntity(exerciseEntry.getName(),
                                                                                 exerciseEntry.getTimeUnit(),
@@ -107,7 +107,7 @@ public class DiaryService {
 
     public void addNoteEntry(final LocalDate diaryDate, final NoteEntry noteEntry) {
         final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntry diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
+        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
         final short entryPosition = (short) diaryEntryView.getEntriesCount();
         final NoteEntryEntity noteEntryEntity = new NoteEntryEntity(noteEntry.getContent(),
                                                                     entryPosition,
@@ -232,10 +232,10 @@ public class DiaryService {
         return diaryEntryView;
     }
 
-    private static DiaryEntry getOptionalDiaryEntry(final UserDiaryEntryView userDiaryEntryView,
-                                                    final LocalDate diaryDate) {
+    private static DiaryEntryEntity getOptionalDiaryEntry(final UserDiaryEntryView userDiaryEntryView,
+                                                          final LocalDate diaryDate) {
         return Optional.ofNullable(userDiaryEntryView.getDiaryEntry())
-                .orElseGet(() -> new DiaryEntry(diaryDate, userDiaryEntryView.getUser()));
+                .orElseGet(() -> new DiaryEntryEntity(diaryDate, userDiaryEntryView.getUser()));
     }
 
     private FoodEntryDetails toFoodEntryDetails(final FoodEntryEntity foodEntry) {

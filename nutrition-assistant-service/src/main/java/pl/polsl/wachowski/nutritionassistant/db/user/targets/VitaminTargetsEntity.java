@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.db.user.targets;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @Entity
-public class VitaminTargets {
+@Table(name = "VITAMIN_TARGETS")
+public class VitaminTargetsEntity {
 
     @Id
     private Long id;
@@ -62,9 +63,9 @@ public class VitaminTargets {
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     @MapsId
-    private User user;
+    private UserEntity user;
 
-    public VitaminTargets(final User user) {
+    public VitaminTargetsEntity(final UserEntity user) {
         this.user = user;
     }
 

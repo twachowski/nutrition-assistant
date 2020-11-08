@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentials;
-import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentialsEntity;
+import pl.polsl.wachowski.nutritionassistant.db.user.VerificationTokenEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
@@ -34,14 +34,14 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User addUser(final String email, final String password) throws UserExistsException {
+    public UserEntity addUser(final String email, final String password) throws UserExistsException {
         if (userExists(email)) {
             throw new UserExistsException("User with given email already exists");
         }
-        final User user = new User(email);
+        final UserEntity user = new UserEntity(email);
 
         final String encodedPassword = passwordEncoder.encode(password);
-        final UserCredentials userCredentials = new UserCredentials(encodedPassword, user);
+        final UserCredentialsEntity userCredentials = new UserCredentialsEntity(encodedPassword, user);
         user.setUserCredentials(userCredentials);
 
         final UserBiometricsEntity userBiometrics = UserBiometricsEntity.getDefault(user);
@@ -54,8 +54,8 @@ public class UserService {
     public void activateUser(final String token) throws VerificationTokenNotFoundException,
                                                         VerificationTokenExpiredException,
                                                         UserAlreadyActiveException {
-        final VerificationToken verificationToken = findVerificationToken(token);
-        final User user = verificationToken.getUser();
+        final VerificationTokenEntity verificationToken = findVerificationToken(token);
+        final UserEntity user = verificationToken.getUser();
         if (user.isActive()) {
             throw new UserAlreadyActiveException();
         }
@@ -64,19 +64,19 @@ public class UserService {
         tokenRepository.deleteAllByUser(user);  //TODO do it asynchronously with event publisher
     }
 
-    public void createVerificationToken(final String token, final User user) {
-        final VerificationToken verificationToken = new VerificationToken(token, user);
+    public void createVerificationToken(final String token, final UserEntity user) {
+        final VerificationTokenEntity verificationToken = new VerificationTokenEntity(token, user);
         tokenRepository.save(verificationToken);
     }
 
-    public User findUser(final String userEmail) {
+    public UserEntity findUser(final String userEmail) {
         return Optional.of(userRepository.findUserByEmail(userEmail))
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    private VerificationToken findVerificationToken(final String token) throws VerificationTokenNotFoundException,
-                                                                               VerificationTokenExpiredException {
-        final VerificationToken verificationToken = tokenRepository.findVerificationTokenByValue(token);
+    private VerificationTokenEntity findVerificationToken(final String token) throws VerificationTokenNotFoundException,
+                                                                                     VerificationTokenExpiredException {
+        final VerificationTokenEntity verificationToken = tokenRepository.findVerificationTokenByValue(token);
 
         if (verificationToken == null) {
             throw new VerificationTokenNotFoundException();

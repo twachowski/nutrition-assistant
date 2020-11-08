@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "EXERCISE_ENTRY")
 public class ExerciseEntryEntity implements Sortable {
 
     @Id
@@ -38,13 +39,13 @@ public class ExerciseEntryEntity implements Sortable {
     @JoinColumn(
             nullable = false,
             updatable = false)
-    private DiaryEntry diaryEntry;
+    private DiaryEntryEntity diaryEntry;
 
     public ExerciseEntryEntity(final String name,
                                final TimeUnit timeUnit,
                                final BigDecimal amount,
                                final Short position,
-                               final DiaryEntry diaryEntry) {
+                               final DiaryEntryEntity diaryEntry) {
         this.name = name;
         this.timeUnit = timeUnit;
         this.amount = amount;

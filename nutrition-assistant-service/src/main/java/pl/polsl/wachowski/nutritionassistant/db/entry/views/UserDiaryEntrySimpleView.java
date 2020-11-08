@@ -11,7 +11,7 @@ public interface UserDiaryEntrySimpleView {
     @Value("#{target.user.id}")
     String getUserId();
 
-    DiaryEntry get();
+    DiaryEntryEntity get();
 
     List<FoodEntryEntity> getFoodEntries();
 

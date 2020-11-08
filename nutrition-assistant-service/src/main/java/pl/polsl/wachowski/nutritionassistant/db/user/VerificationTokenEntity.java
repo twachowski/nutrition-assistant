@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class VerificationToken {
+@Table(name = "VERIFICATION_TOKEN")
+public class VerificationTokenEntity {
 
     @Id
     @GeneratedValue
@@ -29,13 +30,13 @@ public class VerificationToken {
     @JoinColumn(
             nullable = false,
             updatable = false)
-    private User user;
+    private UserEntity user;
 
-    public VerificationToken() {
+    public VerificationTokenEntity() {
         this.expiryDate = LocalDateTime.now().plusDays(1);
     }
 
-    public VerificationToken(final String value, final User user) {
+    public VerificationTokenEntity(final String value, final UserEntity user) {
         this();
         this.value = value;
         this.user = user;

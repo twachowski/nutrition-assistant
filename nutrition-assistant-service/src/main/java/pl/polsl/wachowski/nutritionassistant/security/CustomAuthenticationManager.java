@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
@@ -32,7 +32,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         final String userEmail = authentication.getPrincipal().toString();
         final String password = authentication.getCredentials().toString();
 
-        final User user = userRepository.findUserByEmail(userEmail);
+        final UserEntity user = userRepository.findUserByEmail(userEmail);
         if (user == null || credentialsDiffer(password, user.getUserCredentials().getPassword())) {
             log.info("Failed to authenticate user {} - {}",
                      userEmail,

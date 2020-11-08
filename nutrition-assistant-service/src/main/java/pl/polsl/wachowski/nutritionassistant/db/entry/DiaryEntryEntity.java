@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.db.entry;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class DiaryEntry {
+@Table(name = "DIARY_ENTRY")
+public class DiaryEntryEntity {
 
     @Id
     @GeneratedValue
@@ -43,9 +44,9 @@ public class DiaryEntry {
     @JoinColumn(
             nullable = false,
             updatable = false)
-    private User user;
+    private UserEntity user;
 
-    public DiaryEntry(final LocalDate date, final User user) {
+    public DiaryEntryEntity(final LocalDate date, final UserEntity user) {
         this.date = date;
         this.user = user;
         this.foodEntries = new ArrayList<>(1);

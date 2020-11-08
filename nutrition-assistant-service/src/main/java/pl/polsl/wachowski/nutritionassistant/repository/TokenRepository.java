@@ -2,14 +2,14 @@ package pl.polsl.wachowski.nutritionassistant.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
-import pl.polsl.wachowski.nutritionassistant.db.user.VerificationToken;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.db.user.VerificationTokenEntity;
 
 @Repository
-public interface TokenRepository extends JpaRepository<VerificationToken, Long> {
+public interface TokenRepository extends JpaRepository<VerificationTokenEntity, Long> {
 
-    VerificationToken findVerificationTokenByValue(final String token);
+    VerificationTokenEntity findVerificationTokenByValue(final String token);
 
-    void deleteAllByUser(final User user);
+    void deleteAllByUser(final UserEntity user);
 
 }

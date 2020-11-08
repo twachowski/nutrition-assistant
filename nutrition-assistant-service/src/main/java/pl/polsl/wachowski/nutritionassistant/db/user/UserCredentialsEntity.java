@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-public class UserCredentials {
+@Table(name = "USER_CREDENTIALS")
+public class UserCredentialsEntity {
 
     @Id
     private Long id;
@@ -20,9 +21,9 @@ public class UserCredentials {
     @OneToOne
     @MapsId
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private UserEntity user;
 
-    public UserCredentials(final String password, final User user) {
+    public UserCredentialsEntity(final String password, final UserEntity user) {
         this.password = password;
         this.user = user;
     }

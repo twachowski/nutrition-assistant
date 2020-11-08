@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
 @Primary
@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String userEmail) throws UsernameNotFoundException {
-        final User user = userRepository.findUserByEmailFetchCredentials(userEmail);
+        final UserEntity user = userRepository.findUserByEmailFetchCredentials(userEmail);
         if (user == null) {
             throw new UsernameNotFoundException("User email not found: " + userEmail);
         }

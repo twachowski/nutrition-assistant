@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.polsl.wachowski.nutritionassistant.db.user.User;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class UserPrincipal implements UserDetails {
     private final String password;
     private final boolean isEnabled;
 
-    UserPrincipal(final User user) {
+    UserPrincipal(final UserEntity user) {
         this.userName = user.getEmail();
         this.password = user.getUserCredentials().getPassword();
         this.isEnabled = user.isActive();
