@@ -1,5 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,13 +9,15 @@ import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentialsEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationTokenEntity;
-import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
+import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -33,6 +36,7 @@ public class UserService {
 
     public UserEntity addUser(final String email, final String password) throws UserExistsException {
         if (userExists(email)) {
+            log.warn("User {} already exists", email);
             throw new UserExistsException("User with given email already exists");
         }
         final UserEntity user = new UserEntity(email);
@@ -48,13 +52,13 @@ public class UserService {
     }
 
     @Transactional
-    public void activateUser(final String token) throws VerificationTokenNotFoundException,
-                                                        VerificationTokenExpiredException,
+    public void activateUser(final String token) throws VerificationTokenException,
                                                         UserAlreadyActiveException {
         final VerificationTokenEntity verificationToken = findVerificationToken(token);
         final UserEntity user = verificationToken.getUser();
         if (user.isActive()) {
-            throw new UserAlreadyActiveException();
+            log.error("Activation failed - user {} is already active", user.getEmail());
+            throw new UserAlreadyActiveException(user.getEmail());
         }
 
         user.activate();
@@ -66,13 +70,14 @@ public class UserService {
         tokenRepository.save(verificationToken);
     }
 
-    private VerificationTokenEntity findVerificationToken(final String token) throws VerificationTokenNotFoundException,
-                                                                                     VerificationTokenExpiredException {
+    private VerificationTokenEntity findVerificationToken(final String token) throws VerificationTokenException {
         final VerificationTokenEntity verificationToken = tokenRepository.findVerificationTokenByValue(token);
 
         if (verificationToken == null) {
+            log.error("Token {} has not been found", token);
             throw new VerificationTokenNotFoundException();
         } else if (verificationToken.isExpired()) {
+            log.error("Token {} has expired", token);
             throw new VerificationTokenExpiredException();
         }
 

@@ -25,7 +25,7 @@ public class NoteService {
         final NoteEntryEntity noteEntry = noteEntries.stream()
                 .filter(entry -> entry.getPosition().equals(entryPosition))
                 .findFirst()
-                .orElseThrow(EntryNotFoundException::new);
+                .orElseThrow(() -> new EntryNotFoundException("There is no note entry at position " + entryPosition));
         noteEntry.setContent(editedNoteEntry.getContent());
         noteRepository.save(noteEntry);
     }

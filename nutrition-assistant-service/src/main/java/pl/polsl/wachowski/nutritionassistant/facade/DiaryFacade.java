@@ -7,7 +7,7 @@ import pl.polsl.wachowski.nutritionassistant.api.diary.entry.EntryEditRequest;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.EntryMoveRequest;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.EntryType;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.NewEntryRequest;
-import pl.polsl.wachowski.nutritionassistant.exception.ValidationException;
+import pl.polsl.wachowski.nutritionassistant.exception.validation.ValidationException;
 import pl.polsl.wachowski.nutritionassistant.service.DiaryService;
 
 import javax.validation.ConstraintViolation;

@@ -8,7 +8,6 @@ import pl.polsl.wachowski.nutritionassistant.api.food.FoodBasicData;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutritionDataProvider;
 import pl.polsl.wachowski.nutritionassistant.db.entry.FoodEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.exception.provider.ProviderNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.provider.food.FoodProvider;
 import pl.polsl.wachowski.nutritionassistant.repository.FoodRepository;
 import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
@@ -42,7 +41,7 @@ public class FoodService {
         final FoodProvider foodProvider = foodProviders.stream()
                 .filter(p -> p.getType().equals(provider))
                 .findFirst()
-                .orElseThrow(() -> new ProviderNotFoundException(provider));
+                .orElseThrow(() -> new IllegalStateException("Provider '" + provider + "' has not been found"));
 
         final Food food = foodProvider.getFood(id);
         NutrientHelper.addMandatoryNutrientsIfMissing(food.getNutrients());
@@ -56,7 +55,7 @@ public class FoodService {
         final FoodEntryEntity foodEntry = foodEntries.stream()
                 .filter(entry -> entry.getPosition().equals(entryPosition))
                 .findFirst()
-                .orElseThrow(EntryNotFoundException::new);
+                .orElseThrow(() -> new EntryNotFoundException("There is no food entry at position " + entryPosition));
         foodEntry.setAmount(editedFoodEntry.getAmount());
         foodEntry.setUnit(editedFoodEntry.getMassUnit());
         foodRepository.save(foodEntry);

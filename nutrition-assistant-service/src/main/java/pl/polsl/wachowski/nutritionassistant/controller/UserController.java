@@ -11,10 +11,9 @@ import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationConfi
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationRequest;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.event.RegistrationCompleteEvent;
-import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
-import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
-import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
+import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.service.AuthenticationService;
 import pl.polsl.wachowski.nutritionassistant.service.UserService;
 
@@ -52,8 +51,7 @@ public class UserController {
     }
 
     @PatchMapping(consumes = APPLICATION_JSON_VALUE)
-    ResponseEntity<Void> confirmRegistration(@RequestBody @Valid final UserRegistrationConfirmationRequest request) throws VerificationTokenNotFoundException,
-                                                                                                                           VerificationTokenExpiredException,
+    ResponseEntity<Void> confirmRegistration(@RequestBody @Valid final UserRegistrationConfirmationRequest request) throws VerificationTokenException,
                                                                                                                            UserAlreadyActiveException {
         userService.activateUser(request.getToken());
         return ResponseEntity.noContent().build();
@@ -62,6 +60,7 @@ public class UserController {
     @PostMapping(path = LOGIN_API_SUFFIX,
                  consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<JwtTokenResponse> login(@RequestBody @Valid final UserLoginRequest request) {
+        //TODO send credentials in Authorization header (basic auth)
         final String token = authenticationService.authenticate(request.getEmail(), request.getPassword());
         final JwtTokenResponse response = new JwtTokenResponse(token);
         return ResponseEntity.ok(response);

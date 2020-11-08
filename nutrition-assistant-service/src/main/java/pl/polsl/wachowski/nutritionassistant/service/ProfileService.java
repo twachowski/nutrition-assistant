@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserSimpleBiometrics;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
-import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserBiometricsRepository;
 import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
 
@@ -28,7 +27,7 @@ public class ProfileService {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
         return userBiometricsRepository.findUserBiometricsByUserEmail(userEmail)
                 .map(ProfileService::toUserBiometrics)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new IllegalStateException("User " + userEmail + " has not been found"));
     }
 
     public UserBiometricsEntity getAuthenticatedUserBiometricsEntity() {
@@ -59,7 +58,7 @@ public class ProfileService {
 
     private UserBiometricsEntity getUserBiometrics(final String userEmail) {
         return userBiometricsRepository.findUserBiometricsByUserEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new IllegalStateException("User " + userEmail + " has not been found"));
     }
 
     private static UserBiometrics toUserBiometrics(final UserBiometricsEntity userBiometricsEntity) {

@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.exception;
+package pl.polsl.wachowski.nutritionassistant.exception.user;
 
 import org.springframework.security.core.AuthenticationException;
 

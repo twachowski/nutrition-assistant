@@ -9,8 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
-import pl.polsl.wachowski.nutritionassistant.exception.InvalidCredentialsException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserInactiveException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.InvalidCredentialsException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserInactiveException;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
 
 @Slf4j

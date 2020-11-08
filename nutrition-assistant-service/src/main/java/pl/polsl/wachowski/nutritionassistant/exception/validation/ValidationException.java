@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.exception;
+package pl.polsl.wachowski.nutritionassistant.exception.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

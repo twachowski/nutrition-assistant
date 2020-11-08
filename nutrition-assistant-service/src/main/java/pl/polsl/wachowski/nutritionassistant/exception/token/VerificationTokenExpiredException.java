@@ -1,6 +1,6 @@
 package pl.polsl.wachowski.nutritionassistant.exception.token;
 
-public class VerificationTokenExpiredException extends Exception {
+public class VerificationTokenExpiredException extends VerificationTokenException {
 
     public VerificationTokenExpiredException() {
         super("This token has expired");

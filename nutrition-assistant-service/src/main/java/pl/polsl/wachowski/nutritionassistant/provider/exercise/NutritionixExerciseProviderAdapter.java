@@ -33,7 +33,6 @@ public class NutritionixExerciseProviderAdapter implements ExerciseProvider {
         final NutritionixExerciseSearchRequest searchRequest = createExerciseSearchRequest(query, userBiometrics);
         final NutritionixResult<List<NutritionixExercise>> result = nutritionixClient.searchExercises(searchRequest);
         if (result.isFailure()) {
-            //TODO add exception handling
             log.error("Failed to search exercises in Nutritionix, query={}, biometrics={}, result={}",
                       query,
                       userBiometrics,

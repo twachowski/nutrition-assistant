@@ -48,7 +48,7 @@ public class ExerciseService {
         final ExerciseEntryEntity exerciseEntry = exerciseEntries.stream()
                 .filter(entry -> entry.getPosition().equals(entryPosition))
                 .findFirst()
-                .orElseThrow(EntryNotFoundException::new);
+                .orElseThrow(() -> new EntryNotFoundException("There is no exercise entry at position " + entryPosition));
         exerciseEntry.setAmount(editedExerciseEntry.getDuration());
         exerciseEntry.setTimeUnit(editedExerciseEntry.getTimeUnit());
         exerciseRepository.save(exerciseEntry);
