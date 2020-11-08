@@ -24,6 +24,7 @@ target/
 
 # Log file
 *.log
+*.log.gz
 
 # Package Files #
 *.jar
