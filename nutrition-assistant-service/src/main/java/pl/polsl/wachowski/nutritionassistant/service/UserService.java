@@ -4,19 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentialsEntity;
+import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.db.user.VerificationTokenEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.UserExistsException;
-import pl.polsl.wachowski.nutritionassistant.exception.UserNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -67,11 +64,6 @@ public class UserService {
     public void createVerificationToken(final String token, final UserEntity user) {
         final VerificationTokenEntity verificationToken = new VerificationTokenEntity(token, user);
         tokenRepository.save(verificationToken);
-    }
-
-    public UserEntity findUser(final String userEmail) {
-        return Optional.of(userRepository.findUserByEmail(userEmail))
-                .orElseThrow(UserNotFoundException::new);
     }
 
     private VerificationTokenEntity findVerificationToken(final String token) throws VerificationTokenNotFoundException,
