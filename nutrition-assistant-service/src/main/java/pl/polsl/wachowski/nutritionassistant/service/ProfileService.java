@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserSimpleBiometrics;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
-import pl.polsl.wachowski.nutritionassistant.repository.UserBiometricsRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.UserBiometricsRepository;
 import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
 
 @Slf4j

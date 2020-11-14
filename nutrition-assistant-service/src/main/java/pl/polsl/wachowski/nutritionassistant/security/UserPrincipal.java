@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 
 import java.util.Collection;
 import java.util.Collections;

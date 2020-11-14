@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.service.UserService;
 
 import java.util.UUID;

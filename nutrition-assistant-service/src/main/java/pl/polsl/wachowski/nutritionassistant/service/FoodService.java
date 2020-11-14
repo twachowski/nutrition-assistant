@@ -6,10 +6,10 @@ import pl.polsl.wachowski.nutritionassistant.api.diary.entry.food.EditedFoodEntr
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.FoodBasicData;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutritionDataProvider;
-import pl.polsl.wachowski.nutritionassistant.db.entry.FoodEntryEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.entry.FoodEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.provider.food.FoodProvider;
-import pl.polsl.wachowski.nutritionassistant.repository.FoodRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.FoodRepository;
 import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
 
 import java.util.LinkedHashSet;
@@ -31,6 +31,7 @@ public class FoodService {
     }
 
     public Set<FoodBasicData> searchFoods(final String query) {
+        //TODO make it asynchronous
         return foodProviders.stream()
                 .map(provider -> provider.searchFoods(query))
                 .flatMap(Set::stream)

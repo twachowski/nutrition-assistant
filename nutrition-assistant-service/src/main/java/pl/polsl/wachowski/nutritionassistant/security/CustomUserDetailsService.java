@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
-import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 
 @Primary
 @Service

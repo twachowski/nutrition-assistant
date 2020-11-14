@@ -15,10 +15,10 @@ import pl.polsl.wachowski.nutritionassistant.api.diary.entry.note.NoteEntryDetai
 import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutrientDetails;
-import pl.polsl.wachowski.nutritionassistant.db.entry.*;
-import pl.polsl.wachowski.nutritionassistant.db.entry.views.*;
+import pl.polsl.wachowski.nutritionassistant.domain.db.entry.*;
+import pl.polsl.wachowski.nutritionassistant.domain.db.entry.views.*;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.repository.DiaryRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
 import java.math.BigDecimal;

@@ -9,7 +9,7 @@ import pl.polsl.wachowski.nutritionassistant.api.user.auth.JwtTokenResponse;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserLoginRequest;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationConfirmationRequest;
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationRequest;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.event.RegistrationCompleteEvent;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;

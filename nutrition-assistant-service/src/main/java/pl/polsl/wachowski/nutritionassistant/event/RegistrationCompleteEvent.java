@@ -2,7 +2,7 @@ package pl.polsl.wachowski.nutritionassistant.event;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 
 @Getter
 public class RegistrationCompleteEvent extends ApplicationEvent {

@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.exercise.EditedExerciseEntry;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.ExerciseSearchResponse;
-import pl.polsl.wachowski.nutritionassistant.db.entry.ExerciseEntryEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.entry.ExerciseEntryEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.provider.exercise.ExerciseProvider;
-import pl.polsl.wachowski.nutritionassistant.repository.ExerciseRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.ExerciseRepository;
 
 import java.util.List;
 import java.util.Set;

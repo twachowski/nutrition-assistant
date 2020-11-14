@@ -5,17 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserCredentialsEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserEntity;
-import pl.polsl.wachowski.nutritionassistant.db.user.VerificationTokenEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserCredentialsEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.repository.TokenRepository;
-import pl.polsl.wachowski.nutritionassistant.repository.UserRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.TokenRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 
 @Slf4j
 @Service

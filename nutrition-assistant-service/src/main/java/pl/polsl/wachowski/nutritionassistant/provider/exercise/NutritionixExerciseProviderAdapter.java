@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.user.Sex;
-import pl.polsl.wachowski.nutritionassistant.db.user.UserBiometricsEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.NutritionixException;
 import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
 import pl.polsl.wachowski.nutritionix.client.NutritionixClient;

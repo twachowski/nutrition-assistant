@@ -12,6 +12,7 @@
         <module>nutrition-assistant-api</module>
         <module>nutrition-assistant-service</module>
         <module>nutrition-assistant-scheduling</module>
+        <module>nutrition-assistant-domain</module>
         <module>clients/fdc-client</module>
         <module>clients/nutritionix-client</module>
         <module>clients/common-okhttp-client</module>
@@ -34,6 +35,12 @@
             <dependency>
                 <groupId>pl.polsl.wachowski</groupId>
                 <artifactId>nutrition-assistant-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.polsl.wachowski</groupId>
+                <artifactId>nutrition-assistant-domain</artifactId>
                 <version>${revision}</version>
             </dependency>
 
