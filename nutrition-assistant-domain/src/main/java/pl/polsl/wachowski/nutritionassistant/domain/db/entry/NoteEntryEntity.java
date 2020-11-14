@@ -1,11 +1,15 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.entry;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
+@ToString(exclude = "diaryEntry")
+@EqualsAndHashCode(exclude = "diaryEntry")
 @NoArgsConstructor
 @Entity
 @Table(name = "NOTE_ENTRY")

@@ -1,7 +1,9 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.entry;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @NoArgsConstructor
 @Entity
 @Table(name = "DIARY_ENTRY")

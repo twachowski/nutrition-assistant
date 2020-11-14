@@ -1,11 +1,15 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @NoArgsConstructor
 @Entity
 @Table(name = "USER_CREDENTIALS")

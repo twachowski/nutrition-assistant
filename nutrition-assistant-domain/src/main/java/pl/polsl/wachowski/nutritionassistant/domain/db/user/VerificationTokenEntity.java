@@ -1,11 +1,15 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "VERIFICATION_TOKEN")
 public class VerificationTokenEntity {

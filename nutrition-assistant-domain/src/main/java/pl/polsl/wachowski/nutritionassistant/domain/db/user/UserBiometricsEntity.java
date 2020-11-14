@@ -1,7 +1,9 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.user;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.polsl.wachowski.nutritionassistant.api.user.ActivityLevel;
 import pl.polsl.wachowski.nutritionassistant.api.user.Sex;
 
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @NoArgsConstructor
 @Entity
 @Table(name = "USER_BIOMETRICS")

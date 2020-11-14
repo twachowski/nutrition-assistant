@@ -1,13 +1,17 @@
 package pl.polsl.wachowski.nutritionassistant.domain.db.entry;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.polsl.wachowski.nutritionassistant.api.units.TimeUnit;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@ToString(exclude = "diaryEntry")
+@EqualsAndHashCode(exclude = "diaryEntry")
 @NoArgsConstructor
 @Entity
 @Table(name = "EXERCISE_ENTRY")
