@@ -48,9 +48,9 @@ jwt:
 usda:
   fdc:
     client:
-      connect-timeout: 10000  #millis
-      write-timeout: 10000  #millis
-      read-timeout: 10000  #millis
+      connect-timeout: 10000  # millis
+      write-timeout: 10000  # millis
+      read-timeout: 10000  # millis
       api-key: ENC(C8OptM4elLnDbhUWd4cpYZZNFhfDixrhhfjkRQ0BQPntOPK+rZP8KJorOgSuyVtL6rbUlzGEoak=)
 
 # =========================
@@ -60,9 +60,9 @@ nutritionix:
   client:
     app-id: ENC(t6f9F3//Tg3spZymAWS8idDi0Gb2yev/)
     app-key: ENC(VIR8+VIIvqD7gG8VQXxvckdJXEFvqx0WwSfEAvPN02q4RqQ0u5QthR4hAhKWN78g)
-    connect-timeout: 10000  #millis
-    write-timeout: 10000  #millis
-    read-timeout: 10000  #millis
+    connect-timeout: 10000  # millis
+    write-timeout: 10000  # millis
+    read-timeout: 10000  # millis
 
 # =================
 # Scheduling config

@@ -2,9 +2,10 @@ package pl.polsl.wachowski.nutritionassistant.event;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.service.UserService;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
-public class RegistrationListener implements ApplicationListener<RegistrationCompleteEvent> {
+public class RegistrationListener {
 
     private static final String TITLE = "Nutrition Assistant account confirmation";
     private static final String CONTENT = "Thank you for your registration at Nutrition Assistant! " +
@@ -29,8 +30,9 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         this.mailSender = mailSender;
     }
 
-    @Override
-    public void onApplicationEvent(final RegistrationCompleteEvent registrationCompleteEvent) {
+    @Async
+    @EventListener
+    public void handleRegistrationCompleteEvent(final RegistrationCompleteEvent registrationCompleteEvent) {
         final UserEntity user = registrationCompleteEvent.getUser();
         log.info("New user {} has registered - generating verification token...", user.getEmail());
         final String token = createVerificationToken(user);
