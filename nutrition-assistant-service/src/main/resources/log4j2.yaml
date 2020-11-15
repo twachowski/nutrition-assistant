@@ -43,7 +43,7 @@ Loggers:
   Logger:
     - name: org.hibernate.SQL
       level: DEBUG
-    - name: pl.wachowski
+    - name: pl.polsl.wachowski
       level: DEBUG
 
   Root:
