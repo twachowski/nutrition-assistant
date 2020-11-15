@@ -62,7 +62,6 @@ public class UserService {
         }
 
         user.activate();
-        tokenRepository.deleteAllByUser(user);  //TODO do it asynchronously with event publisher
     }
 
     public void createVerificationToken(final String token, final UserEntity user) {

@@ -1,4 +1,6 @@
-# db config
+# =========
+# DB config
+# =========
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/nutrition_assistant?serverTimezone=CET
@@ -9,7 +11,9 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
-  # mail config
+  # ===========
+  # Mail config
+  # ===========
   mail:
     host: smtp.gmail.com
     port: 587
@@ -22,19 +26,25 @@ spring:
           starttls:
             enable: true
 
-# encryptor config
+# ================
+# Encryptor config
+# ================
 jasypt:
   encryptor:
     pool-size: 4
     password: ${JASYPT_ENCRYPTOR_PASSWORD}
     bean: jasyptEncryptor
 
-# jwt config
+# ==========
+# JWT config
+# ==========
 jwt:
   secret: ENC(SJEowNcWOOF5NVWEFj8tdQPomJeVU1i1GXpJg25SoLC79/dbLPRQlAr+dF4SkJAM)
   expiration-time: 3600
 
+# ======================
 # USDA/FDC client config
+# ======================
 usda:
   fdc:
     client:
@@ -43,7 +53,9 @@ usda:
       read-timeout: 10000  #millis
       api-key: ENC(C8OptM4elLnDbhUWd4cpYZZNFhfDixrhhfjkRQ0BQPntOPK+rZP8KJorOgSuyVtL6rbUlzGEoak=)
 
+# =========================
 # Nutritionix client config
+# =========================
 nutritionix:
   client:
     app-id: ENC(t6f9F3//Tg3spZymAWS8idDi0Gb2yev/)
@@ -51,3 +63,11 @@ nutritionix:
     connect-timeout: 10000  #millis
     write-timeout: 10000  #millis
     read-timeout: 10000  #millis
+
+# =================
+# Scheduling config
+# =================
+scheduling:
+  token-cleanup:
+    enabled: true
+    cron: 0 0/15 * * * *
