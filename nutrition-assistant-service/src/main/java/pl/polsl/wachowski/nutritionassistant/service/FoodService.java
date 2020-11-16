@@ -7,14 +7,16 @@ import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.FoodBasicData;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutritionDataProvider;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.FoodEntryEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.FoodRepository;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.provider.food.FoodProvider;
-import pl.polsl.wachowski.nutritionassistant.domain.repository.FoodRepository;
+import pl.polsl.wachowski.nutritionassistant.util.ConcurrentUtils;
 import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +33,13 @@ public class FoodService {
     }
 
     public Set<FoodBasicData> searchFoods(final String query) {
-        //TODO make it asynchronous
-        return foodProviders.stream()
-                .map(provider -> provider.searchFoods(query))
+        final List<CompletableFuture<Set<FoodBasicData>>> searchTasks = foodProviders.stream()
+                .map(provider -> CompletableFuture.supplyAsync(() -> provider.searchFoods(query)))
+                .collect(Collectors.toList());
+        CompletableFuture.allOf(searchTasks.toArray(new CompletableFuture[0]))
+                .join();
+        return searchTasks.stream()
+                .map(ConcurrentUtils::extractFuture)
                 .flatMap(Set::stream)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }

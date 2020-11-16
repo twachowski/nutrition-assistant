@@ -19,6 +19,7 @@ import pl.polsl.wachowski.nutritionassistant.domain.db.entry.*;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.views.*;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
+import pl.polsl.wachowski.nutritionassistant.facade.FoodFacade;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
 import java.math.BigDecimal;
@@ -32,19 +33,19 @@ import java.util.stream.Stream;
 public class DiaryService {
 
     private final AuthenticationService authenticationService;
-    private final FoodService foodService;
+    private final FoodFacade foodFacade;
     private final ExerciseService exerciseService;
     private final NoteService noteService;
     private final DiaryRepository diaryRepository;
 
     @Autowired
     public DiaryService(final AuthenticationService authenticationService,
-                        final FoodService foodService,
+                        final FoodFacade foodFacade,
                         final ExerciseService exerciseService,
                         final NoteService noteService,
                         final DiaryRepository diaryRepository) {
         this.authenticationService = authenticationService;
-        this.foodService = foodService;
+        this.foodFacade = foodFacade;
         this.exerciseService = exerciseService;
         this.noteService = noteService;
         this.diaryRepository = diaryRepository;
@@ -129,9 +130,9 @@ public class DiaryService {
             log.error("Cannot edit food entry at {} position - diary is empty for {}", entryPosition, diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        foodService.editFoodEntry(foodEntriesView.getFoodEntries(),
-                                  entryPosition,
-                                  editedFoodEntry);
+        foodFacade.editFoodEntry(foodEntriesView.getFoodEntries(),
+                                 entryPosition,
+                                 editedFoodEntry);
     }
 
     public void editExerciseEntry(final LocalDate diaryDate,
@@ -238,7 +239,7 @@ public class DiaryService {
     }
 
     private FoodEntryDetails toFoodEntryDetails(final FoodEntryEntity foodEntry) {
-        final Food food = foodService.getFood(foodEntry.getExternalId(), foodEntry.getProvider());
+        final Food food = foodFacade.getFood(foodEntry.getExternalId(), foodEntry.getProvider());
         final float factor = AmountConverter.getFoodAmountFactor(foodEntry.getAmount().floatValue(), foodEntry.getUnit());
         final Set<NutrientDetails> nutrients = food.getNutrients()
                 .stream()
