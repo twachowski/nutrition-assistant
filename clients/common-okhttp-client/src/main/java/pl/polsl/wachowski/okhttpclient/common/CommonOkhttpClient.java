@@ -41,9 +41,12 @@ public abstract class CommonOkhttpClient {
         }
     }
 
-    private static Optional<String> getResponseBody(final Response response) {
-        return Optional.ofNullable(response.body())
-                .map(Object::toString);
+    private static Optional<String> getResponseBody(final Response response) throws IOException {
+        final ResponseBody responseBody = response.body();
+        if (responseBody == null) {
+            return Optional.empty();
+        }
+        return Optional.of(responseBody.string());
     }
 
     protected static HttpUrl.Builder createUrlBuilder(final String url) {
