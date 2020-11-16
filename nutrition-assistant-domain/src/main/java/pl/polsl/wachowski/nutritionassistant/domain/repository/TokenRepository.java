@@ -12,7 +12,7 @@ public interface TokenRepository extends JpaRepository<VerificationTokenEntity, 
     VerificationTokenEntity findVerificationTokenByValue(final String token);
 
     @Modifying
-    @Query(value = "DELETE t FROM verification_token t INNER JOIN user u on t.user_id = u.id WHERE u.status = :userStatus",
+    @Query(value = "DELETE t FROM verification_token t INNER JOIN user u ON t.user_id = u.id WHERE u.status = :userStatus",
            nativeQuery = true)
     int deleteVerificationTokensByUserStatus(int userStatus);
 
