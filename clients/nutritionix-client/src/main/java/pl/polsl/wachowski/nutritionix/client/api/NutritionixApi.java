@@ -12,8 +12,8 @@ public final class NutritionixApi {
 
     public static final String QUERY = "query";
 
-    public static final String EXERCISE_SEARCH_API = "/natural/exercise";
-    public static final String FOOD_SEARCH_API = "/search/instant";
+    public static final String EXERCISE_SEARCH_API = API_PREFIX + "/natural/exercise";
+    public static final String FOOD_SEARCH_API = API_PREFIX + "/search/instant";
     public static final String FOOD_API = API_PREFIX + "/natural/nutrients";
 
 }
