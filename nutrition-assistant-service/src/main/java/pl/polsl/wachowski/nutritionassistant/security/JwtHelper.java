@@ -3,7 +3,6 @@ package pl.polsl.wachowski.nutritionassistant.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.wachowski.nutritionassistant.config.JwtConfig;
@@ -36,7 +35,7 @@ public class JwtHelper {
         try {
             verifier.verify(token);
             return true;
-        } catch (final JWTVerificationException ex) {
+        } catch (final Exception ex) {
             return false;
         }
     }
