@@ -12,25 +12,17 @@ Properties:
       value: "[%15.15t]"
     - name: LOGGER_NAME_PATTERN
       value: "%-80.80c"
-    - name: CONSOLE_LOG_PATTERN
-      value: "%d{${DATE_PATTERN}} %clr{${LOG_LEVEL_PATTERN}} %magenta{%pid} --- ${THREAD_PATTERN} %cyan{${LOGGER_NAME_PATTERN}} : %m%n"
-    - name: FILE_LOG_PATTERN
+    - name: LOG_PATTERN
       value: "%d{${DATE_PATTERN}} ${LOG_LEVEL_PATTERN} {%pid} --- ${THREAD_PATTERN} ${LOGGER_NAME_PATTERN} : %m%n"
 
 
 Appenders:
-  Console:
-    name: CONSOLE
-    target: SYSTEM_OUT
-    PatternLayout:
-      pattern: ${CONSOLE_LOG_PATTERN}
-
   RollingFile:
     name: FILE
     fileName: ${LOG_PATH}/${LOG_FILE_NAME}.log
     filePattern: ${LOG_PATH}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz
     PatternLayout:
-      pattern: ${FILE_LOG_PATTERN}
+      pattern: ${LOG_PATTERN}
     Policies:
       SizeBasedTriggeringPolicy:
         size: 5MB
@@ -41,10 +33,8 @@ Appenders:
 
 Loggers:
   Logger:
-    - name: org.hibernate.SQL
-      level: DEBUG
     - name: pl.polsl.wachowski
-      level: DEBUG
+      level: INFO
 
   Root:
     level: INFO
