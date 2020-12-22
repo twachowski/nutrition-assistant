@@ -15,7 +15,7 @@ public class AssignedTokensCleanupTask implements TokenCleanupTask {
 
     @Override
     public void execute() {
-        final int deletedRows = tokenRepository.deleteVerificationTokensByUserStatus(UserEntity.UserStatus.ACTIVE.ordinal());
+        final int deletedRows = tokenRepository.deleteVerificationTokensByUserStatus(UserEntity.UserStatus.ACTIVE);
         if (deletedRows > 0) {
             log.info("Deleted {} verification tokens assigned to active users", deletedRows);
         } else {

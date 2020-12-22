@@ -44,6 +44,14 @@ public class VerificationTokenEntity {
         this.user = user;
     }
 
+    public VerificationTokenEntity(final String value,
+                                   final LocalDateTime expiryDate,
+                                   final UserEntity user) {
+        this.value = value;
+        this.expiryDate = expiryDate;
+        this.user = user;
+    }
+
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(expiryDate);
     }
