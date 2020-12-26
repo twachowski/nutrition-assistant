@@ -7,7 +7,7 @@ import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.user.Sex;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.NutritionixException;
-import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
+import pl.polsl.wachowski.nutritionassistant.util.DateUtils;
 import pl.polsl.wachowski.nutritionix.client.NutritionixClient;
 import pl.polsl.wachowski.nutritionix.client.NutritionixResult;
 import pl.polsl.wachowski.nutritionix.client.api.exercise.search.NutritionixExercise;
@@ -49,7 +49,7 @@ public class NutritionixExerciseProviderAdapter implements ExerciseProvider {
     private static NutritionixExerciseSearchRequest createExerciseSearchRequest(final String query,
                                                                                 final UserBiometricsEntity userBiometrics) {
         final String gender = createGender(userBiometrics.getSex());
-        final int age = DateUtil.getUserAge(userBiometrics.getDateOfBirth());
+        final int age = DateUtils.getUserAge(userBiometrics.getDateOfBirth());
         return new NutritionixExerciseSearchRequest(query,
                                                     gender,
                                                     (short) age,

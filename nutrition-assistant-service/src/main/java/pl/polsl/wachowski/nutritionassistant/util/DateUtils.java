@@ -3,9 +3,9 @@ package pl.polsl.wachowski.nutritionassistant.util;
 import java.time.LocalDate;
 import java.time.Period;
 
-public final class DateUtil {
+public final class DateUtils {
 
-    private DateUtil() {
+    private DateUtils() {
     }
 
     public static int getUserAge(final LocalDate dateOfBirth) {

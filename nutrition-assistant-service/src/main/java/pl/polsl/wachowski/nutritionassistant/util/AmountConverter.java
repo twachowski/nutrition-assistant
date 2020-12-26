@@ -15,14 +15,23 @@ public final class AmountConverter {
     }
 
     public static float getFoodAmountFactor(final float amount, final FoodMassUnit unit) {
-        final float amountGrams = FoodMassUnit.GRAM.equals(unit) ? amount : amount * OUNCE_GRAMS;
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must not be negative: amount=" + amount);
+        }
+        final float amountGrams = unit.equals(FoodMassUnit.GRAM) ? amount : amount * OUNCE_GRAMS;
         return amountGrams / 100.f;
     }
 
     public static BigDecimal getExerciseCalories(final BigDecimal kcalPerMin,
                                                  final BigDecimal duration,
                                                  final TimeUnit unit) {
-        final BigDecimal factor = TimeUnit.MINUTE.equals(unit) ? BigDecimal.ONE : SIXTY;
+        if (kcalPerMin.signum() != 1) {
+            throw new IllegalArgumentException("kcalPerMin must be positive: kcalPerMin=" + kcalPerMin);
+        }
+        if (duration.signum() == -1) {
+            throw new IllegalArgumentException("Duration must not be negative: duration=" + duration);
+        }
+        final BigDecimal factor = unit.equals(TimeUnit.MINUTE) ? BigDecimal.ONE : SIXTY;
         return duration.multiply(factor).multiply(kcalPerMin);
     }
 

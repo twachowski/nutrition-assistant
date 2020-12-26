@@ -7,7 +7,7 @@ import pl.polsl.wachowski.nutritionassistant.api.user.UserBiometrics;
 import pl.polsl.wachowski.nutritionassistant.api.user.UserSimpleBiometrics;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserBiometricsRepository;
-import pl.polsl.wachowski.nutritionassistant.util.DateUtil;
+import pl.polsl.wachowski.nutritionassistant.util.DateUtils;
 
 @Slf4j
 @Service
@@ -49,7 +49,7 @@ public class ProfileService {
     }
 
     public static UserSimpleBiometrics toSimpleBiometrics(final UserBiometricsEntity userBiometricsEntity) {
-        final int age = DateUtil.getUserAge(userBiometricsEntity.getDateOfBirth());
+        final int age = DateUtils.getUserAge(userBiometricsEntity.getDateOfBirth());
         return new UserSimpleBiometrics((short) age,
                                         userBiometricsEntity.getSex(),
                                         userBiometricsEntity.getHeight(),
