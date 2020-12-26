@@ -54,6 +54,10 @@ public class DiaryEntryEntity {
         this.noteEntries = new ArrayList<>(1);
     }
 
+    public int getSize() {
+        return foodEntries.size() + exerciseEntries.size() + noteEntries.size();
+    }
+
     public void add(final FoodEntryEntity foodEntry) {
         foodEntries.add(foodEntry);
     }

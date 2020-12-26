@@ -17,6 +17,8 @@ import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNo
 import pl.polsl.wachowski.nutritionassistant.domain.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class UserService {
@@ -67,6 +69,10 @@ public class UserService {
     public void createVerificationToken(final String token, final UserEntity user) {
         final VerificationTokenEntity verificationToken = new VerificationTokenEntity(token, user);
         tokenRepository.save(verificationToken);
+    }
+
+    public UserEntity getUserByEmail(final String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     private VerificationTokenEntity findVerificationToken(final String token) throws VerificationTokenException {

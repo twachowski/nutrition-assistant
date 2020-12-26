@@ -16,9 +16,8 @@ import pl.polsl.wachowski.nutritionassistant.api.exercise.Exercise;
 import pl.polsl.wachowski.nutritionassistant.api.food.Food;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutrientDetails;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.*;
-import pl.polsl.wachowski.nutritionassistant.domain.db.entry.views.*;
-import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
+import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.facade.FoodFacade;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
@@ -33,6 +32,8 @@ import java.util.stream.Stream;
 public class DiaryService {
 
     private final AuthenticationService authenticationService;
+    private final UserService userService;
+    //TODO create entry facade
     private final FoodFacade foodFacade;
     private final ExerciseService exerciseService;
     private final NoteService noteService;
@@ -40,29 +41,25 @@ public class DiaryService {
 
     @Autowired
     public DiaryService(final AuthenticationService authenticationService,
+                        final UserService userService,
                         final FoodFacade foodFacade,
                         final ExerciseService exerciseService,
                         final NoteService noteService,
                         final DiaryRepository diaryRepository) {
         this.authenticationService = authenticationService;
+        this.userService = userService;
         this.foodFacade = foodFacade;
         this.exerciseService = exerciseService;
         this.noteService = noteService;
         this.diaryRepository = diaryRepository;
     }
 
-    public DiaryEntriesResponse getDiaryEntries(final LocalDate date) {
+    public DiaryEntriesResponse getDiaryEntries(final LocalDate diaryDate) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryEntrySimpleView diaryEntry = diaryRepository.findDiaryEntryByUserAndDate(userEmail, date);
-        //TODO test this
-        if (diaryEntry.getUserId() == null) {
-            log.error("Cannot get diary entries - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (diaryEntry.get() == null) {
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchFoodEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
             return DiaryEntriesResponse.EMPTY_INSTANCE;
         }
-
         final Set<FoodEntryDetails> foodEntries = diaryEntry.getFoodEntries()
                 .stream()
                 .map(this::toFoodEntryDetails)
@@ -79,9 +76,8 @@ public class DiaryService {
     }
 
     public void addFoodEntry(final LocalDate diaryDate, final FoodEntry foodEntry) {
-        final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
-        final short entryPosition = (short) diaryEntryView.getEntriesCount();
+        final DiaryEntryEntity diaryEntry = getOptionalUserDiaryEntry(diaryDate);
+        final short entryPosition = (short) diaryEntry.getSize();
         final FoodEntryEntity foodEntryEntity = new FoodEntryEntity(foodEntry.getId(),
                                                                     foodEntry.getNutritionDataProvider(),
                                                                     foodEntry.getMassUnit(),
@@ -93,9 +89,8 @@ public class DiaryService {
     }
 
     public void addExerciseEntry(final LocalDate diaryDate, final ExerciseEntry exerciseEntry) {
-        final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
-        final short entryPosition = (short) diaryEntryView.getEntriesCount();
+        final DiaryEntryEntity diaryEntry = getOptionalUserDiaryEntry(diaryDate);
+        final short entryPosition = (short) diaryEntry.getSize();
         final ExerciseEntryEntity exerciseEntryEntity = new ExerciseEntryEntity(exerciseEntry.getName(),
                                                                                 exerciseEntry.getTimeUnit(),
                                                                                 exerciseEntry.getDuration(),
@@ -106,9 +101,8 @@ public class DiaryService {
     }
 
     public void addNoteEntry(final LocalDate diaryDate, final NoteEntry noteEntry) {
-        final UserDiaryEntryView diaryEntryView = getUserDiaryEntryView(diaryDate);
-        final DiaryEntryEntity diaryEntry = getOptionalDiaryEntry(diaryEntryView, diaryDate);
-        final short entryPosition = (short) diaryEntryView.getEntriesCount();
+        final DiaryEntryEntity diaryEntry = getOptionalUserDiaryEntry(diaryDate);
+        final short entryPosition = (short) diaryEntry.getSize();
         final NoteEntryEntity noteEntryEntity = new NoteEntryEntity(noteEntry.getContent(),
                                                                     entryPosition,
                                                                     diaryEntry);
@@ -120,17 +114,14 @@ public class DiaryService {
                               final short entryPosition,
                               final EditedFoodEntry editedFoodEntry) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryFoodEntriesView foodEntriesView = diaryRepository.findUserAndFoodEntriesByUserAndDate(userEmail,
-                                                                                                             diaryDate);
-        if (foodEntriesView.getUserId() == null) {
-            log.error("Cannot edit food entry - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (foodEntriesView.getDiaryId() == null) {
-            log.error("Cannot edit food entry at {} position - diary is empty for {}", entryPosition, diaryDate);
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchFoodEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
+            log.error("Cannot edit food entry at {} position - diary entry could not be found or is empty for date: {}",
+                      entryPosition,
+                      diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        foodFacade.editFoodEntry(foodEntriesView.getFoodEntries(),
+        foodFacade.editFoodEntry(diaryEntry.getFoodEntries(),
                                  entryPosition,
                                  editedFoodEntry);
     }
@@ -139,17 +130,14 @@ public class DiaryService {
                                   final short entryPosition,
                                   final EditedExerciseEntry editedExerciseEntry) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryExerciseEntriesView exerciseEntriesView = diaryRepository.findUserAndExerciseEntriesByUserAndDate(userEmail,
-                                                                                                                         diaryDate);
-        if (exerciseEntriesView.getUserId() == null) {
-            log.error("Cannot edit exercise entry - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (exerciseEntriesView.getDiaryId() == null) {
-            log.error("Cannot edit exercise entry at {} position - diary is empty for {}", entryPosition, diaryDate);
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchExerciseEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
+            log.error("Cannot edit exercise entry at {} position - diary entry could not be found or is empty for date: {}",
+                      entryPosition,
+                      diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        exerciseService.editExerciseEntry(exerciseEntriesView.getExerciseEntries(),
+        exerciseService.editExerciseEntry(diaryEntry.getExerciseEntries(),
                                           entryPosition,
                                           editedExerciseEntry);
     }
@@ -158,84 +146,65 @@ public class DiaryService {
                               final short entryPosition,
                               final NoteEntry editedNoteEntry) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryNoteEntriesView noteEntriesView = diaryRepository.findUserAndNoteEntriesByUserAndDate(userEmail,
-                                                                                                             diaryDate);
-        if (noteEntriesView.getUserId() == null) {
-            log.error("Cannot edit note entry - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (noteEntriesView.getDiaryId() == null) {
-            log.error("Cannot edit note entry at {} position - diary is empty for {}", entryPosition, diaryDate);
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchNoteEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
+            log.error("Cannot edit note entry at {} position - diary entry could not be found or is empty for date: {}",
+                      entryPosition,
+                      diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        noteService.editNoteEntry(noteEntriesView.getNoteEntries(),
+        noteService.editNoteEntry(diaryEntry.getNoteEntries(),
                                   entryPosition,
                                   editedNoteEntry);
     }
 
     public void deleteEntry(final LocalDate diaryDate, final short entryPosition) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryEntrySimpleView userDiaryView = diaryRepository.findDiaryEntryByUserAndDate(userEmail, diaryDate);
-        if (userDiaryView.getUserId() == null) {
-            log.error("Cannot delete entry - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (userDiaryView.get() == null) {
-            log.error("Cannot delete entry at {} position - diary is empty for {}", diaryDate, entryPosition);
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchFoodEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
+            log.error("Cannot delete entry at {} position - diary entry could not be found or is empty for date: {}",
+                      entryPosition,
+                      diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        deleteByPosition(userDiaryView.getFoodEntries(), entryPosition);
-        deleteByPosition(userDiaryView.getExerciseEntries(), entryPosition);
-        deleteByPosition(userDiaryView.getNoteEntries(), entryPosition);
-        Stream.of(userDiaryView.getFoodEntries(),
-                  userDiaryView.getExerciseEntries(),
-                  userDiaryView.getNoteEntries())
+        deleteByPosition(diaryEntry.getFoodEntries(), entryPosition);
+        deleteByPosition(diaryEntry.getExerciseEntries(), entryPosition);
+        deleteByPosition(diaryEntry.getNoteEntries(), entryPosition);
+        Stream.of(diaryEntry.getFoodEntries(),
+                  diaryEntry.getExerciseEntries(),
+                  diaryEntry.getNoteEntries())
                 .flatMap(List::stream)
                 .filter(entry -> entry.getPosition() > entryPosition)
                 .forEach(Sortable::moveUp);
-        diaryRepository.save(userDiaryView.get());  //TODO test this
+        diaryRepository.save(diaryEntry);
     }
 
     public void moveEntry(final LocalDate diaryDate,
                           final short oldPosition,
                           final short newPosition) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryEntrySimpleView userDiaryView = diaryRepository.findDiaryEntryByUserAndDate(userEmail, diaryDate);
-        if (userDiaryView.getUserId() == null) {
-            log.error("Cannot move entry - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        if (userDiaryView.get() == null) {
-            log.error("Cannot move entry from {} to {} - diary is empty for {}",
+        final DiaryEntryEntity diaryEntry = diaryRepository.findDiaryEntryFetchFoodEntries(userEmail, diaryDate);
+        if (diaryEntry == null) {
+            log.error("Cannot move entry from {} to {} - diary entry could not be found or is empty for date: {}",
                       oldPosition,
                       newPosition,
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
         final Map<Short, Short> positionChanges = getPositionChanges(oldPosition, newPosition);
-        Stream.of(userDiaryView.getFoodEntries(),
-                  userDiaryView.getExerciseEntries(),
-                  userDiaryView.getNoteEntries())
+        Stream.of(diaryEntry.getFoodEntries(),
+                  diaryEntry.getExerciseEntries(),
+                  diaryEntry.getNoteEntries())
                 .flatMap(List::stream)
                 .filter(entry -> positionChanges.containsKey(entry.getPosition()))
                 .forEach(entry -> entry.setPosition(positionChanges.get(entry.getPosition())));
-        diaryRepository.save(userDiaryView.get());
+        diaryRepository.save(diaryEntry);
     }
 
-    private UserDiaryEntryView getUserDiaryEntryView(final LocalDate diaryDate) {
+    private DiaryEntryEntity getOptionalUserDiaryEntry(final LocalDate diaryDate) {
         final String userEmail = authenticationService.getAuthenticatedUserEmail();
-        final UserDiaryEntryView diaryEntryView = diaryRepository.findUserAndDiaryEntryByUserAndDate(userEmail, diaryDate);
-        if (diaryEntryView.getUser() == null) {
-            log.error("Cannot get user diary entry view - authenticated user {} has not been found", userEmail);
-            throw userNotFoundException(userEmail);
-        }
-        return diaryEntryView;
-    }
-
-    private static DiaryEntryEntity getOptionalDiaryEntry(final UserDiaryEntryView userDiaryEntryView,
-                                                          final LocalDate diaryDate) {
-        return Optional.ofNullable(userDiaryEntryView.getDiaryEntry())
-                .orElseGet(() -> new DiaryEntryEntity(diaryDate, userDiaryEntryView.getUser()));
+        return Optional.ofNullable(diaryRepository.findDiaryEntryFetchFoodEntries(userEmail, diaryDate))
+                .orElseGet(() -> new DiaryEntryEntity(diaryDate, userService.getUserByEmail(userEmail)));
     }
 
     private FoodEntryDetails toFoodEntryDetails(final FoodEntryEntity foodEntry) {
@@ -291,10 +260,6 @@ public class DiaryService {
                 .filter(entry -> entry.getPosition().equals(position))
                 .findFirst()
                 .ifPresent(entries::remove);
-    }
-
-    private static IllegalStateException userNotFoundException(final String userEmail) {
-        return new IllegalStateException("User " + userEmail + " has not been found");
     }
 
 }
