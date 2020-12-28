@@ -45,17 +45,17 @@ public class NewEntryRequest {
                                                           "Note entry must not be null in new note entry request"));
     }
 
-    @AssertFalse
+    @AssertFalse(message = "Food entry must not be null in new food entry request")
     private boolean isFoodRequestInvalid() {
         return entryType.equals(EntryType.FOOD) && foodEntry == null;
     }
 
-    @AssertFalse
+    @AssertFalse(message = "Exercise entry must not be null in new exercise entry request")
     private boolean isExerciseRequestInvalid() {
         return entryType.equals(EntryType.EXERCISE) && exerciseEntry == null;
     }
 
-    @AssertFalse
+    @AssertFalse(message = "Note entry must not be null in new note entry request")
     private boolean isNoteRequestInvalid() {
         return entryType.equals(EntryType.NOTE) && noteEntry == null;
     }
