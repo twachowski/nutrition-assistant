@@ -18,7 +18,7 @@ import pl.polsl.wachowski.nutritionassistant.api.food.NutrientDetails;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.*;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.facade.FoodFacade;
+import pl.polsl.wachowski.nutritionassistant.facade.EntryFacade;
 import pl.polsl.wachowski.nutritionassistant.util.AmountConverter;
 
 import java.math.BigDecimal;
@@ -33,24 +33,17 @@ public class DiaryService {
 
     private final AuthenticationService authenticationService;
     private final UserService userService;
-    //TODO create entry facade
-    private final FoodFacade foodFacade;
-    private final ExerciseService exerciseService;
-    private final NoteService noteService;
+    private final EntryFacade entryFacade;
     private final DiaryRepository diaryRepository;
 
     @Autowired
     public DiaryService(final AuthenticationService authenticationService,
                         final UserService userService,
-                        final FoodFacade foodFacade,
-                        final ExerciseService exerciseService,
-                        final NoteService noteService,
+                        final EntryFacade entryFacade,
                         final DiaryRepository diaryRepository) {
         this.authenticationService = authenticationService;
         this.userService = userService;
-        this.foodFacade = foodFacade;
-        this.exerciseService = exerciseService;
-        this.noteService = noteService;
+        this.entryFacade = entryFacade;
         this.diaryRepository = diaryRepository;
     }
 
@@ -121,9 +114,9 @@ public class DiaryService {
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        foodFacade.editFoodEntry(diaryEntry.getFoodEntries(),
-                                 entryPosition,
-                                 editedFoodEntry);
+        entryFacade.editFoodEntry(diaryEntry.getFoodEntries(),
+                                  entryPosition,
+                                  editedFoodEntry);
     }
 
     public void editExerciseEntry(final LocalDate diaryDate,
@@ -137,9 +130,9 @@ public class DiaryService {
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        exerciseService.editExerciseEntry(diaryEntry.getExerciseEntries(),
-                                          entryPosition,
-                                          editedExerciseEntry);
+        entryFacade.editExerciseEntry(diaryEntry.getExerciseEntries(),
+                                      entryPosition,
+                                      editedExerciseEntry);
     }
 
     public void editNoteEntry(final LocalDate diaryDate,
@@ -153,7 +146,7 @@ public class DiaryService {
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        noteService.editNoteEntry(diaryEntry.getNoteEntries(),
+        entryFacade.editNoteEntry(diaryEntry.getNoteEntries(),
                                   entryPosition,
                                   editedNoteEntry);
     }
@@ -208,7 +201,7 @@ public class DiaryService {
     }
 
     private FoodEntryDetails toFoodEntryDetails(final FoodEntryEntity foodEntry) {
-        final Food food = foodFacade.getFood(foodEntry.getExternalId(), foodEntry.getProvider());
+        final Food food = entryFacade.getFood(foodEntry.getExternalId(), foodEntry.getProvider());
         final float factor = AmountConverter.getFoodAmountFactor(foodEntry.getAmount().floatValue(), foodEntry.getUnit());
         final Set<NutrientDetails> nutrients = food.getNutrients()
                 .stream()
@@ -224,7 +217,7 @@ public class DiaryService {
 
     private ExerciseEntryDetails toExerciseEntryDetails(final ExerciseEntryEntity exerciseEntry) {
         final String exerciseName = exerciseEntry.getName();
-        final Exercise exercise = exerciseService.searchExercises(exerciseName)
+        final Exercise exercise = entryFacade.searchExercises(exerciseName)
                 .iterator()
                 .next();
         final BigDecimal calories = AmountConverter.getExerciseCalories(exercise.getKcalPerMin(),
