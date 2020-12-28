@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Data
 @ToString(exclude = "user")
@@ -58,6 +59,11 @@ public class DiaryEntryEntity {
         return foodEntries.size() + exerciseEntries.size() + noteEntries.size();
     }
 
+    public Stream<? extends Sortable> entries() {
+        return Stream.of(foodEntries, exerciseEntries, noteEntries)
+                .flatMap(List::stream);
+    }
+
     public void add(final FoodEntryEntity foodEntry) {
         foodEntries.add(foodEntry);
     }
@@ -68,6 +74,11 @@ public class DiaryEntryEntity {
 
     public void add(final NoteEntryEntity noteEntry) {
         noteEntries.add(noteEntry);
+    }
+
+    public boolean hasEntryAtPosition(final short position) {
+        return entries()
+                .anyMatch(entry -> entry.getPosition() == position);
     }
 
 }

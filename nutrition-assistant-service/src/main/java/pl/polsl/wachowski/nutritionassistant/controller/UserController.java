@@ -11,9 +11,9 @@ import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationConfi
 import pl.polsl.wachowski.nutritionassistant.api.user.auth.UserRegistrationRequest;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.event.RegistrationCompleteEvent;
+import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
-import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.service.AuthenticationService;
 import pl.polsl.wachowski.nutritionassistant.service.UserService;
 

@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 public final class NutrientHelper {
 
-    private static final Set<GeneralNutrient> MANDATORY_NUTRIENTS = EnumSet.of(GeneralNutrient.ENERGY,
-                                                                               GeneralNutrient.TOTAL_CARBS,
-                                                                               GeneralNutrient.TOTAL_FAT,
-                                                                               GeneralNutrient.TOTAL_PROTEIN);
+    public static final Set<GeneralNutrient> MANDATORY_NUTRIENTS = EnumSet.of(GeneralNutrient.ENERGY,
+                                                                              GeneralNutrient.TOTAL_CARBS,
+                                                                              GeneralNutrient.TOTAL_FAT,
+                                                                              GeneralNutrient.TOTAL_PROTEIN);
 
     private NutrientHelper() {
     }

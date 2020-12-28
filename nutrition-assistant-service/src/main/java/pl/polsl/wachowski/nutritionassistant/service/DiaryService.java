@@ -160,13 +160,15 @@ public class DiaryService {
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
-        deleteByPosition(diaryEntry.getFoodEntries(), entryPosition);
-        deleteByPosition(diaryEntry.getExerciseEntries(), entryPosition);
-        deleteByPosition(diaryEntry.getNoteEntries(), entryPosition);
-        Stream.of(diaryEntry.getFoodEntries(),
-                  diaryEntry.getExerciseEntries(),
-                  diaryEntry.getNoteEntries())
-                .flatMap(List::stream)
+        final int removedEntriesCount = Stream.of(deleteByPosition(diaryEntry.getFoodEntries(), entryPosition),
+                                                  deleteByPosition(diaryEntry.getExerciseEntries(), entryPosition),
+                                                  deleteByPosition(diaryEntry.getNoteEntries(), entryPosition))
+                .reduce(0, Integer::sum);
+        if (removedEntriesCount < 1) {
+            log.error("No entry has been deleted - could not find entry at position {}", entryPosition);
+            throw new EntryNotFoundException("Could not find entry at position " + entryPosition);
+        }
+        diaryEntry.entries()
                 .filter(entry -> entry.getPosition() > entryPosition)
                 .forEach(Sortable::moveUp);
         diaryRepository.save(diaryEntry);
@@ -184,11 +186,16 @@ public class DiaryService {
                       diaryDate);
             throw EntryNotFoundException.emptyDiary(diaryDate);
         }
+        if (!diaryEntry.hasEntryAtPosition(oldPosition)) {
+            log.error("Diary entry has no entry at old position {}", oldPosition);
+            throw new EntryNotFoundException("Could not find entry at old position: " + oldPosition);
+        }
+        if (!diaryEntry.hasEntryAtPosition(newPosition)) {
+            log.error("Diary entry has no entry at new position {}", newPosition);
+            throw new EntryNotFoundException("Could not find entry at new position: " + newPosition);
+        }
         final Map<Short, Short> positionChanges = getPositionChanges(oldPosition, newPosition);
-        Stream.of(diaryEntry.getFoodEntries(),
-                  diaryEntry.getExerciseEntries(),
-                  diaryEntry.getNoteEntries())
-                .flatMap(List::stream)
+        diaryEntry.entries()
                 .filter(entry -> positionChanges.containsKey(entry.getPosition()))
                 .forEach(entry -> entry.setPosition(positionChanges.get(entry.getPosition())));
         diaryRepository.save(diaryEntry);
@@ -235,6 +242,9 @@ public class DiaryService {
     }
 
     private static Map<Short, Short> getPositionChanges(final short previousPosition, final short currentPosition) {
+        if (previousPosition == currentPosition) {
+            return Collections.emptyMap();
+        }
         final boolean movedUp = currentPosition < previousPosition;
         final int begin = movedUp ? currentPosition : previousPosition + 1;
         final int end = movedUp ? previousPosition - 1 : currentPosition;
@@ -248,11 +258,13 @@ public class DiaryService {
         return positionChanges;
     }
 
-    private static void deleteByPosition(final List<? extends Sortable> entries, final short position) {
-        entries.stream()
+    private static int deleteByPosition(final List<? extends Sortable> entries, final short position) {
+        final boolean removed = entries.stream()
                 .filter(entry -> entry.getPosition().equals(position))
                 .findFirst()
-                .ifPresent(entries::remove);
+                .map(entries::remove)
+                .orElse(false);
+        return removed ? 1 : 0;
     }
 
 }
