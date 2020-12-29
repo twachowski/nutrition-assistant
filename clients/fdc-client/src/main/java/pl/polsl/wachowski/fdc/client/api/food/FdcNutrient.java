@@ -8,10 +8,14 @@ public class FdcNutrient {
 
     @JsonProperty("nutrient")
     FdcNutrientDetails details;
-    float amount;
+    Float amount;
 
     public int getId() {
         return details.id;
+    }
+
+    public float getAmount() {
+        return amount == null ? 0.f : amount;
     }
 
     @Value
