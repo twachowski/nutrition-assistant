@@ -116,7 +116,7 @@ class UserServiceTest {
         final UserEntity user = UserEntitySamples.inactiveUser("foo@bar.com");
         final String tokenValue = "token";
         final VerificationTokenEntity token = new VerificationTokenEntity(tokenValue,
-                                                                          LocalDateTime.now(),
+                                                                          LocalDateTime.now().minusSeconds(1L),
                                                                           user);
         final Executable executable = () -> userService.activateUser(tokenValue);
 
