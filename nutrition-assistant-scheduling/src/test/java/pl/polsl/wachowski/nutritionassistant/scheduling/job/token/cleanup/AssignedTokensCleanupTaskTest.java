@@ -11,8 +11,8 @@ import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.TokenRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
-import pl.polsl.wachowski.nutritionassistant.scheduling.util.UserSamples;
-import pl.polsl.wachowski.nutritionassistant.scheduling.util.VerificationTokenSamples;
+import pl.polsl.wachowski.nutritionassistant.scheduling.samples.UserSamples;
+import pl.polsl.wachowski.nutritionassistant.scheduling.samples.VerificationTokenSamples;
 
 import java.util.List;
 

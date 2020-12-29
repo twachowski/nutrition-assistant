@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.scheduling.util;
+package pl.polsl.wachowski.nutritionassistant.scheduling.samples;
 
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;

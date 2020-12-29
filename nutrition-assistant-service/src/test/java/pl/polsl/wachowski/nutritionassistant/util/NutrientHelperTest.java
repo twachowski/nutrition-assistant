@@ -3,6 +3,7 @@ package pl.polsl.wachowski.nutritionassistant.util;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.polsl.wachowski.nutritionassistant.api.food.NutrientDetails;
+import pl.polsl.wachowski.nutritionassistant.samples.NutrientDetailsSamples;
 
 import java.util.ArrayList;
 import java.util.List;

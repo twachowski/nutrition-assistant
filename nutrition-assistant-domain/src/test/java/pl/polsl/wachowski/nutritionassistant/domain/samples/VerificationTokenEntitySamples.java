@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.domain.util;
+package pl.polsl.wachowski.nutritionassistant.domain.samples;
 
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;

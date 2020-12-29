@@ -19,7 +19,7 @@ import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNo
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
 import pl.polsl.wachowski.nutritionassistant.util.MockPasswordEncoder;
-import pl.polsl.wachowski.nutritionassistant.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserEntitySamples;
 
 import java.time.LocalDateTime;
 

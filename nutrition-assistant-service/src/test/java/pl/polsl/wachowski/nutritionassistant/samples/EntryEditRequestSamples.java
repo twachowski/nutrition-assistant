@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.util;
+package pl.polsl.wachowski.nutritionassistant.samples;
 
 import org.apache.commons.lang3.StringUtils;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.EntryEditRequest;

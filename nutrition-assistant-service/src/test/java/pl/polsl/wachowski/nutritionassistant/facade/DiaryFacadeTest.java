@@ -13,8 +13,8 @@ import pl.polsl.wachowski.nutritionassistant.api.diary.entry.food.FoodEntry;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.note.NoteEntry;
 import pl.polsl.wachowski.nutritionassistant.exception.validation.ValidationException;
 import pl.polsl.wachowski.nutritionassistant.service.DiaryService;
-import pl.polsl.wachowski.nutritionassistant.util.EntryEditRequestSamples;
-import pl.polsl.wachowski.nutritionassistant.util.NewEntryRequestSamples;
+import pl.polsl.wachowski.nutritionassistant.samples.EntryEditRequestSamples;
+import pl.polsl.wachowski.nutritionassistant.samples.NewEntryRequestSamples;
 import pl.polsl.wachowski.nutritionassistant.util.ViolationUtils;
 
 import javax.validation.Validation;

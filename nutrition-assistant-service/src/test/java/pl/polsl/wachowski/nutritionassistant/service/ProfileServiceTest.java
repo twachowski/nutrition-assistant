@@ -16,9 +16,9 @@ import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserBiometricsRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
-import pl.polsl.wachowski.nutritionassistant.util.UserBiometricsEntitySamples;
-import pl.polsl.wachowski.nutritionassistant.util.UserBiometricsSamples;
-import pl.polsl.wachowski.nutritionassistant.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserBiometricsEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserBiometricsSamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserEntitySamples;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.util;
+package pl.polsl.wachowski.nutritionassistant.samples;
 
 import pl.polsl.wachowski.nutritionassistant.api.user.ActivityLevel;
 import pl.polsl.wachowski.nutritionassistant.api.user.Sex;

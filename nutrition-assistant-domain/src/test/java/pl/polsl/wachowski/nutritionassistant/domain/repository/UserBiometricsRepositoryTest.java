@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
-import pl.polsl.wachowski.nutritionassistant.domain.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.domain.samples.UserEntitySamples;
 
 import java.util.Optional;
 

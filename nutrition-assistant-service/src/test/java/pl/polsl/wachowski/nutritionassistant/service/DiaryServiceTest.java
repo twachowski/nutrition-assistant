@@ -28,6 +28,7 @@ import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundExcept
 import pl.polsl.wachowski.nutritionassistant.facade.EntryFacade;
 import pl.polsl.wachowski.nutritionassistant.facade.FoodFacade;
 import pl.polsl.wachowski.nutritionassistant.provider.exercise.NutritionixExerciseProviderAdapter;
+import pl.polsl.wachowski.nutritionassistant.samples.*;
 import pl.polsl.wachowski.nutritionassistant.util.*;
 import pl.polsl.wachowski.nutritionix.client.NutritionixClient;
 

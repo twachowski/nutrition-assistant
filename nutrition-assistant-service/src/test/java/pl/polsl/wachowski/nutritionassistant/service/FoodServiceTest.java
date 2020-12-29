@@ -26,9 +26,9 @@ import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.FoodRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.util.FoodServiceSamples;
+import pl.polsl.wachowski.nutritionassistant.samples.FoodServiceSamples;
 import pl.polsl.wachowski.nutritionassistant.util.NutrientHelper;
-import pl.polsl.wachowski.nutritionassistant.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserEntitySamples;
 import pl.polsl.wachowski.nutritionix.client.NutritionixClient;
 
 import java.math.BigDecimal;

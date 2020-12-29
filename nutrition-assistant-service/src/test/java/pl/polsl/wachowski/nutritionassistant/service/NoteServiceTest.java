@@ -17,7 +17,7 @@ import pl.polsl.wachowski.nutritionassistant.domain.repository.DiaryRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.NoteRepository;
 import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.samples.UserEntitySamples;
 
 import java.time.LocalDate;
 import java.util.Collections;

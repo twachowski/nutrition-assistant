@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;
-import pl.polsl.wachowski.nutritionassistant.domain.util.UserEntitySamples;
-import pl.polsl.wachowski.nutritionassistant.domain.util.VerificationTokenEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.domain.samples.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.domain.samples.VerificationTokenEntitySamples;
 
 import java.util.List;
 import java.util.stream.Collectors;

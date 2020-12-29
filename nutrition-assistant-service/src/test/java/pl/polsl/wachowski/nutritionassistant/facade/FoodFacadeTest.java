@@ -11,7 +11,7 @@ import pl.polsl.wachowski.nutritionassistant.client.MockNutritionixClient;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.FdcException;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.NutritionixException;
 import pl.polsl.wachowski.nutritionassistant.service.FoodService;
-import pl.polsl.wachowski.nutritionassistant.util.FoodServiceSamples;
+import pl.polsl.wachowski.nutritionassistant.samples.FoodServiceSamples;
 import pl.polsl.wachowski.nutritionix.client.NutritionixClient;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

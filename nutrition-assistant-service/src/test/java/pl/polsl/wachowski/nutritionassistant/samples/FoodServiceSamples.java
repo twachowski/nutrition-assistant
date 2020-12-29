@@ -1,4 +1,4 @@
-package pl.polsl.wachowski.nutritionassistant.util;
+package pl.polsl.wachowski.nutritionassistant.samples;
 
 import org.mockito.Mockito;
 import pl.polsl.wachowski.fdc.client.FdcClient;

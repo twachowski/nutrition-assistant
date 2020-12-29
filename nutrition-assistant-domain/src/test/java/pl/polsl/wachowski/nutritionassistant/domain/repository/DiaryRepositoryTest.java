@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.DiaryEntryEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
-import pl.polsl.wachowski.nutritionassistant.domain.util.DiaryEntryEntitySamples;
-import pl.polsl.wachowski.nutritionassistant.domain.util.UserEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.domain.samples.DiaryEntryEntitySamples;
+import pl.polsl.wachowski.nutritionassistant.domain.samples.UserEntitySamples;
 
 import java.time.LocalDate;
 
