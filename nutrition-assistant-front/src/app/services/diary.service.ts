@@ -1,18 +1,16 @@
-import { Injectable } from '@angular/core';
-import { DiaryEntriesRequest } from '../model/diary/diary-entries-request';
-import { HttpClient } from '@angular/common/http';
-import { DiaryEntriesResponse } from '../model/diary/diary-entries-response';
-import { NewFoodEntry } from '../model/diary/add/new-food-entry';
-import { NewExerciseEntry } from '../model/diary/add/new-exercise-entry';
-import { NewNoteEntry } from '../model/diary/add/new-note-entry';
-import { EditedFoodEntry } from '../model/diary/edit/edited-food-entry';
-import { EntryRequest } from '../model/diary/edit/entry-request';
-import { EditedExerciseEntry } from '../model/diary/edit/edited-exercise-entry';
-import { EditedNoteEntry } from '../model/diary/edit/edited-note-entry';
-import { ReorderRequest } from '../model/diary/reorder/reorder-request';
-import { PositionChange } from '../model/diary/reorder/position-change';
-import { EntryDeleteRequest } from '../model/diary/delete/entry-delete-request';
-import { RoutingService } from './routing.service';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {DiaryEntriesResponse} from '../model/diary/diary-entries-response';
+import {NewFoodEntry} from '../model/diary/new-food-entry';
+import {NewExerciseEntry} from '../model/diary/new-exercise-entry';
+import {NewNoteEntry} from '../model/diary/new-note-entry';
+import {EditedFoodEntry} from '../model/diary/edited-food-entry';
+import {EditedExerciseEntry} from '../model/diary/edited-exercise-entry';
+import {EditedNoteEntry} from '../model/diary/edited-note-entry';
+import {RoutingService} from './routing.service';
+import {NewEntryRequest} from '../model/diary/new-entry-request';
+import {EntryEditRequest} from '../model/diary/entry-edit-request';
+import {EntryMoveRequest} from '../model/diary/entry-move-request';
 
 @Injectable({
   providedIn: 'root'
@@ -21,102 +19,69 @@ export class DiaryService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly routingService: RoutingService) { }
+    private readonly routingService: RoutingService) {
+  }
 
   getDiaryEntries(date: string) {
-    const url = this.routingService.getDiaryUrl();
-    const request: DiaryEntriesRequest = {
-      diaryDate: date
-    };
-    const body = JSON.stringify(request);
-    return this.http.post<DiaryEntriesResponse>(url, body);
+    const url = this.routingService.getDiaryUrl(date);
+    return this.http.get<DiaryEntriesResponse>(url);
   }
 
   addFoodEntry(date: string, foodEntry: NewFoodEntry) {
-    const url = this.routingService.getFoodAddUrl();
-    const request: EntryRequest<NewFoodEntry> = {
-      diaryDate: date,
-      entry: foodEntry
-    };
+    const url = this.routingService.getEntriesUrl(date);
+    const request = NewEntryRequest.food(foodEntry);
     const body = JSON.stringify(request);
     return this.http.post(url, body);
   }
 
   addExerciseEntry(date: string, exerciseEntry: NewExerciseEntry) {
-    const url = this.routingService.getExerciseAddUrl();
-    const request: EntryRequest<NewExerciseEntry> = {
-      diaryDate: date,
-      entry: exerciseEntry
-    };
+    const url = this.routingService.getEntriesUrl(date);
+    const request = NewEntryRequest.exercise(exerciseEntry);
     const body = JSON.stringify(request);
     return this.http.post(url, body);
   }
 
   addNoteEntry(date: string, noteEntry: NewNoteEntry) {
-    const url = this.routingService.getNoteAddUrl();
-    const request: EntryRequest<NewNoteEntry> = {
-      diaryDate: date,
-      entry: noteEntry
-    };
+    const url = this.routingService.getEntriesUrl(date);
+    const request = NewEntryRequest.note(noteEntry);
     const body = JSON.stringify(request);
     return this.http.post(url, body);
   }
 
-  editFood(date: string, foodEntry: EditedFoodEntry) {
-    const url = this.routingService.getFoodEditUrl();
-    const request: EntryRequest<EditedFoodEntry> = {
-      diaryDate: date,
-      entry: foodEntry
-    };
+  editFood(date: string, position: number, foodEntry: EditedFoodEntry) {
+    const url = this.routingService.getEntryUrl(date, position);
+    const request = EntryEditRequest.food(foodEntry);
     const body = JSON.stringify(request);
-    return this.http.put(url, body);
+    return this.http.patch(url, body);
   }
 
-  editExercise(date: string, exerciseEntry: EditedExerciseEntry) {
-    const url = this.routingService.getExerciseEditUrl();
-    const request: EntryRequest<EditedExerciseEntry> = {
-      diaryDate: date,
-      entry: exerciseEntry
-    };
+  editExercise(date: string, position: number, exerciseEntry: EditedExerciseEntry) {
+    const url = this.routingService.getEntryUrl(date, position);
+    const request = EntryEditRequest.exercise(exerciseEntry);
     const body = JSON.stringify(request);
-    return this.http.put(url, body);
+    return this.http.patch(url, body);
   }
 
-  editNote(date: string, noteEntry: EditedNoteEntry) {
-    const url = this.routingService.getNoteEditUrl();
-    const request: EntryRequest<EditedNoteEntry> = {
-      diaryDate: date,
-      entry: noteEntry
-    };
+  editNote(date: string, position: number, noteEntry: EditedNoteEntry) {
+    const url = this.routingService.getEntryUrl(date, position);
+    const request = EntryEditRequest.note(noteEntry);
     const body = JSON.stringify(request);
-    return this.http.put(url, body);
+    return this.http.patch(url, body);
   }
 
-  deleteEntry(date: string, index: number) {
-    const url = this.routingService.getEntryDeleteUrl();
-    const request: EntryDeleteRequest = {
-      diaryDate: date,
-      entryPosition: index
-    };
-    const httpBody = JSON.stringify(request);
-    const httpOptions = {
-      body: httpBody
-    };
-    return this.http.request('DELETE', url, httpOptions);
+  deleteEntry(date: string, position: number) {
+    const url = this.routingService.getEntryUrl(date, position);
+    return this.http.delete(url);
   }
 
-  reorderEntries(date: string, previousIndex: number, currentIndex: number) {
-    const url = this.routingService.getReorderUrl();
-    const posChange: PositionChange = {
-      previousPosition: previousIndex,
-      currentPosition: currentIndex
-    };
-    const request: ReorderRequest = {
-      diaryDate: date,
-      positionChange: posChange
+  reorderEntries(date: string, previousPosition: number, currentPosition: number) {
+    const url = this.routingService.getEntriesUrl(date);
+    const request: EntryMoveRequest = {
+      previousPosition,
+      currentPosition
     };
     const body = JSON.stringify(request);
-    return this.http.put(url, body);
+    return this.http.patch(url, body);
   }
 
 }

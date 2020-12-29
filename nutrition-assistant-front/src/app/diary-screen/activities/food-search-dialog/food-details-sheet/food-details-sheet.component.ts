@@ -1,16 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { FoodUnit } from 'src/app/model/units/food-unit.enum';
-import { FormControl, Validators } from '@angular/forms';
-import { CustomValidators } from 'src/app/validation/custom-validators';
-import { NutrientBasicInfo } from 'src/app/model/food/nutrients/nutrient-basic-info';
-import { GeneralNutrient } from 'src/app/model/food/nutrients/general-nutrient.enum';
-import { Macronutrient } from 'src/app/model/food/nutrients/macronutrient.enum';
-import { DateService } from 'src/app/services/date.service';
-import { EntryService } from 'src/app/services/entry.service';
-import { NewFoodEntry } from 'src/app/model/diary/add/new-food-entry';
-import { NutritionDataProvider } from 'src/app/model/food/nutrition-data-provider.enum';
-import { DiaryService } from 'src/app/services/diary.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {FoodUnit} from 'src/app/model/units/food-unit.enum';
+import {FormControl, Validators} from '@angular/forms';
+import {CustomValidators} from 'src/app/validation/custom-validators';
+import {NutrientBasicInfo} from 'src/app/model/food/nutrients/nutrient-basic-info';
+import {GeneralNutrient} from 'src/app/model/food/nutrients/general-nutrient.enum';
+import {Macronutrient} from 'src/app/model/food/nutrients/macronutrient.enum';
+import {DateService} from 'src/app/services/date.service';
+import {EntryService} from 'src/app/services/entry.service';
+import {NewFoodEntry} from 'src/app/model/diary/new-food-entry';
+import {NutritionDataProvider} from 'src/app/model/food/nutrition-data-provider.enum';
+import {DiaryService} from 'src/app/services/diary.service';
 
 export interface FoodDetailsSheetData {
   readonly externalId: string;
@@ -36,7 +36,7 @@ export class FoodDetailsSheetComponent implements OnInit {
 
   private amount = new FormControl(100, [Validators.required, CustomValidators.positive]);
   private foodUnit = new FormControl(FoodUnit.GRAM);
-  private calories = new FormControl({ value: 0, disabled: true });
+  private calories = new FormControl({value: 0, disabled: true});
   private carbs = new FormControl(0);
   private fat = new FormControl(0);
   private protein = new FormControl(0);
@@ -132,13 +132,11 @@ export class FoodDetailsSheetComponent implements OnInit {
     this.sheetRef.disableClose = true;
 
     const date = this.dateService.getCurrentValue();
-    const entryPosition = this.entryService.getCurrentEntryCount();
     const newFoodEntry: NewFoodEntry = {
-      externalId: this.data.externalId,
-      provider: this.data.provider,
+      id: this.data.externalId,
+      nutritionDataProvider: this.data.provider,
       amount: this.amount.value,
-      unit: this.getUnitKey(),
-      position: entryPosition
+      massUnit: this.getUnitKey()
     };
     const result: FoodDetailsSheetResult = {
       amount: this.amount.value,

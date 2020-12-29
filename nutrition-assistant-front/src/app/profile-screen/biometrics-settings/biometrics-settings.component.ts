@@ -39,7 +39,7 @@ export class BiometricsSettingsComponent implements OnInit {
   private readonly dateOfBirth = new FormControl(moment(), [Validators.required]);
   private readonly height = new FormControl(180, [Validators.required, Validators.min(1)]);
   private readonly weight = new FormControl(80, [Validators.required, CustomValidators.positive]);
-  private readonly sex = new FormControl(Sex.M);
+  private readonly sex = new FormControl(Sex.MALE);
   private readonly activityLevel = new FormControl(ActivityLevel.NONE);
   private readonly sexEntries = Object.entries(Sex).map(arr => arr[1]);
   private readonly activityEntries = Object.entries(ActivityLevel).map(arr => arr[1]);
@@ -72,12 +72,13 @@ export class BiometricsSettingsComponent implements OnInit {
     this.requestInProgress = true;
     this.userService.getUserBiometrics().subscribe(
       data => {
-        this.dateOfBirth.setValue(data.dateOfBirth);
-        this.height.setValue(data.height);
-        this.weight.setValue(data.weight);
-        this.sex.setValue(Sex[data.sex]);
-        this.activityLevel.setValue(ActivityLevel[data.activityLevel]);
-        this.initRadio(data.calorieGoal);
+        const biometrics = data.userBiometrics;
+        this.dateOfBirth.setValue(biometrics.dateOfBirth);
+        this.height.setValue(biometrics.height);
+        this.weight.setValue(biometrics.weight);
+        this.sex.setValue(Sex[biometrics.sex]);
+        this.activityLevel.setValue(ActivityLevel[biometrics.activityLevel]);
+        this.initRadio(biometrics.calorieGoal);
         this.requestInProgress = false;
       },
       error => {
@@ -183,7 +184,7 @@ export class BiometricsSettingsComponent implements OnInit {
       activityLevel: this.getActivityLevelKey(),
       calorieGoal: this.goalBonus.value
     };
-    this.userService.saveUserBiomterics(userBiometrics)
+    this.userService.saveUserBiometrics(userBiometrics)
       .subscribe(value => {
         this.requestInProgress = false;
         const calorieTarget = this.biometricsBMR.value + this.activityBonus.value + this.goalBonus.value;

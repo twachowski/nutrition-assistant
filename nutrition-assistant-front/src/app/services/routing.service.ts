@@ -1,97 +1,58 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoutingService {
 
-  private readonly baseUrl = 'http://localhost:8080/api';
+  private readonly baseUrl = 'http://localhost:8080/nutrition-assistant/api/v1.0';
 
-  private readonly userUrl = this.baseUrl + '/user';
-  private readonly registrationUrl = this.userUrl + '/registration';
-  private readonly registrationConfirmUrl = this.registrationUrl + '/confirm';
-  private readonly loginUrl = this.userUrl + '/login';
+  private readonly usersUrl = this.baseUrl + '/users';
+  private readonly loginUrl = this.usersUrl + '/login';
 
-  private readonly foodSearchUrl = this.baseUrl + '/food/search';
-  private readonly foodDetailsUrl = this.baseUrl + '/food/details';
-  private readonly exerciseSearchUrl = this.baseUrl + '/exercise/search';
+  private readonly profileUrl = this.baseUrl + '/profile';
+  private readonly biometricsUrl = this.profileUrl + '/biometrics';
+
+  private readonly foodsUrl = this.baseUrl + '/foods';
+
+  private readonly exercisesUrl = this.baseUrl + '/exercises';
 
   private readonly diaryUrl = this.baseUrl + '/diary';
-  private readonly diaryAddUrl = this.diaryUrl + '/add';
-  private readonly diaryEditUrl = this.diaryUrl + '/edit';
+  private readonly entriesSuffix = '/entries';
 
-  private readonly entryDeleteUrl = this.diaryUrl + '/delete';
-  private readonly foodAddUrl = this.diaryAddUrl + '/food';
-  private readonly exerciseAddUrl = this.diaryAddUrl + '/exercise';
-  private readonly noteAddUrl = this.diaryAddUrl + '/note';
-  private readonly foodEditUrl = this.diaryEditUrl + '/food';
-  private readonly exerciseEditUrl = this.diaryEditUrl + '/exercise';
-  private readonly noteEditUrl = this.diaryEditUrl + '/note';
-
-  private readonly reorderUrl = this.diaryUrl + '/reorder';
-
-  private readonly biometricsUrl = this.userUrl + '/biometrics';
-
-  constructor() { }
-
-  getRegistrationUrl() {
-    return this.registrationUrl;
+  constructor() {
   }
 
-  getRegistrationConfirmUrl() {
-    return this.registrationConfirmUrl;
+  getUsersUrl() {
+    return this.usersUrl;
   }
 
   getLoginUrl() {
     return this.loginUrl;
   }
 
-  getFoodSearchUrl() {
-    return this.foodSearchUrl;
+  getFoodsUrl() {
+    return this.foodsUrl;
   }
 
-  getFoodDetailsUrl() {
-    return this.foodDetailsUrl;
+  getFoodUrl(foodId: string) {
+    return this.foodsUrl + `/${foodId}`;
   }
 
-  getExerciseSearchUrl() {
-    return this.exerciseSearchUrl;
+  getExercisesUrl() {
+    return this.exercisesUrl;
   }
 
-  getDiaryUrl() {
-    return this.diaryUrl;
+  getDiaryUrl(date: string) {
+    return this.diaryUrl + `/${date}`;
   }
 
-  getFoodAddUrl() {
-    return this.foodAddUrl;
+  getEntriesUrl(date: string) {
+    return this.getDiaryUrl(date) + this.entriesSuffix;
   }
 
-  getExerciseAddUrl() {
-    return this.exerciseAddUrl;
-  }
-
-  getNoteAddUrl() {
-    return this.noteAddUrl;
-  }
-
-  getFoodEditUrl() {
-    return this.foodEditUrl;
-  }
-
-  getExerciseEditUrl() {
-    return this.exerciseEditUrl;
-  }
-
-  getNoteEditUrl() {
-    return this.noteEditUrl;
-  }
-
-  getEntryDeleteUrl() {
-    return this.entryDeleteUrl;
-  }
-
-  getReorderUrl() {
-    return this.reorderUrl;
+  getEntryUrl(date: string, entryPosition: number) {
+    return this.getEntriesUrl(date) + `/${entryPosition}`;
   }
 
   getUserBiometricsUrl() {

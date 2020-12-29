@@ -50,8 +50,8 @@ export class FoodSearchDialogComponent extends DialogWithToolbarComponent implem
     this.foodService.search(this.foodName.value)
       .subscribe(
         data => {
-          this.foods = data;
-          this.foodsDetails = new Array<NutrientBasicInfo[]>(data.length);
+          this.foods = data.foods;
+          this.foodsDetails = new Array<NutrientBasicInfo[]>(data.foods.length);
           this.requestInProgress = false;
         },
         error => {
@@ -77,7 +77,7 @@ export class FoodSearchDialogComponent extends DialogWithToolbarComponent implem
         this.foodService.getDetails(this.selectedFood).subscribe(
           data => {
             this.requestInProgress = false;
-            this.foodsDetails[index] = data.nutrientDetails;
+            this.foodsDetails[index] = data.food.nutrients;
             this.openFoodDetailsSheet();
           },
           error => {
@@ -93,7 +93,7 @@ export class FoodSearchDialogComponent extends DialogWithToolbarComponent implem
 
   openFoodDetailsSheet() {
     const sheetData: FoodDetailsSheetData = {
-      externalId: this.selectedFood.externalId,
+      externalId: this.selectedFood.id,
       provider: this.selectedFood.provider,
       nutrients: this.foodsDetails[this.selectedFoodIndex]
     };
@@ -115,7 +115,7 @@ export class FoodSearchDialogComponent extends DialogWithToolbarComponent implem
 
   getSelectedFoodName() {
     const foodName = this.selectedFood.name;
-    const brandName = this.selectedFood.brandName;
+    const brandName = this.selectedFood.brand;
     return brandName ? foodName.concat(', ', brandName) : foodName;
   }
 

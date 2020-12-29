@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogWithToolbarComponent } from 'src/app/dialog-with-toolbar/dialog-with-toolbar.component';
-import { FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { DiaryService } from 'src/app/services/diary.service';
-import { DateService } from 'src/app/services/date.service';
-import { EntryService } from 'src/app/services/entry.service';
-import { NewNoteEntry } from 'src/app/model/diary/add/new-note-entry';
+import {Component, OnInit} from '@angular/core';
+import {DialogWithToolbarComponent} from 'src/app/dialog-with-toolbar/dialog-with-toolbar.component';
+import {FormControl, Validators} from '@angular/forms';
+import {MatDialogRef} from '@angular/material/dialog';
+import {DiaryService} from 'src/app/services/diary.service';
+import {DateService} from 'src/app/services/date.service';
+import {EntryService} from 'src/app/services/entry.service';
+import {NewNoteEntry} from 'src/app/model/diary/new-note-entry';
 
 @Component({
   selector: 'app-note-add-dialog',
@@ -40,10 +40,8 @@ export class NoteAddDialogComponent extends DialogWithToolbarComponent implement
 
   addNewNote() {
     const date = this.dateService.getCurrentValue();
-    const entryPosition = this.entryService.getCurrentEntryCount();
     const newNoteEntry: NewNoteEntry = {
-      content: this.content.value,
-      position: entryPosition
+      content: this.content.value
     };
     this.diaryService.addNoteEntry(date, newNoteEntry)
       .subscribe(

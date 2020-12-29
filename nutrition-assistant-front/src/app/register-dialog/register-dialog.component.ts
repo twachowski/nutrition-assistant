@@ -71,7 +71,7 @@ export class RegisterDialogComponent extends DialogWithToolbarComponent implemen
     const credentials = {
       email: this.email.value,
       password: this.password.value,
-      confirmedPassword: this.confirmedPassword.value
+      passwordConfirmation: this.confirmedPassword.value
     };
     this.userService.signUp(credentials)
       .subscribe(

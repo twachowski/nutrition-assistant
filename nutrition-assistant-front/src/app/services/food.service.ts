@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { FoodSearchRequest } from '../model/food/food-search-request';
-import { HttpClient } from '@angular/common/http';
-import { FoodSearchItem } from '../model/food/food-search-item';
-import { FoodDetailsRequest } from '../model/food/food-details-request';
-import { FoodDetailsResponse } from '../model/food/food-details-response';
-import { RoutingService } from './routing.service';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {FoodSearchItem} from '../model/food/food-search-item';
+import {RoutingService} from './routing.service';
+import {FoodSearchItemResponse} from '../model/food/food-search-item-response';
+import {FoodResponse} from '../model/food/food-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,25 +12,19 @@ export class FoodService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly routingService: RoutingService) { }
+    private readonly routingService: RoutingService) {
+  }
 
   search(foodName: string) {
-    const url = this.routingService.getFoodSearchUrl();
-    const request: FoodSearchRequest = {
-      query: foodName
-    };
-    const body = JSON.stringify(request);
-    return this.http.post<FoodSearchItem[]>(url, body);
+    const url = this.routingService.getFoodsUrl();
+    const queryParam = new HttpParams().set('query', foodName);
+    return this.http.get<FoodSearchItemResponse>(url, {params: queryParam});
   }
 
   getDetails(foodItem: FoodSearchItem) {
-    const url = this.routingService.getFoodDetailsUrl();
-    const request: FoodDetailsRequest = {
-      externalId: foodItem.externalId,
-      provider: foodItem.provider
-    };
-    const body = JSON.stringify(request);
-    return this.http.post<FoodDetailsResponse>(url, body);
+    const url = this.routingService.getFoodUrl(foodItem.id);
+    const providerParam = new HttpParams().set('provider', foodItem.provider);
+    return this.http.get<FoodResponse>(url, {params: providerParam});
   }
 
 }

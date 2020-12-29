@@ -3,7 +3,7 @@ import { ExerciseDetails } from './exercise-details';
 
 export interface ExerciseSearchResults {
 
-    readonly userBiometrics: UserSimpleBiometrics;
+    readonly userSimpleBiometrics: UserSimpleBiometrics;
     readonly exercises: ExerciseDetails[];
 
 }

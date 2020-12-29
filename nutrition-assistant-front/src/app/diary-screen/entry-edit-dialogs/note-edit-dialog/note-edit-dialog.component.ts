@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { DialogWithToolbarComponent } from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, Validators } from '@angular/forms';
-import { DateService } from 'src/app/services/date.service';
-import { EditedNoteEntry } from 'src/app/model/diary/edit/edited-note-entry';
-import { DiaryService } from 'src/app/services/diary.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {DialogWithToolbarComponent} from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormControl, Validators} from '@angular/forms';
+import {DateService} from 'src/app/services/date.service';
+import {EditedNoteEntry} from 'src/app/model/diary/edited-note-entry';
+import {DiaryService} from 'src/app/services/diary.service';
 
 export interface NoteEditDialogData {
   content: string;
@@ -52,10 +52,9 @@ export class NoteEditDialogComponent extends DialogWithToolbarComponent implemen
     this.requestInProgress = true;
     const date = this.dateService.getCurrentValue();
     const editedEntry: EditedNoteEntry = {
-      content: this.content.value,
-      position: this.data.position
+      content: this.content.value
     };
-    this.diaryService.editNote(date, editedEntry)
+    this.diaryService.editNote(date, this.data.position, editedEntry)
       .subscribe(
         value => {
           this.requestInProgress = false;

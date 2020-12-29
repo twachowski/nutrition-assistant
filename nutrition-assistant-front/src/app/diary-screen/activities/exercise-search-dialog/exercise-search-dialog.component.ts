@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogWithToolbarComponent } from 'src/app/dialog-with-toolbar/dialog-with-toolbar.component';
-import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl, Validators } from '@angular/forms';
-import { ExerciseDetails } from 'src/app/model/exercise/exercise-details';
-import { ExerciseService } from 'src/app/services/exercise.service';
-import { CustomValidators } from 'src/app/validation/custom-validators';
-import { ExerciseUnit } from 'src/app/model/units/exercise-unit.enum';
-import { EntryDialogData } from 'src/app/model/entries/entry-dialog-data';
-import { DateService } from 'src/app/services/date.service';
-import { DiaryService } from 'src/app/services/diary.service';
-import { NewExerciseEntry } from 'src/app/model/diary/add/new-exercise-entry';
-import { EntryService } from 'src/app/services/entry.service';
+import {Component, OnInit} from '@angular/core';
+import {DialogWithToolbarComponent} from 'src/app/dialog-with-toolbar/dialog-with-toolbar.component';
+import {MatDialogRef} from '@angular/material/dialog';
+import {FormControl, Validators} from '@angular/forms';
+import {ExerciseDetails} from 'src/app/model/exercise/exercise-details';
+import {ExerciseService} from 'src/app/services/exercise.service';
+import {CustomValidators} from 'src/app/validation/custom-validators';
+import {ExerciseUnit} from 'src/app/model/units/exercise-unit.enum';
+import {EntryDialogData} from 'src/app/model/entries/entry-dialog-data';
+import {DateService} from 'src/app/services/date.service';
+import {DiaryService} from 'src/app/services/diary.service';
+import {NewExerciseEntry} from 'src/app/model/diary/new-exercise-entry';
+import {EntryService} from 'src/app/services/entry.service';
 
 @Component({
   selector: 'app-exercise-search-dialog',
@@ -28,7 +28,7 @@ export class ExerciseSearchDialogComponent extends DialogWithToolbarComponent im
   private readonly unitKeys = Object.entries(ExerciseUnit).map(arr => arr[0]);
   private duration = new FormControl(0, [Validators.required, CustomValidators.positive]);
   private exerciseUnit = new FormControl(ExerciseUnit.MINUTE);
-  private calories = new FormControl({ value: 0, disabled: true });
+  private calories = new FormControl({value: 0, disabled: true});
 
   private selectedExercise: ExerciseDetails;
   private selectedExerciseIndex: number;
@@ -86,9 +86,11 @@ export class ExerciseSearchDialogComponent extends DialogWithToolbarComponent im
       this.selectedExercise = exercise;
       this.selectedExerciseIndex = index;
       this.exerciseUnit.setValue(ExerciseUnit.MINUTE);
-      const formattedDuration = this.getFormattedValue(this.selectedExercise.durationMin);
+      const defaultDuration = 30;
+      const formattedDuration = this.getFormattedValue(defaultDuration);
       this.duration.setValue(formattedDuration);
-      this.calories.setValue(Number(this.selectedExercise.calories.toFixed(1)));
+      const calories = defaultDuration * this.selectedExercise.kcalPerMin;
+      this.calories.setValue(Number(calories.toFixed(1)));
     }
   }
 
@@ -99,7 +101,7 @@ export class ExerciseSearchDialogComponent extends DialogWithToolbarComponent im
 
   calculateCalories() {
     const durationMin = this.isMinute() ? this.duration.value : this.duration.value * 60;
-    const calories = durationMin / this.selectedExercise.durationMin * this.selectedExercise.calories;
+    const calories = durationMin * this.selectedExercise.kcalPerMin;
     this.calories.setValue(Number(calories.toFixed(1)));
   }
 
@@ -126,9 +128,8 @@ export class ExerciseSearchDialogComponent extends DialogWithToolbarComponent im
     };
     const newExerciseEntry: NewExerciseEntry = {
       name: newExerciseData.name,
-      amount: newExerciseData.amount,
-      unit: this.getUnitKey(),
-      position: entryPosition
+      duration: newExerciseData.amount,
+      timeUnit: this.getUnitKey()
     };
     this.diaryService.addExerciseEntry(date, newExerciseEntry)
       .subscribe(

@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { DialogWithToolbarComponent } from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ExerciseUnit } from '../../../model/units/exercise-unit.enum';
-import { EntryDialogData } from '../../../model/entries/entry-dialog-data';
-import { FormControl, Validators } from '@angular/forms';
-import { CustomValidators } from '../../../validation/custom-validators';
-import { DateService } from 'src/app/services/date.service';
-import { DiaryService } from 'src/app/services/diary.service';
-import { EditedExerciseEntry } from 'src/app/model/diary/edit/edited-exercise-entry';
+import {Component, Inject, OnInit} from '@angular/core';
+import {DialogWithToolbarComponent} from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ExerciseUnit} from '../../../model/units/exercise-unit.enum';
+import {EntryDialogData} from '../../../model/entries/entry-dialog-data';
+import {FormControl, Validators} from '@angular/forms';
+import {CustomValidators} from '../../../validation/custom-validators';
+import {DateService} from 'src/app/services/date.service';
+import {DiaryService} from 'src/app/services/diary.service';
+import {EditedExerciseEntry} from 'src/app/model/diary/edited-exercise-entry';
 
 @Component({
   selector: 'app-exercise-edit-dialog',
@@ -20,7 +20,7 @@ export class ExerciseEditDialogComponent extends DialogWithToolbarComponent impl
   private readonly unitKeys = Object.entries(ExerciseUnit).map(arr => arr[0]);
   private amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
   private exerciseUnit = new FormControl(this.data.unit);
-  private calories = new FormControl({ value: this.data.calories, disabled: true });
+  private calories = new FormControl({value: this.data.calories, disabled: true});
 
   private requestInProgress = false;
 
@@ -90,10 +90,9 @@ export class ExerciseEditDialogComponent extends DialogWithToolbarComponent impl
     };
     const editedEntry: EditedExerciseEntry = {
       duration: this.amount.value,
-      unit: this.getUnitKey(),
-      position: this.data.position
+      timeUnit: this.getUnitKey()
     };
-    this.diaryService.editExercise(date, editedEntry)
+    this.diaryService.editExercise(date, this.data.position, editedEntry)
       .subscribe(
         value => {
           this.requestInProgress = false;

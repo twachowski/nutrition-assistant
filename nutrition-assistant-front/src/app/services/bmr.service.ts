@@ -16,8 +16,8 @@ export class BMRService {
     private readonly activityService: ActivityService,
     private readonly nutrientTargetService: NutrientTargetService) { }
 
-  private getSexCoefficient(sex: Sex) {
-    if (sex === Sex.M) {
+  private static getSexCoefficient(sex: Sex) {
+    if (sex === Sex.MALE) {
       return 5;
     } else {
       return -161;
@@ -25,16 +25,17 @@ export class BMRService {
   }
 
   calculateBMR(age: number, height: number, weight: number, sex: Sex) {
-    return 10 * weight + 6.25 * height - 5 * age + this.getSexCoefficient(sex);
+    return 10 * weight + 6.25 * height - 5 * age + BMRService.getSexCoefficient(sex);
   }
 
   initUserCalorieTarget() {
     this.userService.getUserBiometrics().subscribe(
       value => {
-        const age = moment().diff(value.dateOfBirth, 'year');
-        const bmr = this.calculateBMR(age, value.height, value.weight, Sex[value.sex]);
-        const activityModifier = this.activityService.getModifier(ActivityLevel[value.activityLevel]);
-        const calorieTarget = activityModifier * bmr + value.calorieGoal;
+        const biometrics = value.userBiometrics;
+        const age = moment().diff(biometrics.dateOfBirth, 'year');
+        const bmr = this.calculateBMR(age, biometrics.height, biometrics.weight, Sex[biometrics.sex]);
+        const activityModifier = this.activityService.getModifier(ActivityLevel[biometrics.activityLevel]);
+        const calorieTarget = activityModifier * bmr + biometrics.calorieGoal;
         this.nutrientTargetService.setCalorieTarget(calorieTarget);
       },
       error => {

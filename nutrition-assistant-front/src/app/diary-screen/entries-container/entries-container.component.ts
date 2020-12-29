@@ -1,33 +1,36 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, ViewRef, OnDestroy } from '@angular/core';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatTable } from '@angular/material/table';
-import { Entry } from 'src/app/model/entries/entry';
-import { FoodEntry } from 'src/app/model/entries/food-entry';
-import { ExerciseEntry } from 'src/app/model/entries/exercise-entry';
-import { NoteEntry } from 'src/app/model/entries/note-entry';
-import { EntryType } from '../../model/entries/entry-type.enum';
-import { MatDialog } from '@angular/material/dialog';
-import { NoteEditDialogComponent, NoteEditDialogData } from '../entry-edit-dialogs/note-edit-dialog/note-edit-dialog.component';
-import { FoodEditDialogComponent } from '../entry-edit-dialogs/food-edit-dialog/food-edit-dialog.component';
-import { ExerciseEditDialogComponent } from '../entry-edit-dialogs/exercise-edit-dialog/exercise-edit-dialog.component';
-import { DialogConfigService } from '../../services/dialog-config.service';
-import { DiaryService } from 'src/app/services/diary.service';
-import { FoodEntryDetails } from 'src/app/model/diary/food-entry-details';
-import { NutrientBasicInfo } from 'src/app/model/food/nutrients/nutrient-basic-info';
-import { GeneralNutrient } from 'src/app/model/food/nutrients/general-nutrient.enum';
-import { ExerciseEntryDetails } from 'src/app/model/diary/exercise-entry-details';
-import { NoteEntryDetails } from 'src/app/model/diary/note-entry-details';
-import { DiaryEntriesResponse } from 'src/app/model/diary/diary-entries-response';
-import { ExerciseUnit } from 'src/app/model/units/exercise-unit.enum';
-import { FoodUnit } from 'src/app/model/units/food-unit.enum';
-import { DateService } from 'src/app/services/date.service';
-import { EntryService } from 'src/app/services/entry.service';
-import { EntryDialogData } from 'src/app/model/entries/entry-dialog-data';
-import { NutrientProgressService } from 'src/app/services/nutrient-progress.service';
-import { NutrientDetailsService } from 'src/app/services/nutrient-details.service';
-import { NutrientDetailsType } from 'src/app/model/nutrient-details-type.enum';
-import { BMRService } from 'src/app/services/bmr.service';
-import { Subscription } from 'rxjs';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewRef} from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {MatTable} from '@angular/material/table';
+import {Entry} from 'src/app/model/entries/entry';
+import {FoodEntry} from 'src/app/model/entries/food-entry';
+import {ExerciseEntry} from 'src/app/model/entries/exercise-entry';
+import {NoteEntry} from 'src/app/model/entries/note-entry';
+import {EntryType} from '../../model/entries/entry-type.enum';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  NoteEditDialogComponent,
+  NoteEditDialogData
+} from '../entry-edit-dialogs/note-edit-dialog/note-edit-dialog.component';
+import {FoodEditDialogComponent} from '../entry-edit-dialogs/food-edit-dialog/food-edit-dialog.component';
+import {ExerciseEditDialogComponent} from '../entry-edit-dialogs/exercise-edit-dialog/exercise-edit-dialog.component';
+import {DialogConfigService} from '../../services/dialog-config.service';
+import {DiaryService} from 'src/app/services/diary.service';
+import {FoodEntryDetails} from 'src/app/model/diary/food-entry-details';
+import {NutrientBasicInfo} from 'src/app/model/food/nutrients/nutrient-basic-info';
+import {GeneralNutrient} from 'src/app/model/food/nutrients/general-nutrient.enum';
+import {ExerciseEntryDetails} from 'src/app/model/diary/exercise-entry-details';
+import {NoteEntryDetails} from 'src/app/model/diary/note-entry-details';
+import {DiaryEntriesResponse} from 'src/app/model/diary/diary-entries-response';
+import {ExerciseUnit} from 'src/app/model/units/exercise-unit.enum';
+import {FoodUnit} from 'src/app/model/units/food-unit.enum';
+import {DateService} from 'src/app/services/date.service';
+import {EntryService} from 'src/app/services/entry.service';
+import {EntryDialogData} from 'src/app/model/entries/entry-dialog-data';
+import {NutrientProgressService} from 'src/app/services/nutrient-progress.service';
+import {NutrientDetailsService} from 'src/app/services/nutrient-details.service';
+import {NutrientDetailsType} from 'src/app/model/nutrient-details-type.enum';
+import {BMRService} from 'src/app/services/bmr.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-entries-container',
@@ -67,7 +70,7 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
     this.nutrientDetailsService.getAllNutrients()
       .forEach((type, nutrient) =>
         this.totalNutrients.get(type).push({
-          nutrient: nutrient,
+          nutrient,
           amount: 0
         }));
     this.editFunctionMap = new Map([
@@ -181,7 +184,7 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
           this.requestInProgress = false;
           const entry = this.entries[index];
           if (entry.type === EntryType.FOOD) {
-            this.removeNutrients((<FoodEntry>entry).nutrients);
+            this.removeNutrients((entry as FoodEntry).nutrients);
             this.updateProgress();
           }
           this.entries.splice(index, 1);
@@ -261,18 +264,17 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
 
   mapFoodEntry(entry: FoodEntryDetails) {
     const foodName = entry.name;
-    if (entry.brandName) {
-      foodName.concat(', ', entry.brandName);
+    if (entry.brand) {
+      foodName.concat(', ', entry.brand);
     }
     const calories = entry.nutrients.find(this.isEnergy).amount;
     entry.nutrients.forEach(n => {
-      const name = this.nutrientDetailsService.mapNutrientName(n.nutrient);
-      n.nutrient = name;
+      n.nutrient = this.nutrientDetailsService.mapNutrientName(n.nutrient);
     });
     this.entries[entry.position] =
       new FoodEntry(
         foodName,
-        FoodUnit[entry.unit],
+        FoodUnit[entry.massUnit],
         entry.amount,
         Math.round(calories),
         entry.nutrients);
@@ -282,7 +284,7 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
     this.entries[entry.position] =
       new ExerciseEntry(
         entry.name,
-        ExerciseUnit[entry.unit],
+        ExerciseUnit[entry.timeUnit],
         entry.duration,
         Math.round(entry.calories));
   }
@@ -298,10 +300,10 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
   sumNutrients() {
     this.entries.filter(entry => entry.type === EntryType.FOOD)
       .forEach(foodEntry => {
-        (<FoodEntry>foodEntry).nutrients.forEach(nutrient => {
+        (foodEntry as FoodEntry).nutrients.forEach(nutrient => {
           const type = this.nutrientDetailsService.getNutrientType(nutrient.nutrient);
           this.totalNutrients.get(type).find(n => n.nutrient === nutrient.nutrient).amount += nutrient.amount;
-        })
+        });
       });
   }
 
@@ -315,13 +317,13 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
   }
 
   editNutrients(index: number, coeff: number) {
-    (<FoodEntry>this.entries[index]).nutrients.forEach(nutrient => {
+    (this.entries[index] as FoodEntry).nutrients.forEach(nutrient => {
       const newAmount = nutrient.amount * coeff;
       const diff = newAmount - nutrient.amount;
       nutrient.amount = newAmount;
       const type = this.nutrientDetailsService.getNutrientType(nutrient.nutrient);
       this.totalNutrients.get(type).find(n => n.nutrient === nutrient.nutrient).amount += diff;
-    })
+    });
   }
 
   removeNutrients(nutrients: NutrientBasicInfo[]) {

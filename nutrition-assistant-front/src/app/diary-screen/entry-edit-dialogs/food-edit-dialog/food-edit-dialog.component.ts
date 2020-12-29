@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { DialogWithToolbarComponent } from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
-import { FoodUnit } from '../../../model/units/food-unit.enum';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EntryDialogData } from '../../../model/entries/entry-dialog-data';
-import { FormControl, Validators } from '@angular/forms';
-import { CustomValidators } from '../../../validation/custom-validators';
-import { DateService } from 'src/app/services/date.service';
-import { DiaryService } from 'src/app/services/diary.service';
-import { EditedFoodEntry } from 'src/app/model/diary/edit/edited-food-entry';
+import {Component, Inject, OnInit} from '@angular/core';
+import {DialogWithToolbarComponent} from '../../../dialog-with-toolbar/dialog-with-toolbar.component';
+import {FoodUnit} from '../../../model/units/food-unit.enum';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {EntryDialogData} from '../../../model/entries/entry-dialog-data';
+import {FormControl, Validators} from '@angular/forms';
+import {CustomValidators} from '../../../validation/custom-validators';
+import {DateService} from 'src/app/services/date.service';
+import {DiaryService} from 'src/app/services/diary.service';
+import {EditedFoodEntry} from 'src/app/model/diary/edited-food-entry';
 
 @Component({
   selector: 'app-food-edit-dialog',
@@ -20,7 +20,7 @@ export class FoodEditDialogComponent extends DialogWithToolbarComponent implemen
   private readonly unitKeys = Object.entries(FoodUnit).map(arr => arr[0]);
   private amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
   private foodUnit = new FormControl(this.data.unit);
-  private calories = new FormControl({ value: this.data.calories, disabled: true });
+  private calories = new FormControl({value: this.data.calories, disabled: true});
 
   private requestInProgress = false;
 
@@ -89,10 +89,9 @@ export class FoodEditDialogComponent extends DialogWithToolbarComponent implemen
     };
     const editedEntry: EditedFoodEntry = {
       amount: this.amount.value,
-      unit: this.getUnitKey(),
-      position: this.data.position
+      massUnit: this.getUnitKey()
     };
-    this.diaryService.editFood(date, editedEntry)
+    this.diaryService.editFood(date, this.data.position, editedEntry)
       .subscribe(
         value => {
           this.requestInProgress = false;

@@ -35,7 +35,7 @@ export class LoginDialogComponent extends DialogWithToolbarComponent implements 
     this.userService.logIn(credentials)
       .subscribe(
         response => {
-          localStorage.setItem('jwt', response.jwt);
+          localStorage.setItem('jwt', response.token);
           this.requestInProgress = false;
           this.dialogRef.close(this.email.value);
         },

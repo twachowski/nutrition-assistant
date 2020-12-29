@@ -1,10 +1,10 @@
-import { NutritionDataProvider } from './nutrition-data-provider.enum';
+import {NutritionDataProvider} from './nutrition-data-provider.enum';
 
 export interface FoodSearchItem {
 
-    readonly name: string;
-    readonly brandName: string;
-    readonly externalId: string;
-    readonly provider: NutritionDataProvider;
+  readonly id: string;
+  readonly provider: NutritionDataProvider;
+  readonly name: string;
+  readonly brand: string;
 
 }
