@@ -15,7 +15,7 @@ export class RegisterDialogComponent extends DialogWithToolbarComponent implemen
   private email = new FormControl('', [Validators.required, Validators.email]);
   private password = new FormControl('', [Validators.required, Validators.minLength(this.passwordLength)]);
   private confirmedPassword = new FormControl('', [Validators.required]);
-  private termsAccepted = false;
+  private termsAccepted = true;
   private requestInProgress = false;
   private tabIndex = 0;
 

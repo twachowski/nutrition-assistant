@@ -24,3 +24,7 @@ span {
 .spinner-container {
     padding-right: 10px;
 }
+
+.terms-checkbox {
+  visibility: hidden;
+}
