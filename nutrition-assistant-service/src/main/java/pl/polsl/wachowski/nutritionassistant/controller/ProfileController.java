@@ -36,6 +36,7 @@ public class ProfileController {
     @PutMapping(path = BIOMETRICS_API_SUFFIX,
                 consumes = APPLICATION_JSON_VALUE)
     ResponseEntity<Void> updateBiometrics(@RequestBody @Valid final UserBiometricsRequest request) {
+        profileService.updateUserBiometrics(request.getUserBiometrics());
         return ResponseEntity.noContent().build();
     }
 
