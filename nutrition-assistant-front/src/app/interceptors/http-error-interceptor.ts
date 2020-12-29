@@ -15,11 +15,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     private readonly snackBar: MatSnackBar) {
   }
 
+  private static isErrorMessage(error: HttpErrorResponse) {
+    return (error.error as ErrorMessage).message !== undefined;
+  }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 403 || error.status === 401) {
+          if (error.status === 401) {
             localStorage.removeItem('jwt');
             this.router.navigate(['home']);
           } else {
@@ -38,10 +42,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           return throwError(error.error);
         })
       );
-  }
-
-  private static isErrorMessage(error: HttpErrorResponse) {
-    return (error.error as ErrorMessage).message !== undefined;
   }
 
 }
