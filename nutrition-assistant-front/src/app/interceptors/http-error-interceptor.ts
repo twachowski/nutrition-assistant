@@ -6,12 +6,14 @@ import {Injectable} from '@angular/core';
 import {ErrorMessage} from '../model/error-message';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorSnackBarComponent} from '../error-snack-bar/error-snack-bar.component';
+import {RoutingService} from '../services/routing.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private readonly router: Router,
+    private readonly routingService: RoutingService,
     private readonly snackBar: MatSnackBar) {
   }
 
@@ -23,7 +25,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401) {
+          if ((error.status === 403 && request.url !== this.routingService.getLoginUrl()) || error.status === 401) {
             localStorage.removeItem('jwt');
             this.router.navigate(['home']);
           } else {
