@@ -6,4 +6,6 @@ public interface Nutrient {
 
     Unit getUnit();
 
+    String getName();
+
 }

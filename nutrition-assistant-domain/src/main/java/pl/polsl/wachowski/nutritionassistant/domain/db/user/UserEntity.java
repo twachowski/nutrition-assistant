@@ -3,6 +3,7 @@ package pl.polsl.wachowski.nutritionassistant.domain.db.user;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.domain.db.entry.DiaryEntryEntity;
+import pl.polsl.wachowski.nutritionassistant.domain.db.user.targets.HighlightedTargetsEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -41,6 +42,12 @@ public class UserEntity {
               optional = false,
               orphanRemoval = true)
     private UserCredentialsEntity userCredentials;
+
+    @OneToOne(mappedBy = "user",
+              cascade = CascadeType.ALL,
+              fetch = FetchType.LAZY,
+              orphanRemoval = true)
+    private HighlightedTargetsEntity highlightedTargets;
 
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL,

@@ -3,6 +3,11 @@ package pl.polsl.wachowski.nutritionassistant.api.nutrients;
 import lombok.AllArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.api.units.NutrientMassUnit;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @AllArgsConstructor
 public enum Mineral implements Nutrient {
 
@@ -18,6 +23,9 @@ public enum Mineral implements Nutrient {
     SODIUM,
     ZINC;
 
+    public static Map<String, Mineral> NAME_MAP = Stream.of(values())
+            .collect(Collectors.toMap(Mineral::getName, Function.identity()));
+
     private final NutrientMassUnit unit;
 
     Mineral() {
@@ -27,6 +35,11 @@ public enum Mineral implements Nutrient {
     @Override
     public NutrientMassUnit getUnit() {
         return unit;
+    }
+
+    @Override
+    public String getName() {
+        return name();
     }
 
 }

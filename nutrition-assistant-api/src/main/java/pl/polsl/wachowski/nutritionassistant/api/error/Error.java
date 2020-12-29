@@ -3,6 +3,7 @@ package pl.polsl.wachowski.nutritionassistant.api.error;
 public enum Error {
 
     ENTRY_NOT_FOUND,
+    UNKNOWN_NUTRIENT,
     USER_ALREADY_EXISTS,
     USER_ALREADY_ACTIVE,
     USER_INACTIVE,

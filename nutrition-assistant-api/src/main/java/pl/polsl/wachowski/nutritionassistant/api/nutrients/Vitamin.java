@@ -3,6 +3,11 @@ package pl.polsl.wachowski.nutritionassistant.api.nutrients;
 import lombok.AllArgsConstructor;
 import pl.polsl.wachowski.nutritionassistant.api.units.NutrientMassUnit;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @AllArgsConstructor
 public enum Vitamin implements Nutrient {
 
@@ -21,6 +26,9 @@ public enum Vitamin implements Nutrient {
     FOLATE(NutrientMassUnit.MICROGRAM),
     K(NutrientMassUnit.MICROGRAM);
 
+    public static Map<String, Vitamin> NAME_MAP = Stream.of(values())
+            .collect(Collectors.toMap(Vitamin::getName, Function.identity()));
+
     private final NutrientMassUnit unit;
 
     Vitamin() {
@@ -30,6 +38,11 @@ public enum Vitamin implements Nutrient {
     @Override
     public NutrientMassUnit getUnit() {
         return unit;
+    }
+
+    @Override
+    public String getName() {
+        return name();
     }
 
 }

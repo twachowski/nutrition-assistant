@@ -30,8 +30,11 @@ public final class NutritionAssistantApi {
     //profile
     public static final String PROFILE_API_SUFFIX = "/profile";
     public static final String BIOMETRICS_API_SUFFIX = "/biometrics";
+    public static final String HIGHLIGHTED_TARGETS_API_SUFFIX = "/highlightedTargets";
     public static final String PROFILE_BIOMETRICS_API_SUFFIX = PROFILE_API_SUFFIX + BIOMETRICS_API_SUFFIX;
+    public static final String PROFILE_HIGHLIGHTED_TARGETS_API_SUFFIX = PROFILE_API_SUFFIX + HIGHLIGHTED_TARGETS_API_SUFFIX;
     public static final String PROFILE_BIOMETRICS_API = API_PREFIX + PROFILE_BIOMETRICS_API_SUFFIX;
+    public static final String HIGHLIGHTED_TARGETS_API = API_PREFIX + PROFILE_HIGHLIGHTED_TARGETS_API_SUFFIX;
 
     //foods
     public static final String FOODS_API_SUFFIX = "/foods";

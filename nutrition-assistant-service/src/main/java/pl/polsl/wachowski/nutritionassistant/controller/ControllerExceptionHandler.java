@@ -16,6 +16,7 @@ import pl.polsl.wachowski.nutritionassistant.api.error.ErrorResponse;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.FdcException;
 import pl.polsl.wachowski.nutritionassistant.exception.provider.NutritionixException;
+import pl.polsl.wachowski.nutritionassistant.exception.target.UnknownTargetNutrientException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.user.InvalidCredentialsException;
@@ -35,6 +36,13 @@ public class ControllerExceptionHandler {
     ResponseEntity<ErrorResponse> handleEntryNotFoundException(final EntryNotFoundException e) {
         final ErrorResponse errorResponse = new ErrorResponse(Error.ENTRY_NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(UnknownTargetNutrientException.class)
+    ResponseEntity<ErrorResponse> handleUnknownTargetNutrientException(final UnknownTargetNutrientException e) {
+        final ErrorResponse errorResponse = new ErrorResponse(Error.UNKNOWN_NUTRIENT, e.getMessage());
+        return ResponseEntity.badRequest()
                 .body(errorResponse);
     }
 
