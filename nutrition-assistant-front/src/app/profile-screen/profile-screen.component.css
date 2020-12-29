@@ -1,0 +1,22 @@
+.container {
+    height: 100%;
+    overflow: hidden;
+}
+
+.mat-nav-list {
+    padding-top: 0px;
+}
+
+.mat-list-item {
+    font-size: 28px;
+}
+
+.mat-list-item span {
+    padding-left: 10px;
+}
+
+.go-back-item {
+    margin-bottom: 10px;
+    background: #303030;
+    border-bottom: grey ridge;
+}

@@ -1,0 +1,66 @@
+.mat-form-field {
+    width: 100%;
+}
+
+.search-button {
+    padding-bottom: 20px;
+}
+
+.table-container {
+    min-height: 350px;
+    max-height: 350px;
+    border: solid 4px #558b2f;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.dialog-actions {
+    padding-top: 20px;
+}
+
+.mat-table {
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.mat-cell {
+    font-size: 10pt;
+    max-height: 25px;
+}
+
+.mat-header-row {
+    min-height: 40px;
+    height: 40px;
+    background: #303030;
+}
+
+.mat-row {
+    min-height: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.mat-row:hover {
+    background: #555555;
+}
+
+.clicked {
+    background: #707070;
+}
+
+.clicked:hover {
+    background: #909090;
+}
+
+.name-cell {
+    white-space: nowrap;
+}
+
+.provider-cell {
+    max-width: 85px;
+    justify-content: center;
+}
+
+.brand-name {
+    font-style: italic;
+}

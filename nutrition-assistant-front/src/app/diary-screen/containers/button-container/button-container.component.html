@@ -1,0 +1,14 @@
+<button mat-button class="card-button" (click)="emitOpenDialogEvent()">
+    <mat-card class="card-with-toolbar">
+        <mat-card-title class="card-toolbar" fxLayout="row">
+            <div class="icon-container center">
+                <mat-icon color="primary">
+                    {{icon}}
+                </mat-icon>
+            </div>
+            <div class="label-container">
+                {{label}}
+            </div>
+        </mat-card-title>
+    </mat-card>
+</button>

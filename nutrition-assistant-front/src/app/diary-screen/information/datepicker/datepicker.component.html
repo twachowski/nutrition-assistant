@@ -1,0 +1,15 @@
+<mat-form-field>
+    <input matInput [matDatepicker]="datepicker" [formControl]="date">
+    <button matPrefix matDatepickerToggleIcon mat-icon-button color="accent" (click)="previousDay()">
+        <mat-icon>
+            chevron_left
+        </mat-icon>
+    </button>
+    <button matSuffix matDatepickerToggleIcon mat-icon-button color="accent" (click)="nextDay()">
+        <mat-icon>
+            chevron_right
+        </mat-icon>
+    </button>
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker color="accent" touchUi disabled="false"></mat-datepicker>
+</mat-form-field>

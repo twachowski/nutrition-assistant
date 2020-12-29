@@ -1,0 +1,33 @@
+<app-basic-toolbar></app-basic-toolbar>
+<div class="center">
+    <mat-card class="main-card">
+        <mat-card-title fxLayout="row" fxLayoutAlign="space-evenly center">
+            <ng-container *ngIf="success; else failure">
+                <mat-icon class="main-icon" color="primary">
+                    done
+                </mat-icon>
+                <h2>
+                    You have successfully activated your account!
+                </h2>
+            </ng-container>
+            <ng-template #failure>
+                <mat-icon class="main-icon" color="warn">
+                    error
+                </mat-icon>
+                <h2>
+                    Invalid activation link
+                </h2>
+            </ng-template>
+        </mat-card-title>
+        <mat-card-content>
+            <button mat-button class="card-button" routerLink="/home">
+                <mat-card>
+                    <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="10px">
+                        <mat-icon color="accent">home</mat-icon>
+                        <h1>Home</h1>
+                    </mat-card-content>
+                </mat-card>
+            </button>
+        </mat-card-content>
+    </mat-card>
+</div>

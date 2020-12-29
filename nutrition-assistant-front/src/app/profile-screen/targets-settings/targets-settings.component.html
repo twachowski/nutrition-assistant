@@ -1,0 +1,36 @@
+<mat-card>
+    <mat-card-title class="center">
+        Targets settings
+    </mat-card-title>
+    <mat-card-subtitle>
+        Choose nutrients that will be highlighted in diary screen
+    </mat-card-subtitle>
+    <mat-card-content fxLayout="column">
+        <div *ngFor="let controls of formControls; let j = index" fxLayout="row" fxLayoutAlign="space-between center"
+            fxLayoutGap="10px">
+            <span class="index">{{j+1}}.</span>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Nutrient type</mat-label>
+                <mat-select [formControl]="controls[0]">
+                    <mat-option *ngFor="let type of nutrientTypes" [value]="type[0]">
+                        {{type[1]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Nutrient</mat-label>
+                <mat-select [formControl]="controls[1]">
+                    <mat-option *ngFor="let nutrient of getNutrients(controls[0].value); let i = index" [value]="i">
+                        {{nutrient.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
+            <button mat-raised-button color="primary">
+                Save
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>

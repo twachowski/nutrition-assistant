@@ -1,0 +1,19 @@
+.dialog-with-toolbar .form-field {
+    width: 100%;
+}
+
+.dialog-with-toolbar .mat-dialog-container {
+    padding: 0;
+}
+
+.dialog-with-toolbar .mat-dialog-content {
+    margin: 0;
+}
+
+.dialog-with-toolbar .bottom-padding {
+    padding-bottom: 30px;
+}
+
+.dialog-with-toolbar .mat-toolbar {
+    display: flex;
+}

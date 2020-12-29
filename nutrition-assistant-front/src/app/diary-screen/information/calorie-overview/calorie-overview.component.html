@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div class="calorie-detail left-container">
+        <app-calorie-detail [amount]="formatValue(calorieTarget-foodCalories-exerciseCalories)" label="LEFT">
+        </app-calorie-detail>
+    </div>
+    <div class="calorie-detail border">
+        <app-calorie-detail [amount]="calorieTarget" label="TARGET"></app-calorie-detail>
+    </div>
+    <div class="calorie-detail border">
+        <app-calorie-detail [amount]="foodCalories" label="FOOD"></app-calorie-detail>
+    </div>
+    <div class="calorie-detail border">
+        <app-calorie-detail [amount]="exerciseCalories" label="EXERCISE"></app-calorie-detail>
+    </div>
+    <div class="calorie-detail border">
+        <app-calorie-detail [amount]="formatValue(foodCalories+exerciseCalories)" label="NET"></app-calorie-detail>
+    </div>
+</div>

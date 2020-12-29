@@ -1,0 +1,75 @@
+<app-dialog-with-toolbar title="Sign in">
+    <mat-tab-group [selectedIndex]="tabIndex">
+        <mat-tab>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>
+                        e-mail
+                    </mat-label>
+                    <input matInput type="email" [formControl]="email" required>
+                    <mat-error *ngIf="email.invalid">
+                        {{getEmailLoginErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>
+                        password
+                    </mat-label>
+                    <input matInput type="password" [formControl]="password" required>
+                    <mat-error *ngIf="password.invalid">
+                        {{getPasswordErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="floatleft margin-left">
+                <mat-checkbox>
+                    Remember me
+                </mat-checkbox>
+            </div>
+            <div class="floatright">
+                <a [routerLink]="" (click)="tabIndex=1">
+                    Forgot password
+                </a>
+            </div>
+            <div class="vertical-space"></div>
+            <div class="right bottom-padding" fxLayout="row" fxLayoutAlign="end center">
+                <div class="spinner-container">
+                    <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
+                </div>
+                <button mat-raised-button color="primary" (click)="logIn()" [disabled]="isSignInDisabled()">
+                    Sign in
+                </button>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <div class="top-padding">
+                <button mat-icon-button (click)="tabIndex=0">
+                    <mat-icon>
+                        arrow_back
+                    </mat-icon>
+                </button>
+            </div>
+            <div class="center vertical-padding">
+                Enter the email<br />to receive a password-resetting link
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>
+                        e-mail
+                    </mat-label>
+                    <input matInput type="email" [formControl]="emailReset" required>
+                    <mat-error *ngIf="email.invalid">
+                        {{getEmailResetErrorMessage()}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="right top-padding bottom-padding">
+                <button mat-raised-button color="primary" [disabled]="isResetPasswordDisabled()">
+                    Reset password
+                </button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</app-dialog-with-toolbar>

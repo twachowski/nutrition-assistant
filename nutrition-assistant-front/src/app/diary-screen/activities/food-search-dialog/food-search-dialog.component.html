@@ -1,0 +1,52 @@
+<app-dialog-with-toolbar title="New food">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Food name</mat-label>
+            <input matInput [formControl]="foodName">
+            <mat-error *ngIf="foodName.invalid">
+                Food name must not be blank
+            </mat-error>
+        </mat-form-field>
+        <div class="search-button">
+            <button mat-fab color="accent" (click)="search()" *ngIf="!requestInProgress; else displayProgress"
+                [disabled]="foodName.invalid">
+                <mat-icon>search</mat-icon>
+            </button>
+            <ng-template #displayProgress>
+                <mat-spinner color="accent" diameter="56"></mat-spinner>
+            </ng-template>
+        </div>
+    </div>
+    <div class="table-container">
+        <mat-table #table [dataSource]="foods">
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                <mat-cell class="name-cell" *matCellDef="let food">
+                    {{food.name}}
+                    <ng-container *ngIf="food.brandName">
+                        <p>,&nbsp;</p>
+                        <p class="brand-name">
+                            {{food.brandName}}
+                        </p>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="provider">
+                <mat-header-cell class="provider-cell" *matHeaderCellDef>
+                    Provider
+                </mat-header-cell>
+                <mat-cell class="provider-cell" *matCellDef="let food">
+                    {{getProvider(food.provider)}}
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="onRowClick(row, i)"
+                [class.clicked]="selectedFood && i === selectedFoodIndex"></mat-row>
+        </mat-table>
+    </div>
+    <div class="dialog-actions">
+        <button mat-stroked-button mat-dialog-close>
+            Cancel
+        </button>
+    </div>
+</app-dialog-with-toolbar>

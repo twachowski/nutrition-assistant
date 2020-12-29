@@ -1,0 +1,10 @@
+.progress-container {
+    width: 50%;
+    padding-right: 5%;
+    border-right: dotted;
+}
+
+.label-container {
+    width: 50%;
+    font-size: 125%;
+}

@@ -1,0 +1,16 @@
+.mat-card {
+    width: 180px;
+    height: 150px;
+    padding: 0px 0px;
+}
+
+.icon-container {
+    height: 100%;
+    font-size: 24pt;
+    background: #555555;
+    padding: 60px 12px 12px 12px;
+}
+
+.description-container {
+    padding: 12px 12px;
+}

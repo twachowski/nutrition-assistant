@@ -1,0 +1,38 @@
+.main-card {
+    margin-top: 50px;
+    width: 495px;
+    display: inline-block;
+}
+
+.main-card h2 {
+    margin: 20px 0px 20px 0px;
+}
+
+.main-card .mat-card-title {
+    margin-bottom: 0px;
+}
+
+.main-icon {
+    font-size: 48px;
+    height: 48px;
+    width: 48px;
+}
+
+.card-button {
+    padding: 0px;
+}
+
+.card-button .mat-card {
+    padding: 5px 15px 5px 15px;
+    background: #666666;
+}
+
+.card-button .mat-icon {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+}
+
+.card-button h1 {
+    margin-top: 0px;
+}

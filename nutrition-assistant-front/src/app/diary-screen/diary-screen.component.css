@@ -1,0 +1,17 @@
+.container {
+    height: 100%;
+    width: 100%;
+    padding-top: 30px;
+}
+
+.activity-container {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.information-container {
+    float: right;
+    width: 50%;
+    height: 100%;
+}

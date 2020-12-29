@@ -1,0 +1,86 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NutrientTargetService } from 'src/app/services/nutrient-target.service';
+import { NutrientProgressService } from 'src/app/services/nutrient-progress.service';
+import { NutrientDetailsType } from 'src/app/model/nutrient-details-type.enum';
+import { GeneralNutrient } from 'src/app/model/food/nutrients/general-nutrient.enum';
+import { NutrientDetailsService } from 'src/app/services/nutrient-details.service';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-information',
+  templateUrl: './information.component.html',
+  styleUrls: ['./information.component.css']
+})
+export class InformationComponent implements OnInit, OnDestroy {
+
+  private overallProgress = 0;
+  private readonly progressMap = new Map<NutrientDetailsType, number>();
+  private readonly progressCoeff;
+
+  private calorieTarget = 0;
+  private calorieAmount = 0;
+
+  private readonly subscription: Subscription;
+
+  constructor(
+    private readonly nutrientTargetService: NutrientTargetService,
+    private readonly nutrientProgressService: NutrientProgressService,
+    private readonly nutrientDetailsService: NutrientDetailsService) {
+    this.subscription = this.nutrientTargetService.getCalorieTarget().subscribe(
+      value => this.calorieTarget = value
+    );
+    const progressSub = this.nutrientProgressService.getChanges(NutrientDetailsType.GENERAL).subscribe(
+      changes => this.calorieAmount = changes.find(n => n.nutrient === GeneralNutrient.ENERGY).amount
+    );
+    this.subscription.add(progressSub);
+
+    const nutrientTypes = [
+      NutrientDetailsType.GENERAL,
+      NutrientDetailsType.CARBOHYDRATES,
+      NutrientDetailsType.LIPIDS,
+      NutrientDetailsType.AMINO_ACIDS,
+      NutrientDetailsType.VITAMINS,
+      NutrientDetailsType.MINERALS
+    ];
+    let nutrientsWithTargetCount = 0;
+    nutrientTypes.forEach(type => {
+      this.progressMap.set(type, 0);
+      const nutrientDetails = this.nutrientDetailsService.get(type);
+      nutrientDetails.forEach(nutrient => {
+        if (nutrient.target) {
+          nutrientsWithTargetCount++;
+        }
+      });
+      const sub = this.nutrientProgressService.getChanges(type).subscribe(
+        changes => {
+          let progress = 0;
+          changes.forEach(nutrient => {
+            const nutrientDetail = nutrientDetails.find(n => n.name === nutrient.nutrient);
+            if (nutrientDetail.target) {
+              const nutrientProgress = nutrient.amount / nutrientDetail.target;
+              progress += nutrientProgress > 1 ? 1 : nutrientProgress;
+            }
+          });
+          this.progressMap.set(type, progress);
+          this.calculateProgress();
+        }
+      );
+      this.subscription.add(sub);
+    });
+    this.progressCoeff = 100 / nutrientsWithTargetCount;
+  }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  calculateProgress() {
+    let progress = 0;
+    this.progressMap.forEach(value => progress += value);
+    this.overallProgress = progress * this.progressCoeff;
+  }
+
+}

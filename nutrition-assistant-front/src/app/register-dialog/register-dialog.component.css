@@ -1,0 +1,26 @@
+.mat-card {
+    box-shadow: none;
+    margin-top: 10px;
+}
+
+.mat-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+}
+
+span {
+    font-size: 18px;
+}
+
+.top-padding {
+    padding-top: 7px;
+}
+
+:host ::ng-deep .mat-tab-header {
+    display: none;
+}
+
+.spinner-container {
+    padding-right: 10px;
+}

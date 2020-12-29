@@ -1,0 +1,17 @@
+.container {
+    height: 100%;
+}
+
+.button-container {
+    width: 30%;
+}
+
+.entries-container {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+app-entries-container {
+    width: 97%;
+}

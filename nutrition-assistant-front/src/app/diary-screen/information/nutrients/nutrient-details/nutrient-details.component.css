@@ -1,0 +1,54 @@
+.label-container {
+    width: 30%;
+    font-size: 125%;
+}
+
+.nutrients-container {
+    width: 70%;
+}
+
+.mat-cell {
+    font-size: 10pt;
+}
+
+.mat-header-row {
+    min-height: 30px;
+    max-height: 35px;
+    background: #303030;
+    border-radius: 5px;
+}
+
+.mat-row {
+    min-height: 25px;
+    height: 25px;
+}
+
+.name-cell {
+    max-width: 160px;
+}
+
+.amount-cell {
+    max-width: 50px;
+    justify-content: center;
+}
+
+.unit-cell {
+    max-width: 35px;
+}
+
+.progress-cell {
+    justify-content: center;
+}
+
+.progress-bar {
+    height: 20px;
+}
+
+::ng-deep .mat-tooltip {
+    text-align: center;
+    background: #252525;
+    border: groove #ffab00 2px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: pre-line;
+}

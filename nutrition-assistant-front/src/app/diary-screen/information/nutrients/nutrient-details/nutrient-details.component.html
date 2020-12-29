@@ -1,0 +1,42 @@
+<mat-card>
+    <div fxLayout="row">
+        <div class="label-container" fxLayout="column" fxLayoutAlign="center center">
+            <div *ngIf="amount !== undefined">
+                {{format(amount)}}g
+            </div>
+            <div>
+                {{label}}
+            </div>
+        </div>
+        <div class="nutrients-container">
+            <mat-table [dataSource]="nutrients">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell class="name-cell" *matHeaderCellDef>Name</mat-header-cell>
+                    <mat-cell class="name-cell" *matCellDef="let nutrient">{{nutrient.name}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell class="amount-cell" *matHeaderCellDef>Amount</mat-header-cell>
+                    <mat-cell class="amount-cell" *matCellDef="let nutrient">{{format(nutrient.amount)}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="unit">
+                    <mat-header-cell class="unit-cell" *matHeaderCellDef>Unit</mat-header-cell>
+                    <mat-cell class="unit-cell" *matCellDef="let nutrient">{{nutrient.unit}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="progress">
+                    <mat-header-cell class="progress-cell" *matHeaderCellDef>Progress</mat-header-cell>
+                    <mat-cell *matCellDef="let nutrient">
+                        <app-progress-bar class="progress-bar" *ngIf="nutrient.target; else noTarget"
+                            [value]="round(nutrient.amount/nutrient.target*100)" [matTooltip]="getTooltip(nutrient)"
+                            matTooltipPosition="above" matTooltipShowDelay="100" matTooltipHideDelay="10">
+                        </app-progress-bar>
+                        <ng-template #noTarget>
+                            <app-undefined-progress-bar class="progress-bar"></app-undefined-progress-bar>
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+</mat-card>

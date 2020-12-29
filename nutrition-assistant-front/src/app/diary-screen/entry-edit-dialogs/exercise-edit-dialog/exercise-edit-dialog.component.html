@@ -1,0 +1,36 @@
+<app-dialog-with-toolbar title="Exercise entry editing">
+    <div class="exercise-name center">{{data.name}}</div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayoutGap="10px">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" [formControl]="amount" (blur)="onBlur()">
+            <mat-error *ngIf="amount.invalid">
+                {{getErrorMessage()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="unit-form-field" appearance="outline" color="accent">
+            <mat-label>Unit</mat-label>
+            <mat-select [formControl]="exerciseUnit">
+                <mat-option *ngFor="let unit of units" [value]="unit">
+                    {{unit}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>Calories</mat-label>
+        <input matInput type="number" [formControl]="calories">
+    </mat-form-field>
+    <div class="bottom-padding" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+        <div>
+            <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
+        </div>
+        <button mat-stroked-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button color="primary" [disabled]="amount.invalid || requestInProgress"
+            (click)="editExercise()">
+            Save
+        </button>
+    </div>
+</app-dialog-with-toolbar>

@@ -1,0 +1,52 @@
+<div class="center">
+    <app-datepicker></app-datepicker>
+</div>
+<div class="center information-container" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="16px">
+    <div fxLayout="row" fxLayoutAlign="space-evenly">
+        <app-general-progress [progress]="overallProgress" label="OVERALL PROGRESS"></app-general-progress>
+        <app-general-progress [progress]="calorieAmount/calorieTarget*100" label="CALORIE PROGRESS"></app-general-progress>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-card class="targets-container card-with-toolbar no-bottom-padding">
+            <mat-card-title class="card-toolbar">
+                TARGETS
+            </mat-card-title>
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-evenly">
+                    <app-elementary-progress progress="0" label="Target1"></app-elementary-progress>
+                    <app-elementary-progress progress="16" label="Target2"></app-elementary-progress>
+                    <app-elementary-progress progress="32" label="Target3"></app-elementary-progress>
+                    <app-elementary-progress progress="48" label="Target4"></app-elementary-progress>
+                    <app-elementary-progress progress="64" label="Target5"></app-elementary-progress>
+                    <app-elementary-progress progress="80" label="Target6"></app-elementary-progress>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-card class="targets-container card-with-toolbar">
+            <mat-card-title class="card-toolbar">
+                CALORIE OVERVIEW
+            </mat-card-title>
+            <app-calorie-overview></app-calorie-overview>
+        </mat-card>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-general-nutrient-details class="targets-container"></app-general-nutrient-details>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-carbohydrates-details class="targets-container"></app-carbohydrates-details>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-lipids-details class="targets-container"></app-lipids-details>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-protein-details class="targets-container"></app-protein-details>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-vitamin-details class="targets-container"></app-vitamin-details>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <app-mineral-details class="targets-container"></app-mineral-details>
+    </div>
+</div>

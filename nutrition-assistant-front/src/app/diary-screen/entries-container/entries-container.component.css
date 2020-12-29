@@ -1,0 +1,129 @@
+.mat-card {
+    height: 100%;
+}
+
+.mat-card-content {
+    height: 95%;
+    border: solid 4px #558b2f;
+    border-radius: 10px;
+}
+
+.mat-table {
+    overflow: hidden;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.mat-cell {
+    cursor: move;
+    font-size: 10pt;
+    max-height: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mat-header-row {
+    min-height: 40px;
+    height: 40px;
+    background: #303030;
+}
+
+.mat-row {
+    min-height: 25px;
+    height: 25px;
+}
+
+.placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    width: 100%;
+    height: 25px;
+    transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+    border-radius: 10px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+    transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drop-list.cdk-drop-list-dragging .box:not(.cdk-drag-placeholder) {
+    transition: transform 125ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.green-icon {
+    color: #558b2f;
+}
+
+.blue-icon {
+    color: #00b0ff;
+}
+
+.yellow-icon {
+    color: #ffab00;
+}
+
+.icon-cell {
+    max-width: 45px;
+    padding-left: 10px;
+}
+
+.amount-cell {
+    max-width: 100px;
+    justify-content: flex-end;
+}
+
+.unit-cell {
+    max-width: 40px;
+    justify-content: center;
+}
+
+.calories-cell {
+    max-width: 100px;
+    justify-content: flex-end;
+}
+
+.edit-cell {
+    max-width: 30px;
+    visibility: hidden;
+}
+
+.delete-cell {
+    max-width: 30px;
+    visibility: hidden;
+}
+
+mat-row:hover mat-cell.delete-cell,
+mat-row:hover mat-cell.edit-cell {
+    visibility: visible;
+}
+
+.mat-icon-button {
+    color: dimgray;
+}
+
+.delete-cell .mat-icon-button:hover {
+    color: #f44336;
+}
+
+.edit-cell .mat-icon-button:hover {
+    color: #ffab00;
+}
+
+.loading-overlay {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

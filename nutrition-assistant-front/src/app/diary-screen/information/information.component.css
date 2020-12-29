@@ -1,0 +1,28 @@
+.information-container {
+    height: 100%;
+}
+
+.targets-container {
+    width: 97%;
+}
+
+app-general-progress {
+    width: 48%;
+}
+
+.card-with-toolbar {
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.no-bottom-padding {
+    padding-bottom: 0px;
+}
+
+.card-toolbar {
+    background: #252525;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 10px;
+}

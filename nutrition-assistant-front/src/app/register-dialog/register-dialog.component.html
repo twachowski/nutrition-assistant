@@ -1,0 +1,76 @@
+<app-dialog-with-toolbar title="Sign up">
+    <mat-tab-group [selectedIndex]="tabIndex">
+        <mat-tab>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>
+                    e-mail
+                </mat-label>
+                <input matInput type="email" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">
+                    {{getEmailErrorMessage()}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>
+                    password
+                </mat-label>
+                <input matInput type="password" [formControl]="password" required>
+                <mat-error *ngIf="password.invalid">
+                    {{getPasswordErrorMessage()}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>
+                    confirm password
+                </mat-label>
+                <input matInput type="password" [formControl]="confirmedPassword" pattern="{{password.value}}" required>
+                <mat-error *ngIf="confirmedPassword.invalid">
+                    {{getConfirmedPasswordErrorMessage()}}
+                </mat-error>
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="termsAccepted">
+                I accept the
+                <a href="https:/google.com">
+                    Terms and Conditions
+                </a>
+            </mat-checkbox>
+            <div class="bottom-padding" fxLayout="row" fxLayoutAlign="end center">
+                <div class="spinner-container">
+                    <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
+                </div>
+                <button mat-raised-button color="primary" (click)="signUp()" [disabled]="isSignUpUnavailable()">
+                    Sign up
+                </button>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+                <mat-card>
+                    <mat-card-title fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                        <mat-icon color="primary">
+                            done
+                        </mat-icon>
+                        <span>Success</span>
+                    </mat-card-title>
+                </mat-card>
+                <span>
+                    You have successfully created an account!
+                </span>
+                <span>
+                    All you have to do now is activate your account.
+                </span>
+                <span>
+                    A message has been sent to your e-mail.
+                </span>
+                <span class="center">
+                    Follow the instructions inside and start using<br />Nutrition Assistant!
+                </span>
+                <div class="top-padding bottom-padding">
+                    <button mat-raised-button mat-dialog-close>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</app-dialog-with-toolbar>

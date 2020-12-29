@@ -1,0 +1,10 @@
+:host {
+    display: block;
+    height: 100%;
+}
+
+svg {
+    background: darkgrey;
+    border: solid grey;
+    border-radius: 5px;
+}

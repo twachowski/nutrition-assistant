@@ -1,0 +1,26 @@
+<div class="container">
+    <app-logged-in-toolbar></app-logged-in-toolbar>
+    <mat-sidenav-container fxFlexFill>
+        <mat-sidenav mode="side" opened>
+            <mat-nav-list>
+                <mat-list-item class="go-back-item" routerLink="/home">
+                    <mat-icon mat-list-icon color="primary">arrow_back</mat-icon>
+                    <span>Go back</span>
+                </mat-list-item>
+                <mat-list-item routerLink="biometrics">
+                    <mat-icon mat-list-icon color="accent">assignment_ind</mat-icon>
+                    <span>Biometrics</span>
+                </mat-list-item>
+                <mat-list-item routerLink="targets">
+                    <mat-icon mat-list-icon color="accent">track_changes</mat-icon>
+                    <span>Targets</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="center">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

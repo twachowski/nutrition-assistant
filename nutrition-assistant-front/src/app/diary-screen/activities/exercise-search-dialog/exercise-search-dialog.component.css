@@ -1,0 +1,85 @@
+.mat-form-field {
+    width: 100%;
+}
+
+.search-button {
+    padding-bottom: 20px;
+}
+
+.table-container {
+    min-height: 150px;
+    border: solid 4px #558b2f;
+    border-radius: 10px;
+}
+
+mat-row {
+    cursor: pointer;
+}
+
+mat-row:hover {
+    background: #555555;
+}
+
+.clicked {
+    background: #707070;
+}
+
+.clicked:hover {
+    background: #909090;
+}
+
+.accordion-container {
+    height: 104px;
+    overflow: hidden;
+}
+
+.placeholder {
+    height: 90px;
+}
+
+.mat-expansion-panel {
+    width: 100%;
+    box-shadow: none;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 0px;
+}
+
+.exercise-details {
+    padding-top: 10px;
+}
+
+.number-form-field {
+    max-width: 175px;
+}
+
+.unit-form-field {
+    max-width: 100px;
+}
+
+.mat-table {
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.mat-cell {
+    font-size: 10pt;
+    max-height: 25px;
+}
+
+.mat-header-row {
+    min-height: 40px;
+    height: 40px;
+    background: #303030;
+}
+
+.mat-row {
+    min-height: 25px;
+    height: 25px;
+}
+
+.provider-cell {
+    max-width: 85px;
+    justify-content: center;
+}

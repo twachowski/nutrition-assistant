@@ -1,0 +1,20 @@
+.top-padding {
+    padding-top: 9px;
+}
+
+.vertical-padding {
+    padding-top: 11px;
+    padding-bottom: 30px;
+}
+
+:host ::ng-deep .mat-tab-header {
+    display: none;
+}
+
+.margin-left {
+    margin-left: 12px;
+}
+
+.spinner-container {
+    padding-right: 10px;
+}

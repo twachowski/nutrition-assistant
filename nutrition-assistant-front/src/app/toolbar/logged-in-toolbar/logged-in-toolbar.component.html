@@ -1,0 +1,32 @@
+<app-basic-toolbar>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="column" fxLayoutAlign="space-between center">
+            <div>
+                <mat-icon color="accent" class="person-icon">
+                    person
+                </mat-icon>
+                Logged in as
+            </div>
+            <div>
+                <b>{{user}}</b>
+            </div>
+        </div>
+        <div class="button-container">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>
+                    more_vert
+                </mat-icon>
+            </button>
+            <mat-menu #menu>
+                <button mat-menu-item routerLink="/profile">
+                    <mat-icon>perm_identity</mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+</app-basic-toolbar>

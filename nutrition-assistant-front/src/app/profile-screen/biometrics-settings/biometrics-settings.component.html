@@ -1,0 +1,158 @@
+<mat-card class="main-card">
+    <mat-card-title class="main-card-title center">
+        Biometrics settings
+    </mat-card-title>
+    <mat-card-content class="main-card-content" fxLayout="column" fxLayoutGap="10px">
+        <div>
+            <mat-form-field class="date-form" appearance="outline" color="accent">
+                <mat-label>Date of birth</mat-label>
+                <input matInput [matDatepicker]="datepicker" [formControl]="dateOfBirth" [min]="minDate"
+                    [max]="maxDate">
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker></mat-datepicker>
+                <mat-error *ngIf="dateOfBirth.invalid">
+                    {{getDateErrorMessage()}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
+            <mat-form-field class="form-field" appearance="outline" color="accent">
+                <mat-label>Height</mat-label>
+                <input matInput type="number" [formControl]="height" (blur)="onHeightBlur()">
+                <span matSuffix>cm</span>
+                <mat-error *ngIf="height.invalid">
+                    Invalid height
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline" color="accent">
+                <mat-label>Weight</mat-label>
+                <input matInput type="number" [formControl]="weight" (blur)="onWeightBlur()">
+                <span matSuffix>kg</span>
+                <mat-error *ngIf="weight.invalid">
+                    Invalid weight
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="10px">
+            <mat-form-field class="form-field" appearance="outline" color="accent">
+                <mat-label>Sex</mat-label>
+                <mat-select [formControl]="sex">
+                    <mat-option *ngFor="let s of sexEntries" [value]="s">
+                        {{s}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline" color="accent">
+                <mat-label>Activity level</mat-label>
+                <mat-select [formControl]="activityLevel">
+                    <mat-option *ngFor="let level of activityEntries" [value]="level">
+                        {{level}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <span class="bold accent">
+                {{activityLevel.value}}
+            </span>
+            <span>
+                activity level is equivalent to
+            </span>
+            <span class="bold accent">
+                {{activityService.getModifier(activityLevel.value)}}
+            </span>
+            <span>
+                calorie modifier.
+            </span>
+        </div>
+        <div>
+            <mat-card class="goal-card">
+                <mat-card-title class="goal-card-title">
+                    Goal
+                </mat-card-title>
+                <mat-card-content fxLayout="row" fxLayoutAlign="space-around">
+                    <div class="goal-container" fxLayout="column">
+                        <div class="label-container">
+                            <mat-radio-button (change)="onRadioClick(0)" [checked]="checkedRadio === 0">
+                                Lose weight
+                            </mat-radio-button>
+                        </div>
+                        <div>
+                            <mat-form-field class="goal-form-field" appearance="standard" color="accent"
+                                floatLabel="always">
+                                <mat-label>Calorie deficit</mat-label>
+                                <input matInput type="number" autocomplete="off" [formControl]="calorieDeficit"
+                                    (blur)="onBlur(calorieDeficit)">
+                                <span matPrefix>-&nbsp;</span>
+                                <mat-error *ngIf="calorieDeficit.invalid">
+                                    {{getGoalErrorMessage(calorieDeficit)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="goal-container">
+                        <div class="label-container">
+                            <mat-radio-button (change)="onRadioClick(1)" [checked]="checkedRadio === 1">
+                                Maintain weight
+                            </mat-radio-button>
+                        </div>
+                    </div>
+                    <div class="goal-container" fxLayout="column">
+                        <div class="label-container">
+                            <mat-radio-button (change)="onRadioClick(2)" [checked]="checkedRadio === 2">
+                                Gain weight
+                            </mat-radio-button>
+                        </div>
+                        <div>
+                            <mat-form-field class="goal-form-field" appearance="standard" color="accent"
+                                floatLabel="always">
+                                <mat-label>Calorie surplus</mat-label>
+                                <input matInput type="number" autocomplete="off" [formControl]="calorieSurplus"
+                                    (blur)="onBlur(calorieSurplus)">
+                                <span matPrefix>+&nbsp;</span>
+                                <mat-error *ngIf="calorieSurplus.invalid">
+                                    {{getGoalErrorMessage(calorieSurplus)}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="center">
+            <mat-card class="secondary-card">
+                <mat-card-title class="secondary-card-title">
+                    BMR
+                </mat-card-title>
+                <mat-card-content>
+                    <div fxLayout="row">
+                        <div class="bmr-component-container" fxLayout="column">
+                            <div class="label-container">Biometrics</div>
+                            <div class="value-container">{{biometricsBMR.value}}</div>
+                        </div>
+                        <div class="bmr-component-container" fxLayout="column">
+                            <div class="label-container">Activity</div>
+                            <div class="value-container accent">{{activityBonus.value}}</div>
+                        </div>
+                        <div class="bmr-component-container" fxLayout="column">
+                            <div class="label-container">Goal</div>
+                            <div class="value-container">{{goalBonus.value}}</div>
+                        </div>
+                        <div class="bmr-component-container" fxLayout="column">
+                            <div class="label-container">Total</div>
+                            <div class="value-container">{{biometricsBMR.value + activityBonus.value + goalBonus.value}}
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="button-container" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
+            <button mat-raised-button color="primary" [disabled]="inputInvalid() || requestInProgress"
+                (click)="saveBiometrics()">
+                Save
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>

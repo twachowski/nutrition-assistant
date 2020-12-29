@@ -1,0 +1,17 @@
+<app-dialog-with-toolbar title="New note">
+    <mat-form-field appearance="outline" color="accent">
+        <mat-label>Note content</mat-label>
+        <textarea matInput [formControl]="content"></textarea>
+        <mat-error *ngIf="content.invalid">
+            {{getErrorMessage()}}
+        </mat-error>
+    </mat-form-field>
+    <div class="bottom-padding" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+        <button mat-stroked-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button color="primary" [disabled]="content.invalid" (click)="addNewNote()">
+            Add
+        </button>
+    </div>
+</app-dialog-with-toolbar>

@@ -1,0 +1,16 @@
+mat-toolbar {
+    height: 75px;
+}
+
+a,
+a:hover {
+    color: white;
+}
+
+.title {
+    font-size: 125%;
+}
+
+.fill {
+    flex: 1 1 auto;
+}

@@ -1,0 +1,63 @@
+<app-basic-toolbar></app-basic-toolbar>
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <span>
+        <h2 class="bigger-font">
+            Welcome to
+        </h2>
+    </span>
+    <span>
+        <h1>
+            Nutrition Assistant
+        </h1>
+    </span>
+    <span>
+        <h3>
+            A place where you can:
+        </h3>
+    </span>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="50px">
+        <app-biometrics-and-goals-description></app-biometrics-and-goals-description>
+        <app-foods-description></app-foods-description>
+        <app-exercise-description></app-exercise-description>
+        <app-note-description></app-note-description>
+        <app-nutrition-tracking-description></app-nutrition-tracking-description>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="150px" class="margin-top">
+        <div>
+            <mat-card class="card-with-toolbar">
+                <mat-card-title class="title">
+                    SIGN UP
+                </mat-card-title>
+                <mat-card-content class="content">
+                    You're new here and don't have an account yet? Press the button below to create one. It's free!
+                </mat-card-content>
+                <mat-card-actions class="content">
+                    <button mat-raised-button color="primary" class="button" (click)="openRegisterDialog()">
+                        <mat-icon>
+                            person_add
+                        </mat-icon>
+                        SIGN UP
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div>
+            <mat-card class="card-with-toolbar">
+                <mat-card-title class="title">
+                    SIGN IN
+                </mat-card-title>
+                <mat-card-content class="content">
+                    If you already have an account and want to log in, press the button below.<br /><br />
+                </mat-card-content>
+                <mat-card-actions class="content">
+                    <button mat-raised-button color="primary" class="button" (click)="openLoginDialog()">
+                        <mat-icon>
+                            person
+                        </mat-icon>
+                        SIGN IN
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
