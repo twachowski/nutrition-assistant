@@ -9,15 +9,13 @@ import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserBiometricsEntity
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserCredentialsEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.UserEntity;
 import pl.polsl.wachowski.nutritionassistant.domain.db.user.VerificationTokenEntity;
-import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
-import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.TokenRepository;
+import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenExpiredException;
 import pl.polsl.wachowski.nutritionassistant.exception.token.VerificationTokenNotFoundException;
-import pl.polsl.wachowski.nutritionassistant.domain.repository.TokenRepository;
-import pl.polsl.wachowski.nutritionassistant.domain.repository.UserRepository;
-
-import java.util.Optional;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserAlreadyActiveException;
+import pl.polsl.wachowski.nutritionassistant.exception.user.UserExistsException;
 
 @Slf4j
 @Service
@@ -39,7 +37,7 @@ public class UserService {
     public UserEntity addUser(final String email, final String password) throws UserExistsException {
         if (userExists(email)) {
             log.warn("User {} already exists", email);
-            throw new UserExistsException("User with given email already exists");
+            throw new UserExistsException();
         }
         final UserEntity user = new UserEntity(email);
 
