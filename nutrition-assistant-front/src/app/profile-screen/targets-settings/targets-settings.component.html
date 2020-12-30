@@ -28,7 +28,7 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
             <mat-spinner color="accent" diameter="25" *ngIf="requestInProgress"></mat-spinner>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" [disabled]="requestInProgress" (click)="saveTargets()">
                 Save
             </button>
         </div>

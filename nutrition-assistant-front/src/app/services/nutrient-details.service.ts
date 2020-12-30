@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { NutrientDetail } from '../model/nutrient-detail';
-import { NutrientDetailsType } from '../model/nutrient-details-type.enum';
-import { NutrientUnitService } from './nutrient-unit.service';
-import { NutrientTargetService } from './nutrient-target.service';
-import { Vitamin } from '../model/food/nutrients/vitamin.enum';
-import { GeneralNutrient } from '../model/food/nutrients/general-nutrient.enum';
-import { Lipid } from '../model/food/nutrients/lipid.enum';
-import { Mineral } from '../model/food/nutrients/mineral.enum';
-import { Carbohydrate } from '../model/food/nutrients/carbohydrate.enum';
-import { AminoAcid } from '../model/food/nutrients/amino-acid.enum';
-import { Macronutrient } from '../model/food/nutrients/macronutrient.enum';
+import {Injectable} from '@angular/core';
+import {NutrientDetail} from '../model/nutrient-detail';
+import {NutrientDetailsType} from '../model/nutrient-details-type.enum';
+import {NutrientUnitService} from './nutrient-unit.service';
+import {NutrientTargetService} from './nutrient-target.service';
+import {Vitamin} from '../model/food/nutrients/vitamin.enum';
+import {GeneralNutrient} from '../model/food/nutrients/general-nutrient.enum';
+import {Lipid} from '../model/food/nutrients/lipid.enum';
+import {Mineral} from '../model/food/nutrients/mineral.enum';
+import {Carbohydrate} from '../model/food/nutrients/carbohydrate.enum';
+import {AminoAcid} from '../model/food/nutrients/amino-acid.enum';
+import {Macronutrient} from '../model/food/nutrients/macronutrient.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -127,6 +127,11 @@ export class NutrientDetailsService {
 
   get(nutrientType: NutrientDetailsType) {
     return this.map.get(nutrientType);
+  }
+
+  getNutrientIndex(nutrientType: NutrientDetailsType, nutrientName: string) {
+    return this.map.get(nutrientType)
+      .findIndex(nutrient => nutrient.name === nutrientName);
   }
 
   getAllNutrients() {

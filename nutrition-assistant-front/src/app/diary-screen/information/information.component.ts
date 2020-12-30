@@ -1,10 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NutrientTargetService } from 'src/app/services/nutrient-target.service';
-import { NutrientProgressService } from 'src/app/services/nutrient-progress.service';
-import { NutrientDetailsType } from 'src/app/model/nutrient-details-type.enum';
-import { GeneralNutrient } from 'src/app/model/food/nutrients/general-nutrient.enum';
-import { NutrientDetailsService } from 'src/app/services/nutrient-details.service';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NutrientTargetService} from 'src/app/services/nutrient-target.service';
+import {NutrientProgressService} from 'src/app/services/nutrient-progress.service';
+import {NutrientDetailsType} from 'src/app/model/nutrient-details-type.enum';
+import {GeneralNutrient} from 'src/app/model/food/nutrients/general-nutrient.enum';
+import {NutrientDetailsService} from 'src/app/services/nutrient-details.service';
+import {Subscription} from 'rxjs';
+import {UserService} from '../../services/user.service';
+import {AminoAcid} from '../../model/food/nutrients/amino-acid.enum';
+import {Carbohydrate} from '../../model/food/nutrients/carbohydrate.enum';
+import {Lipid} from '../../model/food/nutrients/lipid.enum';
+import {Mineral} from '../../model/food/nutrients/mineral.enum';
+import {Vitamin} from '../../model/food/nutrients/vitamin.enum';
+import {HighlightedTarget} from '../../model/diary/highlighted-target';
 
 @Component({
   selector: 'app-information',
@@ -17,6 +24,13 @@ export class InformationComponent implements OnInit, OnDestroy {
   private readonly progressMap = new Map<NutrientDetailsType, number>();
   private readonly progressCoeff;
 
+  private highlightedTarget1: HighlightedTarget;
+  private highlightedTarget2: HighlightedTarget;
+  private highlightedTarget3: HighlightedTarget;
+  private highlightedTarget4: HighlightedTarget;
+  private highlightedTarget5: HighlightedTarget;
+  private highlightedTarget6: HighlightedTarget;
+
   private calorieTarget = 0;
   private calorieAmount = 0;
 
@@ -25,7 +39,22 @@ export class InformationComponent implements OnInit, OnDestroy {
   constructor(
     private readonly nutrientTargetService: NutrientTargetService,
     private readonly nutrientProgressService: NutrientProgressService,
-    private readonly nutrientDetailsService: NutrientDetailsService) {
+    private readonly nutrientDetailsService: NutrientDetailsService,
+    private readonly userService: UserService) {
+    userService.getUserHighlightedTargets()
+      .subscribe(
+        data => {
+          this.highlightedTarget1 = this.getTarget(data.target1);
+          this.highlightedTarget2 = this.getTarget(data.target2);
+          this.highlightedTarget3 = this.getTarget(data.target3);
+          this.highlightedTarget4 = this.getTarget(data.target4);
+          this.highlightedTarget5 = this.getTarget(data.target5);
+          this.highlightedTarget6 = this.getTarget(data.target6);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     this.subscription = this.nutrientTargetService.getCalorieTarget().subscribe(
       value => this.calorieTarget = value
     );
@@ -81,6 +110,35 @@ export class InformationComponent implements OnInit, OnDestroy {
     let progress = 0;
     this.progressMap.forEach(value => progress += value);
     this.overallProgress = progress * this.progressCoeff;
+  }
+
+  getTarget(nutrient: string): HighlightedTarget {
+    let name: string;
+    let type: NutrientDetailsType;
+    if (AminoAcid[nutrient]) {
+      type = NutrientDetailsType.AMINO_ACIDS;
+      name = AminoAcid[nutrient];
+    } else if (Carbohydrate[nutrient]) {
+      type = NutrientDetailsType.CARBOHYDRATES;
+      name = Carbohydrate[nutrient];
+    } else if (GeneralNutrient[nutrient]) {
+      type = NutrientDetailsType.GENERAL;
+      name = GeneralNutrient[nutrient];
+    } else if (Lipid[nutrient]) {
+      type = NutrientDetailsType.LIPIDS;
+      name = Lipid[nutrient];
+    } else if (Mineral[nutrient]) {
+      type = NutrientDetailsType.MINERALS;
+      name = Mineral[nutrient];
+    } else if (Vitamin[nutrient]) {
+      type = NutrientDetailsType.VITAMINS;
+      name = Vitamin[nutrient];
+    }
+    return {
+      type,
+      nutrient,
+      nutrientName: name
+    };
   }
 
 }

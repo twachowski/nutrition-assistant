@@ -9,16 +9,16 @@
     <div fxLayout="row" fxLayoutAlign="center center">
         <mat-card class="targets-container card-with-toolbar no-bottom-padding">
             <mat-card-title class="card-toolbar">
-                TARGETS
+                HIGHLIGHTED TARGETS
             </mat-card-title>
             <mat-card-content>
                 <div fxLayout="row" fxLayoutAlign="space-evenly">
-                    <app-elementary-progress progress="0" label="Target1"></app-elementary-progress>
-                    <app-elementary-progress progress="16" label="Target2"></app-elementary-progress>
-                    <app-elementary-progress progress="32" label="Target3"></app-elementary-progress>
-                    <app-elementary-progress progress="48" label="Target4"></app-elementary-progress>
-                    <app-elementary-progress progress="64" label="Target5"></app-elementary-progress>
-                    <app-elementary-progress progress="80" label="Target6"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget1" [highlightedTarget]="highlightedTarget1"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget2" [highlightedTarget]="highlightedTarget2"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget3" [highlightedTarget]="highlightedTarget3"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget4" [highlightedTarget]="highlightedTarget4"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget5" [highlightedTarget]="highlightedTarget5"></app-elementary-progress>
+                    <app-elementary-progress *ngIf="highlightedTarget6" [highlightedTarget]="highlightedTarget6"></app-elementary-progress>
                 </div>
             </mat-card-content>
         </mat-card>

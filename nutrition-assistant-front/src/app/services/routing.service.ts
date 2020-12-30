@@ -12,6 +12,7 @@ export class RoutingService {
 
   private readonly profileUrl = this.baseUrl + '/profile';
   private readonly biometricsUrl = this.profileUrl + '/biometrics';
+  private readonly highlightedTargetsUrl = this.profileUrl + '/highlightedTargets';
 
   private readonly foodsUrl = this.baseUrl + '/foods';
 
@@ -57,6 +58,10 @@ export class RoutingService {
 
   getUserBiometricsUrl() {
     return this.biometricsUrl;
+  }
+
+  getHighlightedTargetsUrl() {
+    return this.highlightedTargetsUrl;
   }
 
 }
