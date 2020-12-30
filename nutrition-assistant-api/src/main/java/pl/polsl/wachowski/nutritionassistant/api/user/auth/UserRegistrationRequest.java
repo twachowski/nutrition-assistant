@@ -25,7 +25,7 @@ public class UserRegistrationRequest {
     }
 
     @AssertTrue(message = "Passwords do not match")
-    private boolean passwordsMatch() {
+    private boolean isPasswordConfirmationValid() {
         return password.equals(passwordConfirmation);
     }
 
