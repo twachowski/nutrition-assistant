@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 @Value
 public class NoteEntry {
 
-    @NotBlank
+    @NotBlank(message = "Note content must not be blank")
     @Size(min = 1,
           max = 255,
           message = "Note content length must be between 1 and 255 characters")

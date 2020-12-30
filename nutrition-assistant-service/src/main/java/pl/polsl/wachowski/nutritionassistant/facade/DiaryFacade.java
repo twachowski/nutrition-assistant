@@ -70,7 +70,7 @@ public class DiaryFacade {
     }
 
     public void moveEntry(final LocalDate diaryDate, final EntryMoveRequest request) {
-        if (!request.isPositionUchanged()) {
+        if (!request.isPositionUnchanged()) {
             diaryService.moveEntry(diaryDate,
                                    request.getPreviousPosition(),
                                    request.getCurrentPosition());

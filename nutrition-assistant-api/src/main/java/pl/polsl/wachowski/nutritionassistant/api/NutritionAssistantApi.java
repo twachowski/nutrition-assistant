@@ -39,22 +39,23 @@ public final class NutritionAssistantApi {
     //foods
     public static final String FOODS_API_SUFFIX = "/foods";
     public static final String FOOD_ID_API_SUFFIX = "/" + FOOD_ID_PATH_PARAM;
+    public static final String FOODS_FOOD_ID_API_SUFFIX = FOODS_API_SUFFIX + FOOD_ID_API_SUFFIX;
     public static final String FOODS_API = API_PREFIX + FOODS_API_SUFFIX;
     public static final String FOOD_ID_API = FOODS_API + FOOD_ID_API_SUFFIX;
 
     //exercises
     public static final String EXERCISES_API_SUFFIX = "/exercises";
-    public static final String EXERCISES_SEARCH_API_SUFFIX = EXERCISES_API_SUFFIX + "/search";
-    public static final String EXERCISES_SEARCH_API = API_PREFIX + EXERCISES_SEARCH_API_SUFFIX;
+    public static final String EXERCISES_API = API_PREFIX + EXERCISES_API_SUFFIX;
 
     //diary
     public static final String DIARY_API_SUFFIX = "/diary";
     public static final String ENTRIES_API_SUFFIX = "/entries";
     public static final String DIARY_DAY_API_SUFFIX = DIARY_API_SUFFIX + "/" + DATE_PATH_PARAM;
     public static final String ENTRIES_POSITION_API_SUFFIX = ENTRIES_API_SUFFIX + "/" + ENTRY_POSITION_PATH_PARAM;
-    public static final String DIARY_DAY_ENTRIES_API_SUFFIX = DIARY_DAY_API_SUFFIX + ENTRIES_POSITION_API_SUFFIX;
+    public static final String DIARY_DAY_ENTRIES_API_SUFFIX = DIARY_DAY_API_SUFFIX + ENTRIES_API_SUFFIX;
+    public static final String DIARY_DAY_ENTRY_POSITION_API_SUFFIX = DIARY_DAY_API_SUFFIX + ENTRIES_POSITION_API_SUFFIX;
     public static final String DIARY_DAY_API = API_PREFIX + DIARY_DAY_API_SUFFIX;
     public static final String DIARY_DAY_ENTRIES_API = DIARY_DAY_API + ENTRIES_API_SUFFIX;
-    public static final String DIARY_DAY_POSITION_API = API_PREFIX + DIARY_DAY_ENTRIES_API_SUFFIX;
+    public static final String DIARY_DAY_ENTRY_POSITION_API = API_PREFIX + DIARY_DAY_ENTRY_POSITION_API_SUFFIX;
 
 }

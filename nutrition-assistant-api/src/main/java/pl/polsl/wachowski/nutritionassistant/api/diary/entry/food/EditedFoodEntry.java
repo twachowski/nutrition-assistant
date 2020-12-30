@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 @Value
 public class EditedFoodEntry {
 
-    @NotNull
+    @NotNull(message = "Mass unit must not be null")
     FoodMassUnit massUnit;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Amount must not be null")
+    @Positive(message = "Amount must be positive")
     BigDecimal amount;
 
 }

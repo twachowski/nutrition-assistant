@@ -12,17 +12,17 @@ import java.math.BigDecimal;
 @Value
 public class FoodEntry {
 
-    @NotBlank
+    @NotBlank(message = "Id must not be blank")
     String id;
 
-    @NotNull
+    @NotNull(message = "Provider must not be null")
     NutritionDataProvider nutritionDataProvider;
 
-    @NotNull
+    @NotNull(message = "Mass unit must not be null")
     FoodMassUnit massUnit;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Amount must not be null")
+    @Positive(message = "Amount must be positive")
     BigDecimal amount;
 
 }

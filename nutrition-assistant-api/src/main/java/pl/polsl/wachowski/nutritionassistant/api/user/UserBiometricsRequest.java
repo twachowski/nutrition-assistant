@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 @Value
 public class UserBiometricsRequest {
 
-    @NotNull
+    @NotNull(message = "User biometrics must not be null")
     @Valid
     UserBiometrics userBiometrics;
 

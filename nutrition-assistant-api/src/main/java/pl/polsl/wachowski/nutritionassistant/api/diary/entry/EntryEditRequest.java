@@ -6,16 +6,19 @@ import lombok.Value;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.exercise.EditedExerciseEntry;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.food.EditedFoodEntry;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.note.NoteEntry;
+import pl.polsl.wachowski.nutritionassistant.api.validation.Secondary;
 
+import javax.validation.GroupSequence;
 import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@GroupSequence({EntryEditRequest.class, Secondary.class})
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class EntryEditRequest {
 
-    @NotNull
+    @NotNull(message = "Entry type must not be null")
     EntryType entryType;
     EditedFoodEntry editedFoodEntry;
     EditedExerciseEntry editedExerciseEntry;
@@ -45,17 +48,20 @@ public class EntryEditRequest {
                                                            "Note entry must not be null in note edit request"));
     }
 
-    @AssertFalse(message = "Edited food entry must not be null in food entry edit request")
+    @AssertFalse(message = "Edited food entry must not be null in food entry edit request",
+                 groups = Secondary.class)
     private boolean isFoodRequestInvalid() {
         return entryType.equals(EntryType.FOOD) && editedFoodEntry == null;
     }
 
-    @AssertFalse(message = "Edited exercise entry must not be null in exercise entry edit request")
+    @AssertFalse(message = "Edited exercise entry must not be null in exercise entry edit request",
+                 groups = Secondary.class)
     private boolean isExerciseRequestInvalid() {
         return entryType.equals(EntryType.EXERCISE) && editedExerciseEntry == null;
     }
 
-    @AssertFalse(message = "Edited note entry must not be null in note entry edit request")
+    @AssertFalse(message = "Edited note entry must not be null in note entry edit request",
+                 groups = Secondary.class)
     private boolean isNoteRequestInvalid() {
         return entryType.equals(EntryType.NOTE) && editedNoteEntry == null;
     }

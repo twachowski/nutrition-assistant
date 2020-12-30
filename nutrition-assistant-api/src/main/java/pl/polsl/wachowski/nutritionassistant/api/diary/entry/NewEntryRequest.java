@@ -6,16 +6,19 @@ import lombok.Value;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.exercise.ExerciseEntry;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.food.FoodEntry;
 import pl.polsl.wachowski.nutritionassistant.api.diary.entry.note.NoteEntry;
+import pl.polsl.wachowski.nutritionassistant.api.validation.Secondary;
 
+import javax.validation.GroupSequence;
 import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@GroupSequence({NewEntryRequest.class, Secondary.class})
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NewEntryRequest {
 
-    @NotNull
+    @NotNull(message = "Entry type must not be null")
     EntryType entryType;
     FoodEntry foodEntry;
     ExerciseEntry exerciseEntry;
@@ -45,17 +48,20 @@ public class NewEntryRequest {
                                                           "Note entry must not be null in new note entry request"));
     }
 
-    @AssertFalse(message = "Food entry must not be null in new food entry request")
+    @AssertFalse(message = "Food entry must not be null in new food entry request",
+                 groups = Secondary.class)
     private boolean isFoodRequestInvalid() {
         return entryType.equals(EntryType.FOOD) && foodEntry == null;
     }
 
-    @AssertFalse(message = "Exercise entry must not be null in new exercise entry request")
+    @AssertFalse(message = "Exercise entry must not be null in new exercise entry request",
+                 groups = Secondary.class)
     private boolean isExerciseRequestInvalid() {
         return entryType.equals(EntryType.EXERCISE) && exerciseEntry == null;
     }
 
-    @AssertFalse(message = "Note entry must not be null in new note entry request")
+    @AssertFalse(message = "Note entry must not be null in new note entry request",
+                 groups = Secondary.class)
     private boolean isNoteRequestInvalid() {
         return entryType.equals(EntryType.NOTE) && noteEntry == null;
     }

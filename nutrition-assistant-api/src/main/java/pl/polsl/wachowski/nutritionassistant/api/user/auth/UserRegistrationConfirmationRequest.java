@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Value
 public class UserRegistrationConfirmationRequest {
 
-    @NotBlank
+    @NotBlank(message = "Token must not be blank")
     String token;
 
 }

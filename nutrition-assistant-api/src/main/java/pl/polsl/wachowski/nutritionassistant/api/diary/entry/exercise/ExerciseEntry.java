@@ -11,14 +11,14 @@ import java.math.BigDecimal;
 @Value
 public class ExerciseEntry {
 
-    @NotBlank
+    @NotBlank(message = "Name must not be blank")
     String name;
 
-    @NotNull
+    @NotNull(message = "Time unit must not be null")
     TimeUnit timeUnit;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Duration must not be null")
+    @Positive(message = "Duration must be positive")
     BigDecimal duration;
 
 }

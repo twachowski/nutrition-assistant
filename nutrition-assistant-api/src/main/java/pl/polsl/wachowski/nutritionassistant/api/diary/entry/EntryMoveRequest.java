@@ -8,15 +8,16 @@ import javax.validation.constraints.NotNull;
 @Value
 public class EntryMoveRequest {
 
-    @NotNull
+    @NotNull(message = "Previous position must not be null")
     @Min(value = 0, message = "Previous position must not be negative")
     Short previousPosition;
 
-    @NotNull
+    @NotNull(message = "Current position must not be null")
     @Min(value = 0, message = "Current position must not be negative")
     Short currentPosition;
 
-    public boolean isPositionUchanged() {
+    public boolean isPositionUnchanged() {
         return previousPosition.equals(currentPosition);
     }
+
 }

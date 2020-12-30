@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 @Value
 public class EditedExerciseEntry {
 
-    @NotNull
+    @NotNull(message = "Time unit must not be null")
     TimeUnit timeUnit;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Duration must not be null")
+    @Positive(message = "Duration must be positive")
     BigDecimal duration;
 
 }
