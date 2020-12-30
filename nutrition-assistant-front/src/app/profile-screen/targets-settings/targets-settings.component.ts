@@ -98,7 +98,6 @@ export class TargetsSettingsComponent implements OnInit {
       target5: this.getNutrientName(this.formControls[4]),
       target6: this.getNutrientName(this.formControls[5])
     };
-    console.log(targets);
     this.userService.saveUserHighlightedTargets(targets)
       .subscribe(
         data => {

@@ -2,13 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NutrientProgressService} from '../../../services/nutrient-progress.service';
 import {NutrientTargetService} from '../../../services/nutrient-target.service';
 import {HighlightedTarget} from '../../../model/diary/highlighted-target';
-import {NutrientDetailsType} from "../../../model/nutrient-details-type.enum";
-import {Mineral} from "../../../model/food/nutrients/mineral.enum";
-import {GeneralNutrient} from "../../../model/food/nutrients/general-nutrient.enum";
-import {AminoAcid} from "../../../model/food/nutrients/amino-acid.enum";
-import {Carbohydrate} from "../../../model/food/nutrients/carbohydrate.enum";
-import {Lipid} from "../../../model/food/nutrients/lipid.enum";
-import {Vitamin} from "../../../model/food/nutrients/vitamin.enum";
+import {NutrientDetailsType} from '../../../model/nutrient-details-type.enum';
+import {Mineral} from '../../../model/food/nutrients/mineral.enum';
+import {GeneralNutrient} from '../../../model/food/nutrients/general-nutrient.enum';
+import {AminoAcid} from '../../../model/food/nutrients/amino-acid.enum';
+import {Carbohydrate} from '../../../model/food/nutrients/carbohydrate.enum';
+import {Lipid} from '../../../model/food/nutrients/lipid.enum';
+import {Vitamin} from '../../../model/food/nutrients/vitamin.enum';
 
 @Component({
   selector: 'app-elementary-progress',
