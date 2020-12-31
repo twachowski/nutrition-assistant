@@ -29,7 +29,9 @@ export class ElementaryProgressComponent implements OnInit {
     this.nutrientProgressService.getChanges(this.highlightedTarget.type).subscribe(
       changes => {
         const amount = changes.find(n => n.nutrient === this.highlightedTarget.nutrientName).amount;
-        this.progress = amount * 100 / this.target;
+        if (this.target) {
+          this.progress = amount * 100 / this.target;
+        }
       }
     );
     if (GeneralNutrient[this.highlightedTarget.nutrient] === GeneralNutrient.ENERGY) {
