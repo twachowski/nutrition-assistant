@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import pl.polsl.wachowski.nutritionassistant.api.error.Error;
 import pl.polsl.wachowski.nutritionassistant.api.error.ErrorResponse;
 import pl.polsl.wachowski.nutritionassistant.exception.entry.EntryNotFoundException;
@@ -148,6 +149,14 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
         log.error("Non-readable HTTP message has been detected", e);
+        final ErrorResponse errorResponse = new ErrorResponse(Error.REQUEST_VALIDATION_ERROR, e.getMessage());
+        return ResponseEntity.badRequest()
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
+        log.error("Inconvertible method argument has been detected", e);
         final ErrorResponse errorResponse = new ErrorResponse(Error.REQUEST_VALIDATION_ERROR, e.getMessage());
         return ResponseEntity.badRequest()
                 .body(errorResponse);

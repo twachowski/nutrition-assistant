@@ -1,7 +1,9 @@
 package pl.polsl.wachowski.nutritionassistant.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +27,10 @@ public class ExerciseController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    ResponseEntity<ExerciseSearchResponse> searchExercises(@RequestParam(QUERY) final String query) {
+    ResponseEntity<ExerciseSearchResponse> searchExercises(@RequestParam(QUERY) final String query) throws MissingServletRequestParameterException {
+        if (StringUtils.isBlank(query)) {
+            throw new MissingServletRequestParameterException(QUERY, "String");
+        }
         final ExerciseSearchResponse response = exerciseService.searchExercisesWithBiometrics(query);
         return ResponseEntity.ok(response);
     }
