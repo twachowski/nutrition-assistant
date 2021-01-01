@@ -51,7 +51,7 @@ export class NutrientTargetService {
     [Mineral.MAGNESIUM, 400],
     [Mineral.MANGANESE, 2.3],
     [Mineral.PHOSPHORUS, 700],
-    [Mineral.POTASSIUM, 4700],
+    [Mineral.POTASSIUM, 3400],
     [Mineral.SELENIUM, 55],
     [Mineral.SODIUM, 1500],
     [Mineral.ZINC, 11]
@@ -73,7 +73,7 @@ export class NutrientTargetService {
     if (lipid === Lipid.OMEGA3) {
       return 1.6;
     } else if (lipid === Lipid.OMEGA6) {
-      return 4.8;
+      return 17;
     } else {
       return 0;
     }
