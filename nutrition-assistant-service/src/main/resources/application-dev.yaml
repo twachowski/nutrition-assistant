@@ -76,4 +76,4 @@ nutritionix:
 scheduling:
   token-cleanup:
     enabled: true
-    cron: 0 0/1 * * * *
+    cron: 0 0/15 * * * *

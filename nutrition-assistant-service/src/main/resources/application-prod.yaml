@@ -14,7 +14,7 @@ spring:
     password: ENC(YCGNyvAdWueC1pn6zRydC44WDF89fkPLRittaY0TAN4=)
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
   # ===========
