@@ -17,8 +17,8 @@ import {Vitamin} from '../../../model/food/nutrients/vitamin.enum';
 })
 export class ElementaryProgressComponent implements OnInit {
 
-  @Input() private readonly highlightedTarget: HighlightedTarget;
-  private progress = 0;
+  @Input() readonly highlightedTarget: HighlightedTarget;
+  progress = 0;
   private target: number;
 
   constructor(private readonly nutrientProgressService: NutrientProgressService,

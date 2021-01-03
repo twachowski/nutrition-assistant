@@ -11,11 +11,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class LoginDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
-  private tabIndex = 0;
-  private email = new FormControl('', [Validators.required, Validators.email]);
-  private password = new FormControl('', [Validators.required]);
-  private emailReset = new FormControl('', [Validators.required, Validators.email]);
-  private requestInProgress = false;
+  tabIndex = 0;
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
+  emailReset = new FormControl('', [Validators.required, Validators.email]);
+  requestInProgress = false;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,

@@ -29,33 +29,33 @@ const DATE_FORMATS = {
 })
 export class BiometricsSettingsComponent implements OnInit {
 
-  private readonly minDate = moment('1900-01-01');
-  private readonly maxDate = moment();
+  readonly minDate = moment('1900-01-01');
+  readonly maxDate = moment();
 
   private readonly sexKeys = Object.entries(Sex).map(arr => arr[0]);
   private readonly activityKeys = Object.entries(ActivityLevel).map(arr => arr[0]);
 
-  private requestInProgress = false;
-  private readonly dateOfBirth = new FormControl(moment(), [Validators.required]);
-  private readonly height = new FormControl(180, [Validators.required, Validators.min(1)]);
-  private readonly weight = new FormControl(80, [Validators.required, CustomValidators.positive]);
-  private readonly sex = new FormControl(Sex.MALE);
-  private readonly activityLevel = new FormControl(ActivityLevel.NONE);
-  private readonly sexEntries = Object.entries(Sex).map(arr => arr[1]);
-  private readonly activityEntries = Object.entries(ActivityLevel).map(arr => arr[1]);
+  requestInProgress = false;
+  readonly dateOfBirth = new FormControl(moment(), [Validators.required]);
+  readonly height = new FormControl(180, [Validators.required, Validators.min(1)]);
+  readonly weight = new FormControl(80, [Validators.required, CustomValidators.positive]);
+  readonly sex = new FormControl(Sex.MALE);
+  readonly activityLevel = new FormControl(ActivityLevel.NONE);
+  readonly sexEntries = Object.entries(Sex).map(arr => arr[1]);
+  readonly activityEntries = Object.entries(ActivityLevel).map(arr => arr[1]);
 
-  private checkedRadio = 1;
+  checkedRadio = 1;
   private readonly calorieDeficitValidators = [Validators.required, Validators.min(1), Validators.max(0)];
-  private readonly calorieDeficit = new FormControl(0, this.calorieDeficitValidators);
-  private readonly calorieSurplus = new FormControl(0, [Validators.required, Validators.min(1)]);
+  readonly calorieDeficit = new FormControl(0, this.calorieDeficitValidators);
+  readonly calorieSurplus = new FormControl(0, [Validators.required, Validators.min(1)]);
 
-  private readonly biometricsBMR = new FormControl(0);
-  private readonly activityBonus = new FormControl(0);
-  private readonly goalBonus = new FormControl(0);
+  readonly biometricsBMR = new FormControl(0);
+  readonly activityBonus = new FormControl(0);
+  readonly goalBonus = new FormControl(0);
 
   constructor(
     private readonly userService: UserService,
-    private readonly activityService: ActivityService,
+    readonly activityService: ActivityService,
     private readonly bmrService: BMRService,
     private readonly nutrientTargetService: NutrientTargetService) {
     this.dateOfBirth.valueChanges.subscribe(() => this.calculateBMR());

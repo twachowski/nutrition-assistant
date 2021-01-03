@@ -11,9 +11,9 @@ import { GeneralNutrient } from 'src/app/model/food/nutrients/general-nutrient.e
 })
 export class CalorieOverviewComponent implements OnInit {
 
-  private calorieTarget = 0;
-  private foodCalories = 0;
-  private exerciseCalories = 0;
+  calorieTarget = 0;
+  foodCalories = 0;
+  exerciseCalories = 0;
 
   constructor(
     private readonly nutrientTargetService: NutrientTargetService,

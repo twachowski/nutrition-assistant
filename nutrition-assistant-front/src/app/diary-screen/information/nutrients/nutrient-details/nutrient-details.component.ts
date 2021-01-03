@@ -10,12 +10,12 @@ import { NutrientDetailsType } from 'src/app/model/nutrient-details-type.enum';
 })
 export class NutrientDetailsComponent implements OnInit {
 
-  @Input() private readonly label: string;
+  @Input() readonly label: string;
   @Input() private readonly nutrientDetailsType: NutrientDetailsType;
-  private readonly types = NutrientDetailsType;
-  private readonly displayedColumns = ['name', 'amount', 'unit', 'progress'];
-  private amount: number;
-  protected nutrients: NutrientDetail[];
+  readonly types = NutrientDetailsType;
+  readonly displayedColumns = ['name', 'amount', 'unit', 'progress'];
+  amount: number;
+  nutrients: NutrientDetail[];
 
   constructor(protected nutrientDetailsService: NutrientDetailsService) {
   }

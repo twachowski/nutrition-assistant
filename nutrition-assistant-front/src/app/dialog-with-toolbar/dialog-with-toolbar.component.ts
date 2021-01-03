@@ -8,7 +8,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class DialogWithToolbarComponent implements OnInit {
 
-  @Input() private readonly title: string;
+  @Input() readonly title: string;
 
   constructor() {
   }

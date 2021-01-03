@@ -25,14 +25,14 @@ export interface NewFoodDialogData {
 })
 export class FoodSearchDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
-  private foodName = new FormControl('', [Validators.required]);
-  private foods: FoodSearchItem[];
+  foodName = new FormControl('', [Validators.required]);
+  foods: FoodSearchItem[];
   private foodsDetails: NutrientBasicInfo[][];
-  private readonly displayedColumns = ['name', 'provider'];
-  private requestInProgress = false;
+  readonly displayedColumns = ['name', 'provider'];
+  requestInProgress = false;
 
-  private selectedFood: FoodSearchItem;
-  private selectedFoodIndex: number;
+  selectedFood: FoodSearchItem;
+  selectedFoodIndex: number;
 
   constructor(
     private readonly dialogRef: MatDialogRef<FoodSearchDialogComponent>,

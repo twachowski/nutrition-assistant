@@ -19,9 +19,9 @@ export interface NoteEditDialogData {
 export class NoteEditDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
   private readonly maxContentLength = 255;
-  private content = new FormControl(this.data.content, [Validators.required, Validators.maxLength(this.maxContentLength)]);
+  content = new FormControl(this.data.content, [Validators.required, Validators.maxLength(this.maxContentLength)]);
 
-  private requestInProgress = false;
+  requestInProgress = false;
 
   constructor(
     private readonly dialogRef: MatDialogRef<NoteEditDialogComponent>,

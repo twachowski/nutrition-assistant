@@ -10,7 +10,7 @@ import { UserContextService } from 'src/app/services/user-context.service';
 })
 export class LoggedInToolbarComponent extends BasicToolbarComponent implements OnInit {
 
-  private readonly user: string;
+  readonly user: string;
 
   constructor(
     private readonly router: Router,

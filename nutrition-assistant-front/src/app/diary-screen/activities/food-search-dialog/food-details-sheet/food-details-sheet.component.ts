@@ -31,16 +31,16 @@ export interface FoodDetailsSheetResult {
 })
 export class FoodDetailsSheetComponent implements OnInit {
 
-  private readonly units = Object.entries(FoodUnit).map(arr => arr[1]);
+  readonly units = Object.entries(FoodUnit).map(arr => arr[1]);
   private readonly unitKeys = Object.entries(FoodUnit).map(arr => arr[0]);
 
-  private amount = new FormControl(100, [Validators.required, CustomValidators.positive]);
-  private foodUnit = new FormControl(FoodUnit.GRAM);
-  private calories = new FormControl({value: 0, disabled: true});
-  private carbs = new FormControl(0);
-  private fat = new FormControl(0);
-  private protein = new FormControl(0);
-  private readonly nutrientCount: number;
+  amount = new FormControl(100, [Validators.required, CustomValidators.positive]);
+  foodUnit = new FormControl(FoodUnit.GRAM);
+  calories = new FormControl({value: 0, disabled: true});
+  carbs = new FormControl(0);
+  fat = new FormControl(0);
+  protein = new FormControl(0);
+  readonly nutrientCount: number;
 
   private readonly caloriesPerGram: number;
   private readonly carbsPerGram: number;

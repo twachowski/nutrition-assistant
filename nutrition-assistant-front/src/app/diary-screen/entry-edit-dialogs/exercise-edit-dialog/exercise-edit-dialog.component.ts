@@ -16,13 +16,13 @@ import {EditedExerciseEntry} from 'src/app/model/diary/edited-exercise-entry';
 })
 export class ExerciseEditDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
-  private readonly units = Object.entries(ExerciseUnit).map(arr => arr[1]);
+  readonly units = Object.entries(ExerciseUnit).map(arr => arr[1]);
   private readonly unitKeys = Object.entries(ExerciseUnit).map(arr => arr[0]);
-  private amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
-  private exerciseUnit = new FormControl(this.data.unit);
-  private calories = new FormControl({value: this.data.calories, disabled: true});
+  amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
+  exerciseUnit = new FormControl(this.data.unit);
+  calories = new FormControl({value: this.data.calories, disabled: true});
 
-  private requestInProgress = false;
+  requestInProgress = false;
 
   private readonly caloriesPerMin: number;
 
@@ -30,7 +30,7 @@ export class ExerciseEditDialogComponent extends DialogWithToolbarComponent impl
     private readonly dialogRef: MatDialogRef<ExerciseEditDialogComponent>,
     private readonly dateService: DateService,
     private readonly diaryService: DiaryService,
-    @Inject(MAT_DIALOG_DATA) private data: EntryDialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: EntryDialogData) {
     super();
     this.amount.markAsTouched();
     this.amount.valueChanges.subscribe(value => this.calculateCalories());

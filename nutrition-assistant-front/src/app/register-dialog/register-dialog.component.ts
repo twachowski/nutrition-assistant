@@ -12,12 +12,12 @@ import { UserService } from '../services/user.service';
 export class RegisterDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
   private readonly passwordLength = 12;
-  private email = new FormControl('', [Validators.required, Validators.email]);
-  private password = new FormControl('', [Validators.required, Validators.minLength(this.passwordLength)]);
-  private confirmedPassword = new FormControl('', [Validators.required]);
-  private termsAccepted = true;
-  private requestInProgress = false;
-  private tabIndex = 0;
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required, Validators.minLength(this.passwordLength)]);
+  confirmedPassword = new FormControl('', [Validators.required]);
+  termsAccepted = true;
+  requestInProgress = false;
+  tabIndex = 0;
 
   constructor(
     private dialogRef: MatDialogRef<RegisterDialogComponent>,

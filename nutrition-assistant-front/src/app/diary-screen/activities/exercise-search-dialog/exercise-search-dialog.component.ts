@@ -19,19 +19,19 @@ import {EntryService} from 'src/app/services/entry.service';
 })
 export class ExerciseSearchDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
-  private exerciseName = new FormControl('', [Validators.required]);
-  private exercises: ExerciseDetails[];
-  private readonly displayedColumns = ['name', 'provider'];
-  private requestInProgress = false;
+  exerciseName = new FormControl('', [Validators.required]);
+  exercises: ExerciseDetails[];
+  readonly displayedColumns = ['name', 'provider'];
+  requestInProgress = false;
 
-  private readonly units = Object.entries(ExerciseUnit).map(arr => arr[1]);
+  readonly units = Object.entries(ExerciseUnit).map(arr => arr[1]);
   private readonly unitKeys = Object.entries(ExerciseUnit).map(arr => arr[0]);
-  private duration = new FormControl(0, [Validators.required, CustomValidators.positive]);
-  private exerciseUnit = new FormControl(ExerciseUnit.MINUTE);
-  private calories = new FormControl({value: 0, disabled: true});
+  duration = new FormControl(0, [Validators.required, CustomValidators.positive]);
+  exerciseUnit = new FormControl(ExerciseUnit.MINUTE);
+  calories = new FormControl({value: 0, disabled: true});
 
-  private selectedExercise: ExerciseDetails;
-  private selectedExerciseIndex: number;
+  selectedExercise: ExerciseDetails;
+  selectedExerciseIndex: number;
 
   constructor(
     private readonly dialogRef: MatDialogRef<ExerciseSearchDialogComponent>,

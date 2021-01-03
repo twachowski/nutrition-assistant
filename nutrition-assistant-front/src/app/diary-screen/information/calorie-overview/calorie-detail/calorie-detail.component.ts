@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CalorieDetailComponent implements OnInit {
 
-  @Input() private readonly amount: number;
-  @Input() private readonly label: string;
+  @Input() readonly amount: number;
+  @Input() readonly label: string;
 
   constructor() { }
 

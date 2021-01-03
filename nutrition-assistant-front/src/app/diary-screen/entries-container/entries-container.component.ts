@@ -40,7 +40,7 @@ import {Subscription} from 'rxjs';
 export class EntriesContainerComponent implements OnInit, OnDestroy {
 
   @ViewChild('table') table: MatTable<Entry>;
-  private entries: Entry[] = [];
+  entries: Entry[] = [];
   private readonly totalNutrients = new Map<NutrientDetailsType, NutrientBasicInfo[]>([
     [NutrientDetailsType.GENERAL, []],
     [NutrientDetailsType.MACRONUTRIENTS, []],
@@ -50,10 +50,10 @@ export class EntriesContainerComponent implements OnInit, OnDestroy {
     [NutrientDetailsType.VITAMINS, []],
     [NutrientDetailsType.MINERALS, []],
   ]);
-  private readonly displayedColumns = ['icon', 'name', 'amount', 'unit', 'calories', 'edit', 'delete'];
+  readonly displayedColumns = ['icon', 'name', 'amount', 'unit', 'calories', 'edit', 'delete'];
   private readonly editFunctionMap: Map<EntryType, (entry: Entry, position: number) => void>;
 
-  private requestInProgress = false;
+  requestInProgress = false;
 
   private subscription: Subscription;
 

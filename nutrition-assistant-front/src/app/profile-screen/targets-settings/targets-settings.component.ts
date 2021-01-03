@@ -18,9 +18,9 @@ import {HighlightedTargetsRequest} from '../../model/user/highlighted-targets-re
 })
 export class TargetsSettingsComponent implements OnInit {
 
-  private requestInProgress = false;
-  private readonly formControls: FormControl[][] = [];
-  private readonly nutrientTypes = [
+  requestInProgress = false;
+  readonly formControls: FormControl[][] = [];
+  readonly nutrientTypes = [
     [NutrientDetailsType.GENERAL, 'General'],
     [NutrientDetailsType.CARBOHYDRATES, 'Carbohydrate'],
     [NutrientDetailsType.LIPIDS, 'Lipid'],

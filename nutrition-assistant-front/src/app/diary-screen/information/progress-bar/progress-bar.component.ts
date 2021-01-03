@@ -38,11 +38,11 @@ const STATE2 = 'state2';
 })
 export class ProgressBarComponent implements OnInit, AfterViewInit, OnChanges {
 
-  private currentState = STATE1;
-  private state1Info: StateInfo = { value: 0, color: 'red' };
-  private state2Info: StateInfo = { value: 100, color: 'green' };
+  currentState = STATE1;
+  state1Info: StateInfo = { value: 0, color: 'red' };
+  state2Info: StateInfo = { value: 100, color: 'green' };
 
-  @Input() private value = 0;
+  @Input() value = 0;
 
   constructor(private readonly colorService: ColorService) {
   }

@@ -16,13 +16,13 @@ import {EditedFoodEntry} from 'src/app/model/diary/edited-food-entry';
 })
 export class FoodEditDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
-  private readonly units = Object.entries(FoodUnit).map(arr => arr[1]);
+  readonly units = Object.entries(FoodUnit).map(arr => arr[1]);
   private readonly unitKeys = Object.entries(FoodUnit).map(arr => arr[0]);
-  private amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
-  private foodUnit = new FormControl(this.data.unit);
-  private calories = new FormControl({value: this.data.calories, disabled: true});
+  amount = new FormControl(this.data.amount, [Validators.required, CustomValidators.positive]);
+  foodUnit = new FormControl(this.data.unit);
+  calories = new FormControl({value: this.data.calories, disabled: true});
 
-  private requestInProgress = false;
+  requestInProgress = false;
 
   private readonly caloriesPerGram: number;
 
@@ -30,7 +30,7 @@ export class FoodEditDialogComponent extends DialogWithToolbarComponent implemen
     private readonly dialogRef: MatDialogRef<FoodEditDialogComponent>,
     private readonly dateService: DateService,
     private readonly diaryService: DiaryService,
-    @Inject(MAT_DIALOG_DATA) private data: EntryDialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: EntryDialogData) {
     super();
     this.amount.markAsTouched();
     this.amount.valueChanges.subscribe(value => this.calculateCalories());

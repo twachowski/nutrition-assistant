@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GeneralProgressComponent implements OnInit {
 
-  @Input() private readonly progress: number;
-  @Input() private readonly label: string;
+  @Input() readonly progress: number;
+  @Input() readonly label: string;
 
   constructor() { }
 

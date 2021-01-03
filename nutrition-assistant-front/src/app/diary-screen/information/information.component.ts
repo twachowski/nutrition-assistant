@@ -20,19 +20,19 @@ import {HighlightedTarget} from '../../model/diary/highlighted-target';
 })
 export class InformationComponent implements OnInit, OnDestroy {
 
-  private overallProgress = 0;
+  overallProgress = 0;
   private readonly progressMap = new Map<NutrientDetailsType, number>();
   private readonly progressCoeff;
 
-  private highlightedTarget1: HighlightedTarget;
-  private highlightedTarget2: HighlightedTarget;
-  private highlightedTarget3: HighlightedTarget;
-  private highlightedTarget4: HighlightedTarget;
-  private highlightedTarget5: HighlightedTarget;
-  private highlightedTarget6: HighlightedTarget;
+  highlightedTarget1: HighlightedTarget;
+  highlightedTarget2: HighlightedTarget;
+  highlightedTarget3: HighlightedTarget;
+  highlightedTarget4: HighlightedTarget;
+  highlightedTarget5: HighlightedTarget;
+  highlightedTarget6: HighlightedTarget;
 
-  private calorieTarget = 0;
-  private calorieAmount = 0;
+  calorieTarget = 0;
+  calorieAmount = 0;
 
   private readonly subscription: Subscription;
 

@@ -9,8 +9,8 @@ import { DialogConfigService } from 'src/app/services/dialog-config.service';
 })
 export class ButtonContainerComponent implements OnInit {
 
-  @Input() private readonly label: string;
-  @Input() private readonly icon: string;
+  @Input() readonly label: string;
+  @Input() readonly icon: string;
 
   @Output() private readonly openDialogEvent = new EventEmitter<void>();
 

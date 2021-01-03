@@ -15,7 +15,7 @@ import {NewNoteEntry} from 'src/app/model/diary/new-note-entry';
 export class NoteAddDialogComponent extends DialogWithToolbarComponent implements OnInit {
 
   private readonly maxContentLength = 255;
-  private content = new FormControl('', [Validators.required, Validators.maxLength(this.maxContentLength)]);
+  content = new FormControl('', [Validators.required, Validators.maxLength(this.maxContentLength)]);
 
   constructor(
     private readonly dialogRef: MatDialogRef<NoteAddDialogComponent>,

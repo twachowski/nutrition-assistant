@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FeatureDescriptionComponent implements OnInit {
 
-  @Input() private readonly icon: string;
+  @Input() readonly icon: string;
 
   constructor() { }
 

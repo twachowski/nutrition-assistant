@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RegistrationConfirmComponent implements OnInit {
 
-  private success: boolean;
+  success: boolean;
 
   constructor(
     private readonly route: ActivatedRoute) { }
