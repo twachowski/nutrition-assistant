@@ -4,6 +4,12 @@
 logging:
   config: classpath:log4j2-dev.yaml
 
+# =============
+# Server config
+# =============
+server:
+  port: 8080
+
 # =========
 # DB config
 # =========
