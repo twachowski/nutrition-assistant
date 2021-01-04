@@ -1,9 +1,5 @@
 Properties:
   Property:
-    - name: LOG_PATH
-      value: "var/log"
-    - name: LOG_FILE_NAME
-      value: "nutrition-assistant"
     - name: DATE_PATTERN
       value: "yyyy-MM-dd HH:mm:ss.SSS"
     - name: LOG_LEVEL_PATTERN
