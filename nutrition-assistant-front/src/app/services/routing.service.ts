@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoutingService {
 
-  private readonly baseUrl = 'http://localhost:8080/nutrition-assistant/api/v1.0';
+  private readonly baseUrl = `${environment.nutritionAssistantServiceBaseUrl}/nutrition-assistant/api/v1.0`;
 
   private readonly usersUrl = this.baseUrl + '/users';
   private readonly loginUrl = this.usersUrl + '/login';
